@@ -4,13 +4,17 @@ import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Platform } from 'react-native';
-import { CATEGORIES } from '../constants';
+import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../constants';
 
 export default function AddExpenseScreen({ navigation }) {
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('');
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [tab, setTab] = useState('GASTOS'); // Estado para manejar GASTOS e INGRESOS
+  const [note, setNote] = useState('');
+
+  const categories = tab === 'GASTOS' ? CATEGORIES_GASTOS : CATEGORIES_INGRESOS;
 
   const handleAddExpense = async () => {
     if (!amount || isNaN(parseFloat(amount))) {
@@ -26,7 +30,9 @@ export default function AddExpenseScreen({ navigation }) {
       id: Date.now(),
       amount: parseFloat(amount),
       category,
-      date: date.toISOString()
+      date: date.toISOString(),
+      type: tab,
+      note
     };
 
     try {
@@ -34,15 +40,33 @@ export default function AddExpenseScreen({ navigation }) {
       const expenses = stored ? JSON.parse(stored) : [];
       expenses.push(newExpense);
       await AsyncStorage.setItem('expenses', JSON.stringify(expenses));
-      navigation.navigate('Overview'); // o donde desees redirigir
+      navigation.navigate('Overview'); // Navegar a una pantalla tras agregar el gasto
     } catch (e) {
-      console.error('Error al guardar gasto:', e);
+      console.error('Error al guardar:', e);
     }
   };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.header}>Añadir Gasto o Ingreso</Text>
+
+      <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={[styles.tab, tab === 'GASTOS' && styles.tabActive]}
+          onPress={() => setTab('GASTOS')}
+        >
+          <Text style={tab === 'GASTOS' ? styles.tabTextActive : styles.tabText}>GASTOS</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tab, tab === 'INGRESO' && styles.tabActive]}
+          onPress={() => setTab('INGRESO')}
+        >
+          <Text style={tab === 'INGRESO' ? styles.tabTextActive : styles.tabText}>INGRESO</Text>
+        </TouchableOpacity>
+      </View>
+      
       <TextInput style={styles.input} placeholder="Cantidad (€)" value={amount} onChangeText={setAmount} keyboardType="numeric" />
+
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={category}
@@ -50,11 +74,19 @@ export default function AddExpenseScreen({ navigation }) {
           style={styles.picker}
         >
           <Picker.Item label="Selecciona una categoría" value="" />
-          {CATEGORIES.map(cat => (
+          {categories.map(cat => (
             <Picker.Item key={cat} label={cat} value={cat} />
           ))}
         </Picker>
       </View>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Notas"
+        value={note}
+        onChangeText={setNote}
+        multiline
+      />
 
       <TouchableOpacity onPress={() => setShowDatePicker(true)}>
         <Text style={styles.dateText}>Fecha: {date.toDateString()}</Text>
@@ -72,13 +104,53 @@ export default function AddExpenseScreen({ navigation }) {
         />
       )}
 
-      <Button title="Agregar gasto" onPress={handleAddExpense} />
+      <Button title="Agregar" onPress={handleAddExpense} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  header: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 18,
+    textAlign: 'center',
+    color: '#222'
+  },
   container: { flex: 1, padding: 20 },
+  tabContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: 10,
+    backgroundColor: '#eee',
+    alignItems: 'center',
+  },
+  tabActive: {
+    backgroundColor: '#2196F3',
+  },
+  tabText: {
+    color: '#333',
+    fontWeight: 'bold',
+  },
+  tabTextActive: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  pickerContainer: {
+  borderWidth: 1,
+  borderColor: '#ccc',
+  borderRadius: 5,
+  marginBottom: 12
+  },
+  picker: {
+    height: 50,
+    width: '100%',
+  },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
