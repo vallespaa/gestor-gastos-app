@@ -9,6 +9,7 @@ const OverviewScreen = () => {
   const [expenses, setExpenses] = useState([]);
   const [total, setTotal] = useState(0);
   const [categories, setCategories] = useState([]);
+  const [tab, setTab] = useState('GASTOS');
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -19,8 +20,11 @@ const OverviewScreen = () => {
 
         const filtered = parsed.filter(item => {
           const itemDate = new Date(item.date);
-          // Filtrar gastos del mes actual
-          return itemDate.getMonth() === currentDate.getMonth() && itemDate.getFullYear() === currentDate.getFullYear();
+          return (
+            itemDate.getMonth() === currentDate.getMonth() &&
+            itemDate.getFullYear() === currentDate.getFullYear() &&
+            item.type && item.type.toUpperCase() === tab 
+          );
         });
 
         const totalAmount = filtered.reduce((acc, item) => acc + parseFloat(item.amount), 0);
@@ -28,10 +32,10 @@ const OverviewScreen = () => {
 
         const categoryMap = {};
         filtered.forEach(item => {
-            categoryMap[item.category] = (categoryMap[item.category] || 0) + item.amount; 
+          categoryMap[item.category] = (categoryMap[item.category] || 0) + item.amount;
         });
 
-        const PieChart = Object.entries(categoryMap).map(([category, amount], index) => ({
+        const chartData = Object.entries(categoryMap).map(([category, amount], index) => ({
           name: category,
           amount,
           color: getColor(index),
@@ -39,7 +43,7 @@ const OverviewScreen = () => {
           legendFontSize: 14,
         }));
 
-        setCategories(PieChart);
+        setCategories(chartData);
         setExpenses(parsed);
       } catch (error) {
         console.log('Error al cargar gastos:', error);
@@ -47,7 +51,7 @@ const OverviewScreen = () => {
     };
 
     fetchExpenses();
-  }, []);
+  }, [tab]); // escucha cambios en `tab`
 
   const getColor = (index) => {
     const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#F77825'];
@@ -56,12 +60,23 @@ const OverviewScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.balance}>${total.toFixed(2)}</Text>
-
-      <View style={styles.tabs}>
-        <TouchableOpacity style={styles.tabSelected}><Text>Gastos</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.tab}><Text>Ingresos</Text></TouchableOpacity>
+      <Text style={styles.header}>Overview</Text>
+    
+      <View style={styles.tabContainer}>
+        <TouchableOpacity
+          style={[styles.tab, tab === 'GASTOS' && styles.tabActive]}
+          onPress={() => setTab('GASTOS')}
+        >
+          <Text style={tab === 'GASTOS' ? styles.tabTextActive : styles.tabText}>GASTOS</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tab, tab === 'INGRESO' && styles.tabActive]}
+          onPress={() => setTab('INGRESO')}
+        >
+          <Text style={tab === 'INGRESO' ? styles.tabTextActive : styles.tabText}>INGRESO</Text>
+        </TouchableOpacity>
       </View>
+      <Text style={styles.balance}>${total.toFixed(2)}</Text>
 
       {categories.length > 0 ? (
         <PieChart
@@ -112,5 +127,58 @@ const styles = StyleSheet.create({
   balance: {
     fontSize: 20,
     marginVertical: 15,
+  },
+  container: { flex: 1, padding: 20 },
+  tabContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: 10,
+    backgroundColor: '#eee',
+    alignItems: 'center',
+  },
+  tabActive: {
+    backgroundColor: '#2196F3',
+  },
+  tabText: {
+    color: '#333',
+    fontWeight: 'bold',
+  },
+  tabTextActive: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  summary: {
+    marginTop: 30,
+    width: '100%',
+  },
+  summaryRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  catName: {
+    flex: 1,
+    fontSize: 14,
+  },
+  bar: {
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 10,
+    flex: 2,
+  },
+  catAmount: {
+    fontSize: 14,
+    flex: 1,
+    textAlign: 'right',
+  },
+  header: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
 });
