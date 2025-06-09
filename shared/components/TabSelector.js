@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { COLORS, SPACING, BORDER_RADIUS } from '../styles/global';
 
 export default function TabSelector({ tab, setTab }) {
   return (
@@ -23,25 +24,25 @@ export default function TabSelector({ tab, setTab }) {
 const styles = StyleSheet.create({
   tabContainer: {
     flexDirection: 'row',
-    marginBottom: 20,
-    borderRadius: 8,
+    marginBottom: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
     overflow: 'hidden',
   },
   tab: {
     flex: 1,
-    paddingVertical: 10,
-    backgroundColor: '#eee',
+    paddingVertical: SPACING.sm,
+    backgroundColor: COLORS.lightGray,
     alignItems: 'center',
   },
   tabActive: {
-    backgroundColor: '#2196F3',
+    backgroundColor: COLORS.primary,
   },
   tabText: {
-    color: '#333',
+    color: COLORS.black,
     fontWeight: 'bold',
   },
   tabTextActive: {
-    color: '#fff',
+    color: COLORS.white,
     fontWeight: 'bold',
   },
 });

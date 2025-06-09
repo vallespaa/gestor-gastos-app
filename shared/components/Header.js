@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { COLORS, FONT_SIZES, SPACING } from '../styles/global';
 
 const Header = ({ amount, title }) => {
   return (
@@ -14,18 +15,18 @@ const Header = ({ amount, title }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    padding: SPACING.md,
     alignItems: 'center',
-    backgroundColor: 'fff',
+    backgroundColor: COLORS.white,
   },
   amount: {
-    fontSize: 32,
+    fontSize: FONT_SIZES.xxl,
     fontWeight: 'bold',
   },
   title: {
-    fontSize: 24,
+    fontSize: FONT_SIZES.xl,
     fontWeight: 'bold',
-    manginTop: 8,
+    manginTop: SPACING.sm,
   },
 });
 

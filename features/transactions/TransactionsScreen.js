@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../../shared/components/Header';
+import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS} from '../../shared/styles/global';
 
 export default function TransactionsScreen() {
   const [expenses, setExpenses] = useState([]);
@@ -49,19 +50,47 @@ export default function TransactionsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
+  container: {
+    flex: 1, 
+    padding: SPACING.md,
+    backgroundColor: COLORS.white
+  },
   item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 12,
-    marginVertical: 5,
-    backgroundColor: '#f2f2f2',
-    borderRadius: 6,
+    padding: SPACING.sm,
+    marginVertical: SPACING.xs,
+    backgroundColor: COLORS.lightGray,
+    borderRadius: BORDER_RADIUS.sm,
   },
-  category: { fontSize: 16, fontWeight: '600' },
-  type: { fontSize: 12, color: '#2196F3', fontWeight: 'bold' },
-  date: { fontSize: 12, color: '#666' },
-  note: { fontSize: 12, color: '#888', fontStyle: 'italic', marginTop: 2 },
-  amount: { fontSize: 16, fontWeight: 'bold', color: '#2c3e50', marginLeft: 10 },
-  empty: { textAlign: 'center', marginTop: 20, color: '#999' },
+  category: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: '600'
+  },
+  type: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.primary,
+    fontWeight: 'bold'
+  },
+  date: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.gray
+  },
+  note: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.darkGray,
+    fontStyle: 'italic',
+    marginTop: SPACING.xs
+  },
+  amount: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: 'bold',
+    color: COLORS.darkBlue,
+    marginLeft: SPACING.sm
+  },
+  empty: {
+    textAlign: 'center',
+    marginTop: SPACING.md,
+    color: COLORS.lightGray
+  },
 });

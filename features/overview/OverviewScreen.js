@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Dimensions, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PieChart } from 'react-native-chart-kit';
 import TabSelector from '../../shared/components/TabSelector';
 import Header from '../../shared/components/Header';
+import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -41,8 +42,8 @@ const OverviewScreen = () => {
           name: category,
           amount,
           color: getColor(index),
-          legendFontColor: '#333',
-          legendFontSize: 14,
+          legendFontColor: COLORS.gray,
+          legendFontSize: FONT_SIZES.sm,
         }));
 
         setCategories(chartData);
@@ -73,9 +74,7 @@ const OverviewScreen = () => {
           width={screenWidth - 20}
           height={220}
           chartConfig={{
-            backgroundColor: '#fff',
-            backgroundGradientFrom: '#fff',
-            backgroundGradientTo: '#fff',
+            backgroundColor: COLORS.white,
             color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           }}
           accessor="amount"
@@ -84,7 +83,7 @@ const OverviewScreen = () => {
           absolute
         />
       ) : (
-        <Text style={{ marginTop: 20 }}>No hay datos para mostrar.</Text>
+        <Text style={{ marginTop: SPACING.md }}>No hay datos para mostrar.</Text>
       )}
 
       <View style={styles.summary}>
@@ -105,30 +104,30 @@ export default OverviewScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
+    padding: SPACING.md,
+    backgroundColor: COLORS.white,
   },
   summary: {
-    marginTop: 30,
+    marginTop: SPACING.xl,
     width: '100%',
   },
   summaryRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: SPACING.md,
   },
   catName: {
     flex: 1,
-    fontSize: 14,
+    fontSize: FONT_SIZES.smS,
   },
   bar: {
     height: 10,
-    borderRadius: 5,
-    marginHorizontal: 10,
+    borderRadius: BORDER_RADIUS.sm,
+    marginHorizontal: SPACING.sm,
     flex: 2,
   },
   catAmount: {
-    fontSize: 14,
+    fontSize: FONT_SIZES.sm,
     flex: 1,
     textAlign: 'right',
   },

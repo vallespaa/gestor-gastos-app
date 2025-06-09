@@ -7,6 +7,7 @@ import { Platform } from 'react-native';
 import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../shared/constants/constants';
 import TabSelector from '../../shared/components/TabSelector';
 import Header from '../../shared/components/Header';
+import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
 
 export default function AddExpenseScreen({ navigation }) {
   const [amount, setAmount] = useState('');
@@ -101,28 +102,29 @@ export default function AddExpenseScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20
+    padding: SPACING.md,
+    backgroundColor: COLORS.white
   },
   pickerContainer: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    marginBottom: 12
+    borderColor: COLORS.gray,
+    borderRadius: BORDER_RADIUS.md,
+    marginBottom: SPACING.md
   },
   picker: {
-    height: 50,
+    height: SPACING.xl,
     width: '100%',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
-    marginBottom: 12,
-    padding: 10,
-    borderRadius: 5
+    borderColor: COLORS.lightGray,
+    marginBottom: SPACING.md,
+    padding: SPACING.sm,
+    borderRadius: BORDER_RADIUS.md
   },
   dateText: {
-    marginBottom: 12,
-    color: '#333',
-    fontSize: 16
+    marginBottom: SPACING.sm,
+    color: COLORS.black,
+    fontSize: FONT_SIZES.md
   }
 });
