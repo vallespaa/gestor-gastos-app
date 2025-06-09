@@ -1,8 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import OverviewScreen from '../screens/OverviewScreen';
-import AddExpenseScreen from '../screens/AddExpenseScreen';
-import TransactionsScreen from '../screens/TransactionsScreen';
+import OverviewScreen from '../features/overview/OverviewScreen';
+import AddExpenseScreen from '../features/add/AddExpenseScreen';
+import TransactionsScreen from '../features/transactions/TransactionsScreen';
 import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();

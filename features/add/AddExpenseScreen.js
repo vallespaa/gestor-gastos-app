@@ -4,7 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Platform } from 'react-native';
-import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../constants';
+import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../shared/constants/constants';
 
 export default function AddExpenseScreen({ navigation }) {
   const [amount, setAmount] = useState('');

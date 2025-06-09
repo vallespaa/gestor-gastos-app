@@ -51,7 +51,7 @@ const OverviewScreen = () => {
     };
 
     fetchExpenses();
-  }, [tab]); // escucha cambios en `tab`
+  }, [tab]);
 
   const getColor = (index) => {
     const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#F77825'];
@@ -60,7 +60,7 @@ const OverviewScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>Overview</Text>
+      <Text style={styles.header}>${total.toFixed(2)}</Text>
     
       <View style={styles.tabContainer}>
         <TouchableOpacity
@@ -76,7 +76,6 @@ const OverviewScreen = () => {
           <Text style={tab === 'INGRESO' ? styles.tabTextActive : styles.tabText}>INGRESO</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.balance}>${total.toFixed(2)}</Text>
 
       {categories.length > 0 ? (
         <PieChart
@@ -114,7 +113,14 @@ const OverviewScreen = () => {
 export default OverviewScreen;
 
 const styles = StyleSheet.create({
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 24,
+    textAlign: 'center',
+  },
   container: {
+    flex: 1,
     padding: 20,
     alignItems: 'center',
     backgroundColor: '#fff',
@@ -175,10 +181,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     flex: 1,
     textAlign: 'right',
-  },
-  header: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 20,
   },
 });
