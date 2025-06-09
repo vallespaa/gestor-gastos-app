@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Header from '../../shared/components/Header';
 
 export default function TransactionsScreen() {
   const [expenses, setExpenses] = useState([]);
@@ -36,7 +37,7 @@ export default function TransactionsScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Transacciones</Text>
+      <Header title={"Transacciones"}/>
       <FlatList
         data={expenses}
         keyExtractor={(item) => item.id.toString()}
@@ -49,7 +50,6 @@ export default function TransactionsScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20 },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10 },
   item: {
     flexDirection: 'row',
     justifyContent: 'space-between',

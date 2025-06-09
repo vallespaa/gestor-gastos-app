@@ -6,6 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { Platform } from 'react-native';
 import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../shared/constants/constants';
 import TabSelector from '../../shared/components/TabSelector';
+import Header from '../../shared/components/Header';
 
 export default function AddExpenseScreen({ navigation }) {
   const [amount, setAmount] = useState('');
@@ -49,7 +50,7 @@ export default function AddExpenseScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Añadir Gasto o Ingreso</Text>
+      <Header title={"Añadir"}/>
 
       <TabSelector tab={tab} setTab={setTab}/>
 
@@ -98,19 +99,15 @@ export default function AddExpenseScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 18,
-    textAlign: 'center',
-    color: '#222'
+  container: {
+    flex: 1,
+    padding: 20
   },
-  container: { flex: 1, padding: 20 },
   pickerContainer: {
-  borderWidth: 1,
-  borderColor: '#ccc',
-  borderRadius: 5,
-  marginBottom: 12
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 12
   },
   picker: {
     height: 50,

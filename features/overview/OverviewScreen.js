@@ -3,6 +3,7 @@ import { View, Text, Dimensions, StyleSheet, ScrollView, TouchableOpacity } from
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PieChart } from 'react-native-chart-kit';
 import TabSelector from '../../shared/components/TabSelector';
+import Header from '../../shared/components/Header';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -61,7 +62,8 @@ const OverviewScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>{total.toFixed(2)}€</Text>
+
+      <Header amount={total.toFixed(2)}/>
 
       <TabSelector tab={tab} setTab={setTab}/>
 
@@ -101,22 +103,10 @@ const OverviewScreen = () => {
 export default OverviewScreen;
 
 const styles = StyleSheet.create({
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 24,
-    textAlign: 'center',
-  },
   container: {
     flex: 1,
     padding: 20,
-    alignItems: 'center',
     backgroundColor: '#fff',
-    flexGrow: 1,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
   },
   summary: {
     marginTop: 30,
