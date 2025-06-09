@@ -11,10 +11,10 @@ export default function TabSelector({ tab, setTab }) {
             <Text style={tab === 'GASTOS' ? styles.tabTextActive : styles.tabText}>GASTOS</Text>
         </TouchableOpacity>
         <TouchableOpacity
-            style={[styles.tab, tab === 'INGRESO' && styles.tabActive]}
-            onPress={() => setTab('INGRESO')}
+            style={[styles.tab, tab === 'INGRESOS' && styles.tabActive]}
+            onPress={() => setTab('INGRESOS')}
         >
-            <Text style={tab === 'INGRESO' ? styles.tabTextActive : styles.tabText}>INGRESO</Text>
+            <Text style={tab === 'INGRESOS' ? styles.tabTextActive : styles.tabText}>INGRESOS</Text>
         </TouchableOpacity>
     </View>
   );
