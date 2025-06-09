@@ -5,6 +5,7 @@ import { PieChart } from 'react-native-chart-kit';
 import TabSelector from '../../shared/components/TabSelector';
 import Header from '../../shared/components/Header';
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
+import { CategoryPieChart } from './components/CategoryPieChart';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -68,23 +69,7 @@ const OverviewScreen = () => {
 
       <TabSelector tab={tab} setTab={setTab}/>
 
-      {categories.length > 0 ? (
-        <PieChart
-          data={categories}
-          width={screenWidth - 20}
-          height={220}
-          chartConfig={{
-            backgroundColor: COLORS.white,
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          }}
-          accessor="amount"
-          backgroundColor="transparent"
-          paddingLeft="15"
-          absolute
-        />
-      ) : (
-        <Text style={{ marginTop: SPACING.md }}>No hay datos para mostrar.</Text>
-      )}
+      <CategoryPieChart categories={categories} />
 
       <View style={styles.summary}>
         {categories.map((cat) => (
@@ -118,7 +103,7 @@ const styles = StyleSheet.create({
   },
   catName: {
     flex: 1,
-    fontSize: FONT_SIZES.smS,
+    fontSize: FONT_SIZES.sm,
   },
   bar: {
     height: 10,
