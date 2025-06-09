@@ -61,7 +61,7 @@ const OverviewScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>${total.toFixed(2)}</Text>
+      <Text style={styles.header}>{total.toFixed(2)}€</Text>
 
       <TabSelector tab={tab} setTab={setTab}/>
 
@@ -86,11 +86,11 @@ const OverviewScreen = () => {
       )}
 
       <View style={styles.summary}>
-        {categories.map((cat, idx) => (
-          <View key={idx} style={styles.summaryRow}>
+        {categories.map((cat) => (
+          <View key={cat.name} style={styles.summaryRow}>
             <Text style={styles.catName}>{cat.name}</Text>
             <View style={[styles.bar, { width: `${(cat.amount / total) * 100}%`, backgroundColor: cat.color }]} />
-            <Text style={styles.catAmount}>€{cat.amount.toFixed(2)}</Text>
+            <Text style={styles.catAmount}>{cat.amount.toFixed(2)}€</Text>
           </View>
         ))}
       </View>
@@ -117,17 +117,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-  },
-  balance: {
-    fontSize: 20,
-    marginVertical: 15,
-  },
-  container: { flex: 1, padding: 20 },
-  tabContainer: {
-    flexDirection: 'row',
-    marginBottom: 20,
-    borderRadius: 8,
-    overflow: 'hidden',
   },
   summary: {
     marginTop: 30,
