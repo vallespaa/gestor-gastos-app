@@ -5,13 +5,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Platform } from 'react-native';
 import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../shared/constants/constants';
+import TabSelector from '../../shared/components/TabSelector';
 
 export default function AddExpenseScreen({ navigation }) {
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('');
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [tab, setTab] = useState('GASTOS'); // Estado para manejar GASTOS e INGRESOS
+  const [tab, setTab] = useState('GASTOS');
   const [note, setNote] = useState('');
 
   const categories = tab === 'GASTOS' ? CATEGORIES_GASTOS : CATEGORIES_INGRESOS;
@@ -50,21 +51,8 @@ export default function AddExpenseScreen({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.header}>Añadir Gasto o Ingreso</Text>
 
-      <View style={styles.tabContainer}>
-        <TouchableOpacity
-          style={[styles.tab, tab === 'GASTOS' && styles.tabActive]}
-          onPress={() => setTab('GASTOS')}
-        >
-          <Text style={tab === 'GASTOS' ? styles.tabTextActive : styles.tabText}>GASTOS</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tab, tab === 'INGRESO' && styles.tabActive]}
-          onPress={() => setTab('INGRESO')}
-        >
-          <Text style={tab === 'INGRESO' ? styles.tabTextActive : styles.tabText}>INGRESO</Text>
-        </TouchableOpacity>
-      </View>
-      
+      <TabSelector tab={tab} setTab={setTab}/>
+
       <TextInput style={styles.input} placeholder="Cantidad (€)" value={amount} onChangeText={setAmount} keyboardType="numeric" />
 
       <View style={styles.pickerContainer}>
@@ -118,29 +106,6 @@ const styles = StyleSheet.create({
     color: '#222'
   },
   container: { flex: 1, padding: 20 },
-  tabContainer: {
-    flexDirection: 'row',
-    marginBottom: 20,
-    borderRadius: 8,
-    overflow: 'hidden',
-  },
-  tab: {
-    flex: 1,
-    paddingVertical: 10,
-    backgroundColor: '#eee',
-    alignItems: 'center',
-  },
-  tabActive: {
-    backgroundColor: '#2196F3',
-  },
-  tabText: {
-    color: '#333',
-    fontWeight: 'bold',
-  },
-  tabTextActive: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
   pickerContainer: {
   borderWidth: 1,
   borderColor: '#ccc',

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PieChart } from 'react-native-chart-kit';
+import TabSelector from '../../shared/components/TabSelector';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -61,21 +62,8 @@ const OverviewScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>${total.toFixed(2)}</Text>
-    
-      <View style={styles.tabContainer}>
-        <TouchableOpacity
-          style={[styles.tab, tab === 'GASTOS' && styles.tabActive]}
-          onPress={() => setTab('GASTOS')}
-        >
-          <Text style={tab === 'GASTOS' ? styles.tabTextActive : styles.tabText}>GASTOS</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tab, tab === 'INGRESO' && styles.tabActive]}
-          onPress={() => setTab('INGRESO')}
-        >
-          <Text style={tab === 'INGRESO' ? styles.tabTextActive : styles.tabText}>INGRESO</Text>
-        </TouchableOpacity>
-      </View>
+
+      <TabSelector tab={tab} setTab={setTab}/>
 
       {categories.length > 0 ? (
         <PieChart
@@ -140,23 +128,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 8,
     overflow: 'hidden',
-  },
-  tab: {
-    flex: 1,
-    paddingVertical: 10,
-    backgroundColor: '#eee',
-    alignItems: 'center',
-  },
-  tabActive: {
-    backgroundColor: '#2196F3',
-  },
-  tabText: {
-    color: '#333',
-    fontWeight: 'bold',
-  },
-  tabTextActive: {
-    color: '#fff',
-    fontWeight: 'bold',
   },
   summary: {
     marginTop: 30,
