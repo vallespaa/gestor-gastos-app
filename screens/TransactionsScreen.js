@@ -10,7 +10,6 @@ export default function TransactionsScreen() {
       try {
         const stored = await AsyncStorage.getItem('expenses');
         const parsed = stored ? JSON.parse(stored) : [];
-        // Ordenar por fecha descendente
         parsed.sort((a, b) => new Date(b.date) - new Date(a.date));
         setExpenses(parsed);
       } catch (e) {
@@ -24,11 +23,14 @@ export default function TransactionsScreen() {
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>
-      <View>
-        <Text style={styles.name}>{item.name}</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.category}>{item.category}</Text>
         <Text style={styles.date}>{new Date(item.date).toLocaleDateString()}</Text>
+        {item.note ? <Text style={styles.note}>{item.note}</Text> : null}
       </View>
-      <Text style={styles.amount}>€{item.amount.toFixed(2)}</Text>
+      <Text style={styles.amount}>
+        {item.type === 'GASTOS' ? '-' : ''}€{item.amount.toFixed(2)}
+      </Text>
     </View>
   );
 
@@ -56,8 +58,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2f2f2',
     borderRadius: 6,
   },
-  name: { fontSize: 16, fontWeight: '600' },
+  category: { fontSize: 16, fontWeight: '600' },
+  type: { fontSize: 12, color: '#2196F3', fontWeight: 'bold' },
   date: { fontSize: 12, color: '#666' },
-  amount: { fontSize: 16, fontWeight: 'bold', color: '#2c3e50' },
+  note: { fontSize: 12, color: '#888', fontStyle: 'italic', marginTop: 2 },
+  amount: { fontSize: 16, fontWeight: 'bold', color: '#2c3e50', marginLeft: 10 },
   empty: { textAlign: 'center', marginTop: 20, color: '#999' },
 });
