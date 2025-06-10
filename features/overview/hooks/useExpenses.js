@@ -19,6 +19,33 @@ export const useExpenses = (tab) => {
     }
   }
   
+  // Eliminar un gasto  
+  const deleteExpense = async (id) => {
+    try {
+      const updatedExpenses = expenses.filter(expense => expense.id !== id);
+      await AsyncStorage.setItem('expenses', JSON.stringify(updatedExpenses));
+      setExpenses(updatedExpenses);
+      await refreshData(updatedExpenses);
+    } catch (error) {
+      console.log('Error al eliminar gasto:', error);
+    }
+  };
+
+  // Editar un gasto
+  const editExpense = async (updatedExpense) => {
+    try {
+      const updatedExpenses = expenses.map(expense => 
+        expense.id === updatedExpense.id ? updatedExpense : expense
+      );
+      
+      await AsyncStorage.setItem('expenses', JSON.stringify(updatedExpenses));
+      setExpenses(updatedExpenses);
+      await refreshData(updatedExpenses);
+    } catch (error) {
+      console.log('Error al editar gasto:', error);
+    }
+  };
+  
   // Recargar el total y las categorías
   const refreshData = async (data) => {
     const currentDate = new Date();
@@ -64,6 +91,9 @@ export const useExpenses = (tab) => {
   return {
     expenses,
     total,
-    categories
+    categories,
+    loadExpenses,
+    deleteExpense,
+    editExpense,
    };
 };
