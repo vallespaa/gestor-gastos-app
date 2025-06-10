@@ -7,51 +7,58 @@ export const useExpenses = (tab) => {
   const [total, setTotal] = useState(0);
   const [categories, setCategories] = useState([]);
 
+  // Cargar los gastos desde AsyncStorage
+  const loadExpenses = async () => {
+    try {
+      const stored = await AsyncStorage.getItem('expenses');
+      const parsed = stored ? JSON.parse(stored) : [];
+      setExpenses(parsed);
+      await refreshData(parsed);
+    } catch (error) {
+      console.error('Error al cargar gastos:', error);
+    }
+  }
+  
+  // Recargar el total y las categorías
+  const refreshData = async (data) => {
+    const currentDate = new Date();
+
+    const filtered = data.filter(item => {
+      const itemDate = new Date(item.date);
+      return (
+        itemDate.getMonth() === currentDate.getMonth() &&
+        itemDate.getFullYear() === currentDate.getFullYear() &&
+        item.type && item.type.toUpperCase() === tab
+      );
+    });
+
+    const totalAmount = filtered.reduce((acc, item) => acc + parseFloat(item.amount), 0);
+    setTotal(totalAmount);        
+
+    const categoryMap = {};
+    filtered.forEach(item => {
+      categoryMap[item.category] = (categoryMap[item.category] || 0) + item.amount;
+    });
+
+    const chartData = Object.entries(categoryMap).map(([category, amount], index) => ({
+      name: category,
+      amount,
+      color: getColor(index),
+      legendFontColor: COLORS.gray,
+      legendFontSize: FONT_SIZES.sm,
+    }));
+
+    setCategories(chartData);
+  }
+
+  // Asignar color a cada categoría
   const getColor = (index) => {
     const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#F77825'];
     return colors[index % colors.length];
   };
 
   useEffect(() => {
-    const fetchExpenses = async () => {
-      try {
-        const stored = await AsyncStorage.getItem('expenses');
-        const parsed = stored ? JSON.parse(stored) : [];
-        const currentDate = new Date();
-
-        const filtered = parsed.filter(item => {
-          const itemDate = new Date(item.date);
-          return (
-            itemDate.getMonth() === currentDate.getMonth() &&
-            itemDate.getFullYear() === currentDate.getFullYear() &&
-            item.type && item.type.toUpperCase() === tab 
-          );
-        });
-
-        const totalAmount = filtered.reduce((acc, item) => acc + parseFloat(item.amount), 0);
-        setTotal(totalAmount);
-
-        const categoryMap = {};
-        filtered.forEach(item => {
-          categoryMap[item.category] = (categoryMap[item.category] || 0) + item.amount;
-        });
-
-        const chartData = Object.entries(categoryMap).map(([category, amount], index) => ({
-          name: category,
-          amount,
-          color: getColor(index),
-          legendFontColor: COLORS.gray,
-          legendFontSize: FONT_SIZES.sm,
-        }));
-
-        setCategories(chartData);
-        setExpenses(parsed);
-      } catch (error) {
-        console.log('Error al cargar gastos:', error);
-      }
-    };
-
-    fetchExpenses();
+    loadExpenses();
   }, [tab]);
 
   return {
