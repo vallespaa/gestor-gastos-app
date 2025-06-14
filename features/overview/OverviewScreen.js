@@ -4,7 +4,7 @@ import TabSelector from '../../shared/components/TabSelector';
 import Header from '../../shared/components/Header';
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
 import { CategoryPieChart } from './components/CategoryPieChart';
-import { useExpenses } from './hooks/useExpenses';
+import { useExpenses } from '../../shared/hooks/useExpenses';
 
 const OverviewScreen = () => {
   const [tab, setTab] = useState('GASTOS');

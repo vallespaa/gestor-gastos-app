@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { COLORS, FONT_SIZES } from '../../../shared/styles/global';
+import { COLORS, FONT_SIZES } from '../styles/global';
 
 export const useExpenses = (tab) => {
   const [expenses, setExpenses] = useState([]);
