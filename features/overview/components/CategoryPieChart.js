@@ -1,27 +1,24 @@
-import react from 'react';
-import { PieChart } from 'react-native-chart-kit';
+import PieChart from 'react-native-pie-chart';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { COLORS, FONT_SIZES, SPACING } from '../../shared/styles/global';
+import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
 
 const screenWidth = Dimensions.get('window').width;
 
 export const CategoryPieChart = ({ categories }) => {
 
+  const series = categories.map(category => {
+    return {
+      value: category.amount,
+      color: category.color,
+    };
+  });
+
   return (
     <View style={styles.container}>
-      {categories.length > 0 ? (
+      {series.length > 0 ? (
         <PieChart
-          data={categories}
-          width={screenWidth - 20}
-          height={220}
-          chartConfig={{
-            backgroundColor: COLORS.white,
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          }}
-          accessor="amount"
-          backgroundColor="transparent"
-          paddingLeft="15"
-          absolute
+          series={series}
+          widthAndHeight={screenWidth - 120}
         />
       ) : (
         <Text style={styles.noDataText}>No hay datos para mostrar.</Text>
@@ -38,7 +35,7 @@ const styles = StyleSheet.create({
   },
   noDataText: {
     marginTop: SPACING.md,
-    fontSize: FONT_SIZES.sm,
+    fontSize: FONT_SIZES.md,
     color: COLORS.gray,
   },
 });
