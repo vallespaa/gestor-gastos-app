@@ -5,10 +5,12 @@ import Header from '../../shared/components/Header';
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
 import { CategoryPieChart } from './components/CategoryPieChart';
 import { useExpenses } from '../../shared/hooks/useExpenses';
+import { useExpenseSummary } from './hooks/useExpenseSummary';
 
 const OverviewScreen = () => {
   const [tab, setTab] = useState('GASTOS');
-  const { total, categories } = useExpenses(tab);
+  const { expenses } = useExpenses(tab);
+  const { total, categories } = useExpenseSummary(expenses, tab);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
