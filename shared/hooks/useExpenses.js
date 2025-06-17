@@ -17,8 +17,19 @@ export const useExpenses = () => {
     } catch (error) {
       console.error('Error al cargar gastos:', error);
     }
-  }
+  };
   
+  // Agregar un nuevo gasto
+  const addExpense = async (expense) => {
+    try {
+      const updatedExpenses = [...expenses, expense];
+      await AsyncStorage.setItem('expenses', JSON.stringify(updatedExpenses));
+      setExpenses(updatedExpenses);
+    } catch (error) {
+      console.log('Error al agregar gasto:', error);
+    }
+  };
+
   // Eliminar un gasto  
   const deleteExpense = async (id) => {
     try {
@@ -47,6 +58,7 @@ export const useExpenses = () => {
   return {
     expenses,
     loadExpenses,
+    addExpense,
     deleteExpense,
     editExpense,
    };
