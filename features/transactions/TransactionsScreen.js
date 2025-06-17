@@ -1,27 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useExpenses } from '../../shared/hooks/useExpenses';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../../shared/components/Header';
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS} from '../../shared/styles/global';
 
 export default function TransactionsScreen() {
-  const [expenses, setExpenses] = useState([]);
+  const { expenses } = useExpenses();
 
-  useEffect(() => {
-    const loadExpenses = async () => {
-      try {
-        const stored = await AsyncStorage.getItem('expenses');
-        const parsed = stored ? JSON.parse(stored) : [];
-        parsed.sort((a, b) => new Date(b.date) - new Date(a.date));
-        setExpenses(parsed);
-      } catch (e) {
-        console.error('Error cargando gastos:', e);
-      }
-    };
-
-    const unsubscribe = loadExpenses();
-    return () => unsubscribe;
-  }, []);
+  const sortedExpenses = expenses
+    .slice()
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>
@@ -40,7 +28,7 @@ export default function TransactionsScreen() {
     <View style={styles.container}>
       <Header title={"Transacciones"}/>
       <FlatList
-        data={expenses}
+        data={sortedExpenses}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         ListEmptyComponent={<Text style={styles.empty}>No hay transacciones registradas.</Text>}
@@ -77,20 +65,21 @@ const styles = StyleSheet.create({
     color: COLORS.gray
   },
   note: {
-    fontSize: FONT_SIZES.sm,
-    color: COLORS.darkGray,
+    fontSize: FONT_SIZES.md,
+    color: COLORS.gray,
     fontStyle: 'italic',
     marginTop: SPACING.xs
   },
   amount: {
     fontSize: FONT_SIZES.md,
     fontWeight: 'bold',
-    color: COLORS.darkBlue,
+    color: COLORS.primary,
     marginLeft: SPACING.sm
   },
   empty: {
     textAlign: 'center',
     marginTop: SPACING.md,
-    color: COLORS.lightGray
+    fontSize: FONT_SIZES.md,
+    color: COLORS.gray
   },
 });
