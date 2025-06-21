@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useExpenses } from '../../shared/hooks/useExpenses';
+import { useTransactions } from '../../shared/context/TransactionsContext';
 import { View, StyleSheet } from 'react-native';
 import Header from '../../shared/components/Header';
 import TabSelector from '../../shared/components/TabSelector';
@@ -10,14 +10,14 @@ import { COLORS, SPACING } from '../../shared/styles/global';
 export default function TransactionsScreen() {
 	const [tab, setTab] = useState('GASTOS');
 	const [period, setPeriod] = useState('MONTH');
-	const { expenses } = useExpenses();
+	const { transactions } = useTransactions();
 
 	return (
 		<View style={styles.container}>
 			<Header title={"Transacciones"} />
 			<TabSelector tab={tab} setTab={setTab} />
 			<PeriodTabs period={period} setPeriod={setPeriod} />
-			<TransactionsList transactions={expenses} tab={tab} period={period} />
+			<TransactionsList transactions={transactions} tab={tab} period={period} />
 		</View>
 	);
 }

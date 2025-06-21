@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useExpenses } from '../../shared/hooks/useExpenses';
+import { useTransactions } from '../../shared/context/TransactionsContext';
 import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -11,7 +11,7 @@ import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/
 export default function AddExpenseScreen({ navigation }) {
 	const [showDatePicker, setShowDatePicker] = useState(false);
 	const [tab, setTab] = useState('GASTOS');
-	const { addExpense } = useExpenses();
+	const { addTransaction } = useTransactions();
 	const [amount, setAmount] = useState('');
 	const [category, setCategory] = useState('');
 	const [date, setDate] = useState(new Date());
@@ -38,7 +38,7 @@ export default function AddExpenseScreen({ navigation }) {
 			note
 		};
 
-		await addExpense(newExpense);
+		await addTransaction(newExpense);
 		setAmount('');
 		setCategory('');
 		setDate(new Date());

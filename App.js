@@ -1,11 +1,13 @@
-import React from 'react';
+import { TransactionsProvider } from './shared/context/TransactionsContext';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabs from './navigation/BottomTabs';
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <BottomTabs />
-    </NavigationContainer>
-  );
-}
+	return (
+		<TransactionsProvider>
+			<NavigationContainer>
+				<BottomTabs />
+			</NavigationContainer>
+		</TransactionsProvider>
+	);
+};

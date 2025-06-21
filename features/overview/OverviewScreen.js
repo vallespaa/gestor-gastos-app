@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import TabSelector from '../../shared/components/TabSelector';
 import PeriodTabs from '../../shared/components/PeriodTabs';
 import Header from '../../shared/components/Header';
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
 import { CategoryPieChart } from './components/CategoryPieChart';
-import { useExpenses } from '../../shared/hooks/useExpenses';
+import { useTransactions } from '../../shared/context/TransactionsContext';
 import { useFilteredTransactions } from '../../shared/hooks/useFilteredTransactions';
 import { useExpenseSummary } from './hooks/useExpenseSummary';
 
 const OverviewScreen = () => {
 	const [tab, setTab] = useState('GASTOS');
 	const [period, setPeriod] = useState('MONTH');
-	const { expenses } = useExpenses();
-	const filteredExpenses = useFilteredTransactions(expenses, tab, period);
-	const { total, categories } = useExpenseSummary(filteredExpenses);
+	const { transactions } = useTransactions();
+	const filteredTransactions = useFilteredTransactions(transactions, tab, period);
+	const { total, categories } = useExpenseSummary(filteredTransactions);
 
 	return (
 		<ScrollView contentContainerStyle={styles.container}>
