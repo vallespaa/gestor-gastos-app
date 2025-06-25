@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { useTransactions } from '../../shared/context/TransactionsContext';
-import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../shared/constants/constants';
-import TabSelector from '../../shared/components/TabSelector';
 import Header from '../../shared/components/Header';
-import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
+import TabSelector from '../../shared/components/TabSelector';
+import CategoryPicker from '../../shared/components/CategoryPicker';
+import DateSelector from '../../shared/components/DateSelector';
+import { COLORS, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
 
 export default function AddExpenseScreen({ navigation }) {
-	const [showDatePicker, setShowDatePicker] = useState(false);
 	const [tab, setTab] = useState('GASTOS');
 	const { addTransaction } = useTransactions();
 	const [amount, setAmount] = useState('');
@@ -54,18 +53,13 @@ export default function AddExpenseScreen({ navigation }) {
 
 			<TextInput style={styles.input} placeholder="Cantidad (€)" value={amount} onChangeText={setAmount} keyboardType="numeric" />
 
-			<View style={styles.pickerContainer}>
-				<Picker
-					selectedValue={category}
-					onValueChange={(itemValue) => setCategory(itemValue)}
-					style={styles.picker}
-				>
-					<Picker.Item label="Selecciona una categoría" value="" />
-					{categories.map(cat => (
-						<Picker.Item key={cat} label={cat} value={cat} />
-					))}
-				</Picker>
-			</View>
+			<CategoryPicker
+				categories={categories}
+				selectedCategory={category}
+				onCategoryChange={setCategory}
+			/>
+
+			<DateSelector date={date} setDate={setDate} />
 
 			<TextInput
 				style={styles.input}
@@ -73,23 +67,8 @@ export default function AddExpenseScreen({ navigation }) {
 				value={note}
 				onChangeText={setNote}
 				multiline
+				textAlignVertical="top"
 			/>
-
-			<TouchableOpacity onPress={() => setShowDatePicker(true)}>
-				<Text style={styles.dateText}>Fecha: {date.toDateString()}</Text>
-			</TouchableOpacity>
-
-			{showDatePicker && (
-				<DateTimePicker
-					value={date}
-					mode="date"
-					display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-					onChange={(e, selectedDate) => {
-						setShowDatePicker(false);
-						if (selectedDate) setDate(selectedDate);
-					}}
-				/>
-			)}
 
 			<Button title="Agregar" onPress={handleAddExpense} />
 		</View>
@@ -102,26 +81,11 @@ const styles = StyleSheet.create({
 		padding: SPACING.md,
 		backgroundColor: COLORS.white
 	},
-	pickerContainer: {
-		borderWidth: 1,
-		borderColor: COLORS.gray,
-		borderRadius: BORDER_RADIUS.md,
-		marginBottom: SPACING.md
-	},
-	picker: {
-		height: SPACING.xl,
-		width: '100%',
-	},
 	input: {
 		borderWidth: 1,
 		borderColor: COLORS.lightGray,
 		marginBottom: SPACING.md,
 		padding: SPACING.sm,
 		borderRadius: BORDER_RADIUS.md
-	},
-	dateText: {
-		marginBottom: SPACING.sm,
-		color: COLORS.black,
-		fontSize: FONT_SIZES.md
 	}
 });

@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useTransactions } from '../../../shared/context/TransactionsContext';
-import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity, Platform, Dimensions } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { View, TextInput, Button, StyleSheet, Dimensions } from 'react-native';
+import CategoryPicker from '../../../shared/components/CategoryPicker';
 import Modal from 'react-native-modal';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../../shared/constants/constants';
-import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS } from '../../../shared/styles/global';
+import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
 
 const screenHeight = Dimensions.get('window').height;
 
 export default function TransactionDetailModal({ isVisible, onClose, transaction }) {
 	const { editTransaction, deleteTransaction } = useTransactions();
-	const [showDatePicker, setShowDatePicker] = useState(false);
 	const [categories, setCategories] = useState([]);
 
 	const [amount, setAmount] = useState('');
@@ -71,34 +69,13 @@ export default function TransactionDetailModal({ isVisible, onClose, transaction
 
 					<TextInput style={styles.input} placeholder="Cantidad (€)" value={amount} onChangeText={setAmount} keyboardType="numeric" />
 
-					<View style={styles.pickerContainer}>
-						<Picker
-							selectedValue={category}
-							onValueChange={(itemValue) => setCategory(itemValue)}
-							style={styles.picker}
-						>
-							<Picker.Item label="Selecciona una categoría" value="" />
-							{categories.map(cat => (
-								<Picker.Item key={cat} label={cat} value={cat} />
-							))}
-						</Picker>
-					</View>
+					<CategoryPicker
+						categories={categories}
+						selectedCategory={category}
+						setSelectedCategory={setCategory}
+					/>
 
-					<TouchableOpacity onPress={() => setShowDatePicker(true)}>
-						<Text style={styles.dateText}>Fecha: {date.toDateString()}</Text>
-					</TouchableOpacity>
-
-					{showDatePicker && (
-						<DateTimePicker
-							value={date}
-							mode="date"
-							display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-							onChange={(e, selectedDate) => {
-								setShowDatePicker(false);
-								if (selectedDate) setDate(selectedDate);
-							}}
-						/>
-					)}
+					<DateSelector date={date} setDate={setDate} />
 
 					<TextInput
 						style={[styles.input, styles.notesInput]}
@@ -136,16 +113,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingBottom: SPACING.md,
 	},
-	pickerContainer: {
-		borderWidth: 1,
-		borderColor: COLORS.gray,
-		borderRadius: BORDER_RADIUS.md,
-		marginBottom: SPACING.md
-	},
-	picker: {
-		height: SPACING.xl,
-		width: '100%',
-	},
 	input: {
 		borderWidth: 1,
 		borderColor: COLORS.lightGray,
@@ -156,11 +123,6 @@ const styles = StyleSheet.create({
 	notesInput: {
 		flex: 1,
 		minHeight: 100,
-	},
-	dateText: {
-		marginBottom: SPACING.sm,
-		color: COLORS.black,
-		fontSize: FONT_SIZES.md
 	},
 	buttonContainer: {
 		marginTop: SPACING.lg,
