@@ -4,7 +4,7 @@ import TabSelector from '../../shared/components/TabSelector';
 import PeriodTabs from '../../shared/components/PeriodTabs';
 import Header from '../../shared/components/Header';
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
-import { CategoryPieChart } from './components/CategoryPieChart';
+import CategoryPieChart from './components/CategoryPieChart';
 import { useTransactions } from '../../shared/context/TransactionsContext';
 import { useFilteredTransactions } from '../../shared/hooks/useFilteredTransactions';
 import { useExpenseSummary } from './hooks/useExpenseSummary';
