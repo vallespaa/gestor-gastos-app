@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, Text, FlatList, StyleSheet, Pressable } from "react-native";
 import { useFilteredTransactions } from "../../../shared/hooks/useFilteredTransactions";
 import TransactionDetailModal from "./TransactionDetailModal";
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
@@ -21,7 +20,13 @@ export default function TransactionsList({ transactions, tab, period }) {
 	};
 
 	const renderItem = ({ item }) => (
-		<TouchableOpacity onPress={() => handlePress(item)} style={styles.item}>
+		<Pressable
+			onPress={() => handlePress(item)}
+			style={({ pressed }) => [
+				styles.item,
+				pressed && styles.pressed
+			]}
+		>
 			<View style={{ flex: 1 }}>
 				<Text style={styles.category}>{item.category}</Text>
 				<Text style={styles.date}>{new Date(item.date).toLocaleDateString()}</Text>
@@ -30,7 +35,7 @@ export default function TransactionsList({ transactions, tab, period }) {
 			<Text style={styles.amount}>
 				{item.type === 'GASTOS' ? '-' : ''}€{item.amount.toFixed(2)}
 			</Text>
-		</TouchableOpacity>
+		</Pressable>
 	);
 
 	return (
@@ -85,5 +90,8 @@ const styles = StyleSheet.create({
 		marginTop: SPACING.md,
 		fontSize: FONT_SIZES.md,
 		color: COLORS.gray
-	}
+	},
+	pressed: {
+		opacity: 0.5,
+	},
 });

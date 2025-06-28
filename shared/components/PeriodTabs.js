@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { COLORS, SPACING, BORDER_RADIUS, FONT_SIZES } from '../styles/global';
 
 const PERIODS = [
@@ -12,15 +12,19 @@ export default function PeriodTabs({ period, setPeriod }) {
 	return (
 		<View style={styles.tabContainer}>
 			{PERIODS.map(({ key, label }) => (
-				<TouchableOpacity
+				<Pressable
 					key={key}
-					style={[styles.tab, period === key && styles.tabActive]}
+					style={({ pressed }) => [
+						styles.tab,
+						period === key && styles.tabActive,
+						pressed && styles.pressed
+					]}
 					onPress={() => setPeriod(key)}
 				>
 					<Text style={period === key ? styles.tabTextActive : styles.tabText}>
 						{label}
 					</Text>
-				</TouchableOpacity>
+				</Pressable>
 			))}
 		</View>
 	);
@@ -52,5 +56,8 @@ const styles = StyleSheet.create({
 	tabTextActive: {
 		color: COLORS.white,
 		fontWeight: 'bold',
+	},
+	pressed: {
+		opacity: 0.5,
 	},
 });
