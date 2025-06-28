@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useTransactions } from '../../../shared/context/TransactionsContext';
-import { View, TextInput, Button, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Dimensions, Pressable } from 'react-native';
 import CategoryPicker from '../../../shared/components/CategoryPicker';
 import Modal from 'react-native-modal';
 import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../../shared/constants/constants';
+import { MaterialIcons } from '@expo/vector-icons';
 import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
 
 const screenHeight = Dimensions.get('window').height;
@@ -87,9 +88,14 @@ export default function TransactionDetailModal({ isVisible, onClose, transaction
 					/>
 				</View>
 
-				<View style={styles.buttonContainer}>
-					<Button title="Actualizar transacción" onPress={handleUpdate} color={COLORS.primary} />
-					<Button title="Eliminar" onPress={handleDelete} color={'crimson'} />
+				<View style={styles.buttonRow}>
+					<Pressable style={styles.updateButton} onPress={handleUpdate}>
+						<Text style={styles.updateText}>ACTUALIZAR TRANSACCIÓN</Text>
+					</Pressable>
+
+					<Pressable style={styles.deleteButton} onPress={handleDelete}>
+						<MaterialIcons name="delete" size={24} color={COLORS.white} />
+					</Pressable>
 				</View>
 			</View>
 		</Modal>
@@ -124,8 +130,34 @@ const styles = StyleSheet.create({
 		flex: 1,
 		minHeight: 100,
 	},
-	buttonContainer: {
+	buttonRow: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
 		marginTop: SPACING.lg,
-		gap: SPACING.md
-	}
+	},
+	updateButton: {
+		flex: 1,
+		backgroundColor: COLORS.primary,
+		paddingVertical: SPACING.md,
+		borderRadius: BORDER_RADIUS.md,
+		alignItems: 'center',
+		justifyContent: 'center',
+		marginRight: SPACING.sm,
+	},
+	updateText: {
+		color: COLORS.white,
+		fontWeight: 'bold',
+		fontSize: 16,
+		letterSpacing: 0.5,
+	},
+	deleteButton: {
+		width: 50,
+		height: 50,
+		backgroundColor: "#F44336",
+		paddingVertical: SPACING.md,
+		borderRadius: BORDER_RADIUS.md,
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
 });
