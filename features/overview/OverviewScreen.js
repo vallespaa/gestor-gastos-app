@@ -16,10 +16,17 @@ export default function OverviewScreen() {
 	const filteredTransactions = useFilteredTransactions(transactions, tab, period);
 	const { total, categories } = useExpenseSummary(filteredTransactions);
 
+	const balance = transactions.reduce((acc, item) => {
+		if (item.type === 'INGRESOS') {
+			return acc + parseFloat(item.amount);
+		}
+		return acc - parseFloat(item.amount);
+	}, 0);
+
 	return (
 		<ScrollView contentContainerStyle={styles.container}>
 
-			<Header amount={total.toFixed(2)} />
+			<Header amount={balance.toFixed(2)} />
 
 			<TabSelector tab={tab} setTab={setTab} />
 
