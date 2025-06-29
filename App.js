@@ -1,12 +1,12 @@
 import { TransactionsProvider } from './shared/context/TransactionsContext';
 import { NavigationContainer } from '@react-navigation/native';
-import BottomTabs from './navigation/BottomTabs';
+import DrawerNavigator from './navigation/DrawerNavigator';
 
 export default function App() {
 	return (
 		<TransactionsProvider>
 			<NavigationContainer>
-				<BottomTabs />
+				<DrawerNavigator />
 			</NavigationContainer>
 		</TransactionsProvider>
 	);

@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import TabSelector from '../../shared/components/TabSelector';
-import PeriodTabs from '../../shared/components/PeriodTabs';
-import Header from '../../shared/components/Header';
-import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
-import CategoryPieChart from './components/CategoryPieChart';
 import { useTransactions } from '../../shared/context/TransactionsContext';
 import { useFilteredTransactions } from '../../shared/hooks/useFilteredTransactions';
 import { useExpenseSummary } from './hooks/useExpenseSummary';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import Header from '../../shared/components/Header';
+import TabSelector from '../../shared/components/TabSelector';
+import PeriodTabs from '../../shared/components/PeriodTabs';
+import CategoryPieChart from './components/CategoryPieChart';
+import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
 
-const OverviewScreen = () => {
+export default function OverviewScreen() {
 	const [tab, setTab] = useState('GASTOS');
 	const [period, setPeriod] = useState('MONTH');
 	const { transactions } = useTransactions();
@@ -39,8 +39,6 @@ const OverviewScreen = () => {
 		</ScrollView>
 	);
 };
-
-export default OverviewScreen;
 
 const styles = StyleSheet.create({
 	container: {
