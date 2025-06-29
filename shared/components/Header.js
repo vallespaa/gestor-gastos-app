@@ -29,20 +29,30 @@ export default Header = ({ amount, title }) => {
 
 const styles = StyleSheet.create({
 	container: {
-		padding: SPACING.md,
+		flexDirection: 'row',
 		alignItems: 'center',
+		padding: SPACING.md,
 		backgroundColor: COLORS.white,
+		position: 'relative',
 	},
 	menuButton: {
-		position: 'absolute',
-		left: SPACING.md,
-		top: SPACING.md,
+		width: 40, // ancho fijo para botón
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 	amount: {
+		position: 'absolute',
+		left: 0,
+		right: 0,
+		textAlign: 'center',
 		fontSize: FONT_SIZES.xxl,
 		fontWeight: 'bold',
 	},
 	title: {
+		position: 'absolute',
+		left: 0,
+		right: 0,
+		textAlign: 'center',
 		fontSize: FONT_SIZES.xl,
 		fontWeight: 'bold',
 		marginTop: SPACING.sm,
