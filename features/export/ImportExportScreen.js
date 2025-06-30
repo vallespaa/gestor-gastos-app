@@ -1,13 +1,29 @@
 import { useState } from 'react';
 import { View, Text, Button, StyleSheet, Alert } from 'react-native';
+import Header from '../../shared/components/Header';
 import * as Sharing from 'expo-sharing';
+import { importFromExcel } from './utils/ImportFromExcel';
 import { exportToExcel } from './utils/ExportToExcel';
 import { useTransactions } from '../../shared/context/TransactionsContext';
-import { FONT_SIZES, SPACING } from '../../shared/styles/global';
+import { FONT_SIZES, SPACING, COLORS } from '../../shared/styles/global';
 
 export default function ExportScreen() {
-	const { transactions } = useTransactions();
+	const { transactions, addTransaction } = useTransactions();
 	const [loading, setLoading] = useState(false);
+
+	const handleImport = async () => {
+		setLoading(true);
+		try {
+			const jsonData = await importFromExcel(addTransaction);
+
+			Alert.alert('Importación exitosa', `${jsonData.length} transacciones importadas`);
+		} catch (error) {
+			console.error('Error al importar:', error);
+			Alert.alert('Error', 'No se pudo importar el archivo');
+		} finally {
+			setLoading(false);
+		}
+	}
 
 	const handleExport = async () => {
 		setLoading(true);
@@ -31,6 +47,13 @@ export default function ExportScreen() {
 
 	return (
 		<View style={styles.container}>
+			<Header title={"Importar / Exportar"} />
+			<Text style={styles.title}>Importar Transacciones</Text>
+			<Button
+				title={loading ? 'Importando...' : 'Importar desde Excel'}
+				onPress={handleImport}
+				disabled={loading}
+			/>
 			<Text style={styles.title}>Exportar Transacciones</Text>
 			<Button
 				title={loading ? 'Exportando...' : 'Exportar a Excel'}
@@ -44,9 +67,8 @@ export default function ExportScreen() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: 20,
+		padding: SPACING.md,
+		backgroundColor: COLORS.white
 	},
 	title: {
 		fontSize: FONT_SIZES.xl,
