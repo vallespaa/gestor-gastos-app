@@ -5,13 +5,11 @@ import { useExpenseSummary } from './hooks/useExpenseSummary';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Header from '../../shared/components/Header';
 import TabSelector from '../../shared/components/TabSelector';
-import PeriodTabs from '../../shared/components/PeriodTabs';
 import CategoryPieChart from './components/CategoryPieChart';
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
 
-export default function OverviewScreen() {
+export default function OverviewScreen({ period = 'MONTH' }) {
 	const [tab, setTab] = useState('GASTOS');
-	const [period, setPeriod] = useState('MONTH');
 	const { transactions } = useTransactions();
 	const filteredTransactions = useFilteredTransactions(transactions, tab, period);
 	const { total, categories } = useExpenseSummary(filteredTransactions);
@@ -29,8 +27,6 @@ export default function OverviewScreen() {
 			<Header amount={balance.toFixed(2)} />
 
 			<TabSelector tab={tab} setTab={setTab} />
-
-			<PeriodTabs period={period} setPeriod={setPeriod} />
 
 			<CategoryPieChart categories={categories} />
 
