@@ -15,10 +15,26 @@ export default function DrawerNavigator() {
 
 	return (
 		<Drawer.Navigator screenOptions={{ headerShown: false }}>
-			<Drawer.Screen name="Día" component={DayOverview} />
-			<Drawer.Screen name="Semana" component={WeekOverview} />
-			<Drawer.Screen name="Mes" component={MonthOverview} />
-			<Drawer.Screen name="Año" component={YearOverview} />
+			<Drawer.Screen
+				name="Día"
+				component={OverviewScreen}
+				initialParams={{ period: "DAY" }}
+			/>
+			<Drawer.Screen
+				name="Semana"
+				component={OverviewScreen}
+				initialParams={{ period: "WEEK" }}
+			/>
+			<Drawer.Screen
+				name="Mes"
+				component={OverviewScreen}
+				initialParams={{ period: "MONTH" }}
+			/>
+			<Drawer.Screen
+				name="Año"
+				component={OverviewScreen}
+				initialParams={{ period: "YEAR" }}
+			/>
 			<Drawer.Screen
 				name="Add"
 				component={AddExpenseScreen}

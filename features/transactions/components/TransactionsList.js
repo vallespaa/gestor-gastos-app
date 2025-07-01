@@ -5,7 +5,8 @@ import TransactionDetailModal from "./TransactionDetailModal";
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
 
 export default function TransactionsList({ transactions, tab, period }) {
-	const filteredTransactions = useFilteredTransactions(transactions, tab, period);
+	const date = new Date();
+	const filteredTransactions = useFilteredTransactions(transactions, tab, period, date);
 
 	const [selectedTransaction, setSelectedTransaction] = useState(null);
 	const [modalVisible, setModalVisible] = useState(false);

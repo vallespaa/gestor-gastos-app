@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
 
-export const useFilteredTransactions = (transactions, tab, period) => {
-	const now = new Date();
-
+export const useFilteredTransactions = (transactions, tab, period, date) => {
 	return useMemo(() => {
 		return transactions.filter((item) => {
 			const itemDate = new Date(item.date);
@@ -11,21 +9,21 @@ export const useFilteredTransactions = (transactions, tab, period) => {
 			if (!isCorrectType) return false;
 
 			if (period === 'DAY') {
-				return itemDate.toDateString() === now.toDateString();
+				return itemDate.toDateString() === date.toDateString();
 			} else if (period === 'WEEK') {
-				const weekAgo = new Date(now);
-				weekAgo.setDate(now.getDate() - 7);
-				return itemDate >= weekAgo && itemDate <= now;
+				const weekAgo = new Date(date);
+				weekAgo.setDate(date.getDate() - 7);
+				return itemDate >= weekAgo && itemDate <= date;
 			} else if (period === 'MONTH') {
 				return (
-					itemDate.getMonth() === now.getMonth() &&
-					itemDate.getFullYear() === now.getFullYear()
+					itemDate.getMonth() === date.getMonth() &&
+					itemDate.getFullYear() === date.getFullYear()
 				);
 			} else if (period === 'YEAR') {
-				return itemDate.getFullYear() === now.getFullYear();
+				return itemDate.getFullYear() === date.getFullYear();
 			}
 
 			return false;
 		});
-	}, [transactions, tab, period]);
+	}, [transactions, tab, period, date]);
 };

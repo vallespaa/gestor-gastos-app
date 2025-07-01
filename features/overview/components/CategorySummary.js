@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { useFilteredTransactions } from '../../../shared/hooks/useFilteredTransactions';
 import { useExpenseSummary } from '../hooks/useExpenseSummary';
 import PieChart from 'react-native-pie-chart';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
@@ -5,8 +7,10 @@ import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../shared/styl
 
 const screenWidth = Dimensions.get('window').width;
 
-export default CategorySummary = ({ transactions }) => {
-	const { total, categories } = useExpenseSummary(transactions);
+export default CategorySummary = ({ transactions, tab, period }) => {
+	const [selectedDate, setSelectedDate] = useState(new Date());
+	const filteredTransactions = useFilteredTransactions(transactions, tab, period, selectedDate);
+	const { total, categories } = useExpenseSummary(filteredTransactions);
 
 	const series = categories.map(category => {
 		return {
