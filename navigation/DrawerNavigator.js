@@ -1,20 +1,33 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import { View, Text } from 'react-native';
 import OverviewScreen from '../features/overview/OverviewScreen';
 import AddExpenseScreen from '../features/add/AddExpenseScreen';
 import TransactionsScreen from '../features/transactions/TransactionsScreen';
 import ImportExportScreen from '../features/export/ImportExportScreen';
 import { Ionicons } from '@expo/vector-icons';
+import { SPACING, FONT_SIZES } from '../shared/styles/global'
 
 const Drawer = createDrawerNavigator();
 
-export default function DrawerNavigator() {
-	const DayOverview = () => <OverviewScreen period="DAY" />;
-	const WeekOverview = () => <OverviewScreen period="WEEK" />;
-	const MonthOverview = () => <OverviewScreen period="MONTH" />;
-	const YearOverview = () => <OverviewScreen period="YEAR" />;
-
+function CustomDrawerContent(props) {
 	return (
-		<Drawer.Navigator screenOptions={{ headerShown: false }}>
+		<DrawerContentScrollView {...props}>
+			<View style={{ padding: SPACING.lg }}>
+				<Text style={{ fontWeight: 'bold', fontSize: FONT_SIZES.lg }}>Gestor de Gastos</Text>
+			</View>
+			<DrawerItemList {...props} />
+		</DrawerContentScrollView>
+	);
+}
+
+
+export default function DrawerNavigator() {
+	return (
+		<Drawer.Navigator
+			drawerContent={props => <CustomDrawerContent {...props} />}
+			screenOptions={{ headerShown: false }}
+		>
 			<Drawer.Screen
 				name="Día"
 				component={OverviewScreen}
