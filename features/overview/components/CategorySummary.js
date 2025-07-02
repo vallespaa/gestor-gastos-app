@@ -56,14 +56,21 @@ export default CategorySummary = ({ transactions, tab, period }) => {
 			)}
 
 			<View style={styles.summary}>
-				{categories.map((cat) => (
-					<View key={cat.name} style={styles.summaryRow}>
-						<Text style={styles.catName}>{cat.name}</Text>
-						<View style={[styles.bar, { width: `${(cat.amount / total) * 100}%`, backgroundColor: cat.color }]} />
-						<Text style={styles.catAmount}>{cat.amount.toFixed(2)}€</Text>
-					</View>
-				))}
+				{categories.map((cat) => {
+					const percentage = (cat.amount / total) * 100;
+
+					return (
+						<View key={cat.name} style={styles.summaryRow}>
+							<Text style={styles.catName}>{cat.name}</Text>
+							<View style={styles.barContainer}>
+								<View style={[styles.barFill, { width: `${percentage}%`, backgroundColor: cat.color }]} />
+							</View>
+							<Text style={styles.catAmount}>{cat.amount.toFixed(2)}€</Text>
+						</View>
+					);
+				})}
 			</View>
+
 		</View>
 	);
 };
@@ -101,7 +108,7 @@ function PeriodTitle({ period, date }) {
 
 const styles = StyleSheet.create({
 	container: {
-		marginTop: SPACING.lg,
+		marginTop: SPACING.md,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
@@ -111,27 +118,37 @@ const styles = StyleSheet.create({
 		color: COLORS.gray,
 	},
 	summary: {
-		marginTop: SPACING.xl,
+		marginTop: SPACING.lg,
 		width: '100%',
 	},
 	summaryRow: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		marginBottom: SPACING.md,
+		marginBottom: SPACING.sm,
+		backgroundColor: COLORS.lightGray,
+		padding: SPACING.md,
+		borderRadius: BORDER_RADIUS.md,
 	},
 	catName: {
-		flex: 1,
-		fontSize: FONT_SIZES.sm,
+		flex: 1.2,
+		fontSize: FONT_SIZES.sm
 	},
-	bar: {
+	barContainer: {
+		flex: 3,
 		height: 10,
+		backgroundColor: COLORS.gray,
 		borderRadius: BORDER_RADIUS.sm,
-		marginHorizontal: SPACING.sm,
-		flex: 2,
+		overflow: 'hidden',
+	},
+	barFill: {
+		height: '100%',
+		borderRadius: BORDER_RADIUS.sm,
 	},
 	catAmount: {
-		fontSize: FONT_SIZES.sm,
 		flex: 1,
+		fontSize: FONT_SIZES.sm,
+		fontWeight: 'bold',
+		color: COLORS.primary,
 		textAlign: 'right',
 	},
 	periodRow: {
@@ -153,5 +170,6 @@ const styles = StyleSheet.create({
 	arrowText: {
 		fontSize: 24,
 		color: COLORS.primary,
+		fontWeight: 'bold',
 	},
 });

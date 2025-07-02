@@ -30,7 +30,6 @@ export default function TabSelector({ tab, setTab }) {
 const styles = StyleSheet.create({
 	tabContainer: {
 		flexDirection: 'row',
-		marginBottom: SPACING.md,
 		borderRadius: BORDER_RADIUS.md,
 		overflow: 'hidden',
 	},
