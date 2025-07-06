@@ -63,6 +63,10 @@ gestor-gastos-app/
 
 ¿Quieres contribuir? Haz un fork del repositorio, crea una rama y envía tu pull request.
 
+## Changelog
+
+Consulta el historial de cambios en [CHANGELOG.md](./CHANGELOG.md).
+
 ## Roadmap
 
 Consulta nuestro [Roadmap](./ROADMAP.md) para ver lo que se viene.
