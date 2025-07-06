@@ -44,11 +44,26 @@ expo start
 
 ```
 gestor-gastos-app/
-├── features/           # Pantallas y lógica principal (transacciones, resumen, exportar, etc.)
-├── shared/             # Componentes reutilizables, hooks, estilos y contexto
-├── navigation/         # Navegación de la app
-├── App.js              # Punto de entrada principal
-└── ...
+├── features/           # Pantallas principales y lógica de negocio
+│   ├── transactions/   # Pantalla y componentes de listado/edición de transacciones
+│   ├── overview/       # Pantalla y componentes de resumen
+│   ├── export/         # Pantalla y lógica de importación/exportación de datos
+│   └── add/            # Pantalla para agregar nuevas transacciones
+├── shared/             # Componentes reutilizables, hooks, estilos y contexto global
+│   ├── components/
+│   ├── hooks/
+│   ├── styles/
+│   ├── context/
+│   └── constants/
+├── navigation/         # Configuración de la navegación (Drawer, Stacks, etc.)
+├── App.js              # Punto de entrada principal de la app
+├── index.js            # Registro de la app para Expo
+├── app.json            # Configuración de Expo
+├── package.json        # Dependencias y scripts del proyecto
+├── README.md           # Documentación principal
+├── CHANGELOG.md        # Historial de cambios
+├── ROADMAP.md          # Plan de desarrollo y futuras funcionalidades
+└── LICENSE.md          # Licencia del proyecto
 ```
 
 ## Tecnologías utilizadas
