@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useTransactions } from '../../../shared/context/TransactionsContext';
 import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Header';
-import TabSelector from '../../../shared/components/TabSelector';
-import PeriodTabs from '../../../shared/components/PeriodTabs';
+import TabSelector from '../../components/TabSelector';
+import PeriodTabs from '../../components/PeriodTabs';
 import TransactionsList from './components/TransactionsList';
 import { COLORS, SPACING } from '../../../shared/styles/global';
 

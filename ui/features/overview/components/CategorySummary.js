@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { useFilteredTransactions } from '../../../shared/hooks/useFilteredTransactions';
+import { useFilteredTransactions } from '../../../hooks/useFilteredTransactions';
 import { useExpenseSummary } from '../hooks/useExpenseSummary';
 import PieChart from 'react-native-pie-chart';
 import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native';
 import { format, addDays, addWeeks, addMonths, addYears, startOfWeek, endOfWeek } from "date-fns";
 import { es } from 'date-fns/locale';
-import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
+import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
 
 const screenWidth = Dimensions.get('window').width;
 

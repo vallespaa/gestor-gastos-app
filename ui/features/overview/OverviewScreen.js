@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useTransactions } from '../../shared/context/TransactionsContext';
+import { useTransactions } from '../../../shared/context/TransactionsContext';
 import { StyleSheet, ScrollView } from 'react-native';
-import Header from '../../shared/components/Header';
-import TabSelector from '../../shared/components/TabSelector';
+import Header from '../../components/Header';
+import TabSelector from '../../components/TabSelector';
 import CategorySummary from './components/CategorySummary';
-import { COLORS, SPACING } from '../../shared/styles/global';
+import { COLORS, SPACING } from '../../../shared/styles/global';
 
 export default function OverviewScreen({ route }) {
 	const { period } = route.params;

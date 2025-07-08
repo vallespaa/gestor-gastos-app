@@ -1,4 +1,4 @@
-import { COLORS, FONT_SIZES } from '../../../shared/styles/global';
+import { COLORS, FONT_SIZES } from '../../../../shared/styles/global';
 
 export const useExpenseSummary = (expenses) => {
 	const total = expenses.reduce((acc, item) => acc + parseFloat(item.amount), 0);

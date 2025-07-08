@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Pressable, View, Text, StyleSheet, Platform } from "react-native";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { COLORS, FONT_SIZES, SPACING } from '../styles/global';
+import { COLORS, FONT_SIZES, SPACING } from '../../shared/styles/global';
 
 export default DateSelector = ({ date, setDate }) => {
 	const [show, setShow] = useState(false);

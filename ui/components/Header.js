@@ -1,10 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS, FONT_SIZES, SPACING } from '../styles/global';
-
-const Drawer = createDrawerNavigator();
+import { COLORS, FONT_SIZES, SPACING } from '../../shared/styles/global';
 
 export default Header = ({ amount, title }) => {
 	const navigation = useNavigation();

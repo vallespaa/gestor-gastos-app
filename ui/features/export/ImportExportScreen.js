@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { View, Text, Button, StyleSheet, Alert } from 'react-native';
-import Header from '../../shared/components/Header';
+import Header from '../../components/Header';
 import * as Sharing from 'expo-sharing';
 import { importFromExcel } from './utils/ImportFromExcel';
 import { exportToExcel } from './utils/ExportToExcel';
-import { useTransactions } from '../../shared/context/TransactionsContext';
-import { FONT_SIZES, SPACING, COLORS } from '../../shared/styles/global';
+import { useTransactions } from '../../../shared/context/TransactionsContext';
+import { FONT_SIZES, SPACING, COLORS } from '../../../shared/styles/global';
 
 export default function ExportScreen() {
 	const { transactions, addTransaction } = useTransactions();

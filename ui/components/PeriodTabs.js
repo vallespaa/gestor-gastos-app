@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { COLORS, SPACING, BORDER_RADIUS, FONT_SIZES } from '../styles/global';
+import { COLORS, SPACING, BORDER_RADIUS, FONT_SIZES } from '../../shared/styles/global';
 
 const PERIODS = [
 	{ key: 'DAY', label: 'd' },

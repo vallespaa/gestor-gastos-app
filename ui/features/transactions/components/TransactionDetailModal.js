@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTransactions } from '../../../../shared/context/TransactionsContext';
-import { View, Text, TextInput, Button, StyleSheet, Dimensions, Pressable } from 'react-native';
-import CategoryPicker from '../../../../shared/components/CategoryPicker';
+import { View, Text, TextInput, StyleSheet, Dimensions, Pressable } from 'react-native';
+import CategoryPicker from '../../../components/CategoryPicker';
 import Modal from 'react-native-modal';
 import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../../../shared/constants/constants';
 import { MaterialIcons } from '@expo/vector-icons';
