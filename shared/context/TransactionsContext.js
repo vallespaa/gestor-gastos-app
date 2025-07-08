@@ -1,9 +1,13 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const STORAGE_KEY = 'transactions';
+import TransactionAsyncStorageRepository from '../../app/data/transactions/TransactionAsyncStorageRepository';
+import { getAllTransactions } from '../../app/application/getAllTransactions';
+import { createTransaction } from '../../app/application/createTransaction';
+import { deleteTransaction } from '../../app/application/deleteTransaction';
+import { updateTransaction } from '../../app/application/updateTransaction';
 
 const TransactionsContext = createContext();
+
+const repository = new TransactionAsyncStorageRepository();
 
 export const TransactionsProvider = ({ children }) => {
 	const [transactions, setTransactions] = useState([]);
@@ -14,48 +18,26 @@ export const TransactionsProvider = ({ children }) => {
 
 	// Cargar las transacciones desde AsyncStorage
 	const loadTransactions = async () => {
-		try {
-			const stored = await AsyncStorage.getItem(STORAGE_KEY);
-			const parsed = stored ? JSON.parse(stored) : [];
-			setTransactions(parsed);
-		} catch (error) {
-			console.error('Error al cargar transacción:', error);
-		}
-	};
+    const all = await getAllTransactions(repository);
+    setTransactions(all);
+  };
 
 	// Agregar una nueva transacción
 	const addTransaction = async (transaction) => {
-		try {
-			const updatedTransactions = [...transactions, transaction];
-			await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedTransactions));
-			setTransactions(updatedTransactions);
-		} catch (error) {
-			console.log('Error al agregar transacción:', error);
-		}
+			await createTransaction(repository, transaction);
+      await loadTransactions();
 	};
 
 	// Eliminar una transacción  
-	const deleteTransaction = async (id) => {
-		try {
-			const updatedTransactions = transactions.filter(t => t.id !== id);
-			await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedTransactions));
-			setTransactions(updatedTransactions);
-		} catch (error) {
-			console.log('Error al eliminar transacción:', error);
-		}
+	const removeTransaction = async (id) => {
+    await deleteTransaction(repository, id);
+    await loadTransactions();
 	};
 
 	// Editar una transacción
 	const editTransaction = async (updatedTransaction) => {
-		try {
-			const updatedTransactions = transactions.map(t =>
-				t.id === updatedTransaction.id ? updatedTransaction : t
-			);
-			await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedTransactions));
-			setTransactions(updatedTransactions);
-		} catch (error) {
-			console.log('Error al editar transacción:', error);
-		}
+    await updateTransaction(repository, updatedTransaction);
+    await loadTransactions();
 	};
 
 	return (
@@ -63,7 +45,7 @@ export const TransactionsProvider = ({ children }) => {
 			transactions,
 			loadTransactions,
 			addTransaction,
-			deleteTransaction,
+			removeTransaction,
 			editTransaction
 		}}>
 			{children}
