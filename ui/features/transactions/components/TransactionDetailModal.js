@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useTransactions } from '../../../shared/context/TransactionsContext';
+import { useTransactions } from '../../../../shared/context/TransactionsContext';
 import { View, Text, TextInput, Button, StyleSheet, Dimensions, Pressable } from 'react-native';
-import CategoryPicker from '../../../shared/components/CategoryPicker';
+import CategoryPicker from '../../../../shared/components/CategoryPicker';
 import Modal from 'react-native-modal';
-import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../../shared/constants/constants';
+import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../../../shared/constants/constants';
 import { MaterialIcons } from '@expo/vector-icons';
-import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
+import { COLORS, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
 
 const screenHeight = Dimensions.get('window').height;
 

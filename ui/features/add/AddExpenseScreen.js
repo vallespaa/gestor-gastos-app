@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useTransactions } from '../../shared/context/TransactionsContext';
+import { useTransactions } from '../../../shared/context/TransactionsContext';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
-import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../shared/constants/constants';
+import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../../shared/constants/constants';
 import Header from '../../shared/components/Header';
 import TabSelector from '../../shared/components/TabSelector';
 import CategoryPicker from '../../shared/components/CategoryPicker';

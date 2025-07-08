@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { View, Text, FlatList, StyleSheet, Pressable } from "react-native";
-import { useFilteredTransactions } from "../../../shared/hooks/useFilteredTransactions";
+import { useFilteredTransactions } from "../../../hooks/useFilteredTransactions";
 import TransactionDetailModal from "./TransactionDetailModal";
-import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
+import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
 
 export default function TransactionsList({ transactions, tab, period }) {
 	const date = new Date();

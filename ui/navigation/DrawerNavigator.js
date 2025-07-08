@@ -6,7 +6,7 @@ import AddExpenseScreen from '../features/add/AddExpenseScreen';
 import TransactionsScreen from '../features/transactions/TransactionsScreen';
 import ImportExportScreen from '../features/export/ImportExportScreen';
 import { Ionicons } from '@expo/vector-icons';
-import { SPACING, FONT_SIZES } from '../shared/styles/global'
+import { SPACING, FONT_SIZES } from '../../shared/styles/global'
 
 const Drawer = createDrawerNavigator();
 

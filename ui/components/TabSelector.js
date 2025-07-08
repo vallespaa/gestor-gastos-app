@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { COLORS, SPACING, BORDER_RADIUS } from '../styles/global';
+import { COLORS, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
 
 export default function TabSelector({ tab, setTab }) {
 	return (
