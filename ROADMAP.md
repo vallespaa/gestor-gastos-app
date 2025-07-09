@@ -4,33 +4,39 @@ Este roadmap detalla las tareas pendientes y planeadas para el desarrollo del MV
 
 ---
 
-## Completado
+## 🔜 [0.2.0] - Prevista: 2025-07-13
 
-_(Aún no hay tareas finalizadas en esta fase)_
-
----
-
-## En desarrollo / Alta prioridad (v0.1 MVP)
-
-- [ ] UX: Filtrado de gastos en la vista de lista con desplegable
-- [ ] UI: Estilo del tab de los tipos (Ingresos / Gastos)
-- [ ] Feat: Hacer screen de ajustes
-- [ ] UX: Configurar el header propio de React Native (reemplazar el predeterminado)
+- Nueva arquitectura de datos con enfoque limpio
+- Validaciones al crear transacciones
+- Mejora del encabezado de navegación
+- Pantalla de ajustes básica
+- Botón flotante para crear nuevas transacciones
 
 ---
 
-## Siguiente versión (v0.2)
+## [0.3.0] - Prevista: 2025-07-20
 
-- [ ] Feat: Añadir import/export de CSV
-- [ ] Feat: Realizar transferencias entre las cuentas de la app
-- [ ] Feat: Añadir más de una cuenta para dividir el dinero
-- [ ] UI: Cajón ampliable para los gastos divididos en categorías
+- Filtro de transacciones por tipo
+- Gestión de cuentas (crear, editar, borrar, transferencias)
+- Gestión de categorías personalizadas
+- Mejora del estilo de pestañas (gastos / ingresos)
 
 ---
 
-## 💡 Ideas adicionales / A considerar (sin versión asignada)
+## [0.4.0] - Prevista: 2025-07-27
 
-- [ ] UX: Slider en el cambio de fechas
+- Mejoras visuales en la pantalla de creación de transacciones
+- Cajón ampliable para ver categorías detalladas
+
+---
+
+## 💡 Ideas futuras (sin fecha definida)
+
+- Slider para cambio de fechas
+- Soporte para exportación/importación CSV
+- Guardado local con SQLite
+- Date Picker propio con selección de fecha y notificaciones
+- Gráficas mejoradas para categorías (pie chart, etc.)
 
 ---
 
@@ -38,4 +44,3 @@ _(Aún no hay tareas finalizadas en esta fase)_
 
 - Esta lista puede cambiar a medida que se prueban funcionalidades.
 - Las versiones son tentativas y solo representan agrupaciones por prioridad.
-- Las etiquetas (`UI`, `UX`, `Feat`) ayudan a distinguir el tipo de tarea.

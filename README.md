@@ -80,13 +80,8 @@ gestor-gastos-app/
 
 ## Changelog
 
-Consulta el historial de cambios en [CHANGELOG.md](./CHANGELOG.md).
+Consulta el historial de cambios en el [Changelog](./CHANGELOG.md).
 
 ## Roadmap
 
 Consulta nuestro [Roadmap](./ROADMAP.md) para ver lo que se viene.
-
-
-## Licencia
-
-MIT
