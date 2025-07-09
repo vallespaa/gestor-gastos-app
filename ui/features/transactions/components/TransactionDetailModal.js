@@ -10,7 +10,7 @@ import { COLORS, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global
 const screenHeight = Dimensions.get('window').height;
 
 export default function TransactionDetailModal({ isVisible, onClose, transaction }) {
-	const { editTransaction, deleteTransaction } = useTransactions();
+	const { editTransaction, removeTransaction } = useTransactions();
 	const [categories, setCategories] = useState([]);
 
 	const [amount, setAmount] = useState('');
@@ -30,7 +30,7 @@ export default function TransactionDetailModal({ isVisible, onClose, transaction
 	}, [transaction]);
 
 
-	const handleUpdate = () => {
+	const handleUpdate = async () => {
 		if (!amount || isNaN(parseFloat(amount))) {
 			alert('Por favor ingresa una cantidad válida.');
 			return;
@@ -47,12 +47,12 @@ export default function TransactionDetailModal({ isVisible, onClose, transaction
 			date: date.toISOString(),
 			note
 		};
-		editTransaction(updated);
+		await editTransaction(updated);
 		onClose();
 	};
 
-	const handleDelete = () => {
-		deleteTransaction(transaction.id);
+	const handleDelete = async () => {
+		await removeTransaction(transaction.id);
 		onClose();
 	};
 
@@ -73,7 +73,7 @@ export default function TransactionDetailModal({ isVisible, onClose, transaction
 					<CategoryPicker
 						categories={categories}
 						selectedCategory={category}
-						setSelectedCategory={setCategory}
+						onCategoryChange={setCategory}
 					/>
 
 					<DateSelector date={date} setDate={setDate} />
