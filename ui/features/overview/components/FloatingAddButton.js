@@ -24,7 +24,7 @@ export default function FloatingAddButton() {
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
       }}
-      onPress={() => navigation.navigate('Add')}
+      onPress={() => navigation.navigate('AddTransaction')}
     >
       <Ionicons name="add" size={24} color={COLORS.white} />
     </Pressable>

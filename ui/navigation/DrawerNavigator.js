@@ -2,7 +2,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { View, Text } from 'react-native';
 import OverviewScreen from '../features/overview/OverviewScreen';
-import AddExpenseScreen from '../features/add/AddExpenseScreen';
 import TransactionsScreen from '../features/transactions/TransactionsScreen';
 import ImportExportScreen from '../features/export/ImportExportScreen';
 import { Ionicons } from '@expo/vector-icons';
@@ -47,11 +46,6 @@ export default function DrawerNavigator() {
 				name="Año"
 				component={OverviewScreen}
 				initialParams={{ period: "YEAR" }}
-			/>
-			<Drawer.Screen
-				name="Add"
-				component={AddExpenseScreen}
-				options={{ drawerIcon: ({ color }) => <Ionicons name="add" size={24} color={color} /> }}
 			/>
 			<Drawer.Screen
 				name="Transactions"
