@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Pressable, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS } from '../../../shared/styles/global';
+import { COLORS } from '../../../../shared/styles/global';
 
 export default function FloatingAddButton() {
   const navigation = useNavigation();
