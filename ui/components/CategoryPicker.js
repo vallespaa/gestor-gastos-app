@@ -1,6 +1,6 @@
 import { View, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { COLORS, SPACING, BORDER_RADIUS } from '../styles/global';
+import { COLORS, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
 
 export default CategoryPicker = ({ categories, selectedCategory, onCategoryChange }) => {
 	return (

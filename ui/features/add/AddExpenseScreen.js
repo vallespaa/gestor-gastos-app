@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { useTransactions } from '../../shared/context/TransactionsContext';
+import { useTransactions } from '../../../shared/context/TransactionsContext';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
-import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../shared/constants/constants';
-import Header from '../../shared/components/Header';
-import TabSelector from '../../shared/components/TabSelector';
-import CategoryPicker from '../../shared/components/CategoryPicker';
-import DateSelector from '../../shared/components/DateSelector';
-import { COLORS, SPACING, BORDER_RADIUS } from '../../shared/styles/global';
+import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../../shared/constants/constants';
+import Header from '../../components/Header';
+import TabSelector from '../../components/TabSelector';
+import CategoryPicker from '../../components/CategoryPicker';
+import DateSelector from '../../components/DateSelector';
+import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
 
 export default function AddExpenseScreen({ navigation }) {
 	const [tab, setTab] = useState('GASTOS');

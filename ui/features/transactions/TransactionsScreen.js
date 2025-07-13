@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useTransactions } from '../../shared/context/TransactionsContext';
+import { useTransactions } from '../../../shared/context/TransactionsContext';
 import { View, StyleSheet } from 'react-native';
-import Header from '../../shared/components/Header';
-import TabSelector from '../../shared/components/TabSelector';
-import PeriodTabs from '../../shared/components/PeriodTabs';
+import Header from '../../components/Header';
+import TabSelector from '../../components/TabSelector';
+import PeriodTabs from '../../components/PeriodTabs';
 import TransactionsList from './components/TransactionsList';
-import { COLORS, SPACING } from '../../shared/styles/global';
+import { COLORS, SPACING } from '../../../shared/styles/global';
 
 export default function TransactionsScreen() {
 	const [tab, setTab] = useState('GASTOS');
