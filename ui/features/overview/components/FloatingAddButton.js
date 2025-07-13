@@ -1,0 +1,32 @@
+import { useNavigation } from '@react-navigation/native';
+import { Pressable, Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from '../../../shared/styles/global';
+
+export default function FloatingAddButton() {
+  const navigation = useNavigation();
+
+  return (
+    <Pressable
+      style={{
+        position: 'absolute',
+        bottom: 40,
+        right: 30,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: COLORS.primary,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 5, 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+      }}
+      onPress={() => navigation.navigate('Add')}
+    >
+      <Ionicons name="add" size={24} color={COLORS.white} />
+    </Pressable>
+  );
+}
