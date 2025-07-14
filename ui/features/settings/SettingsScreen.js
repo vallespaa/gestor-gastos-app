@@ -1,10 +1,59 @@
+import { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Alert, Linking  } from 'react-native';
 import Header from '../../components/Header';
+import * as Sharing from 'expo-sharing';
+import { importFromExcel } from './utils/ImportFromExcel';
+import { exportToExcel } from './utils/ExportToExcel';
+import { useTransactions } from '../../../shared/context/TransactionsContext';
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
-import { SPACING, COLORS, FONT_SIZES } from '../../../shared/styles/global';
+import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
 
 export default function SettingsScreen() {
+  const { transactions, addTransaction } = useTransactions();
+  const [loading, setLoading] = useState(false);
+
+  const handleImport = async () => {
+    setLoading(true);
+    try {
+      const jsonData = await importFromExcel(addTransaction);
+
+      Alert.alert('Importación exitosa', `${jsonData.length} transacciones importadas`);
+    } catch (error) {
+      console.error('Error al importar:', error);
+      Alert.alert('Error', 'No se pudo importar el archivo');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const handleExport = async () => {
+    setLoading(true);
+    try {
+      const filePath = await exportToExcel(transactions);
+
+      Alert.alert('Exportación exitosa', `Archivo guardado en:\n${filePath}`);
+
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(filePath);
+      } else {
+        Alert.alert('Compartir no disponible', 'No se puede compartir este archivo en este dispositivo.');
+      }
+    } catch (error) {
+      console.error('Error al exportar:', error);
+      Alert.alert('Error', 'No se pudo exportar el archivo.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFeedback = () => {
+    const email = 'tucorreo@gmail.com';
+    const subject = 'Feedback sobre la app';
+    const body = 'Hola, quería comentar...';
+    const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    Linking.openURL(mailto);
+  };
 
   return (
     <View style={styles.container}>
@@ -12,12 +61,12 @@ export default function SettingsScreen() {
 
       <Text style={styles.sectionTitle}>IMPORTAR Y EXPORTAR</Text>
 
-      <Pressable style={styles.item} >
+      <Pressable style={styles.item} onPress={handleImport} disabled={loading}>
         <Ionicons name="download-outline" size={24} color={COLORS.black} style={styles.icon} />
         <Text style={styles.itemText}>Importar datos en Formato Excel</Text>
       </Pressable>
 
-      <Pressable style={styles.item}>
+      <Pressable style={styles.item} onPress={handleExport} disabled={loading}>
         <Ionicons name="push-outline" size={24} color={COLORS.black} style={styles.icon} />
         <Text style={styles.itemText}>Exportar datos en Formato Excel</Text>
       </Pressable>
@@ -38,12 +87,12 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: SPACING.md,
-        paddingTop: Constants.statusBarHeight + SPACING.md,
-        backgroundColor: COLORS.white
-    },
+  container: {
+    flex: 1,
+    padding: SPACING.md,
+    paddingTop: Constants.statusBarHeight + SPACING.md,
+    backgroundColor: COLORS.white
+  },
   sectionTitle: {
     color: COLORS.gray,
     fontWeight: '600',
