@@ -48,7 +48,7 @@ export default function SettingsScreen() {
   };
 
   const handleFeedback = () => {
-    const email = 'tucorreo@gmail.com';
+    const email = Constants.expoConfig.extra?.feedbackEmail || 'fallback@example.com';
     const subject = 'Feedback sobre la app';
     const body = 'Hola, quería comentar...';
     const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
