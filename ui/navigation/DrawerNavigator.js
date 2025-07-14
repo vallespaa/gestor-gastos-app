@@ -4,6 +4,7 @@ import { View, Text } from 'react-native';
 import OverviewScreen from '../features/overview/OverviewScreen';
 import TransactionsScreen from '../features/transactions/TransactionsScreen';
 import ImportExportScreen from '../features/export/ImportExportScreen';
+import SettingsScreen from '../features/settings/SettingsScreen.js';
 import { Ionicons } from '@expo/vector-icons';
 import { SPACING, FONT_SIZES } from '../../shared/styles/global'
 
@@ -53,9 +54,9 @@ export default function DrawerNavigator() {
 				options={{ drawerIcon: ({ color }) => <Ionicons name="list" size={24} color={color} /> }}
 			/>
 			<Drawer.Screen
-				name="Importar / Exportar"
-				component={ImportExportScreen}
-				options={{ drawerIcon: ({ color }) => <Ionicons name="repeat" size={24} color={color} /> }}
+				name="Ajustes"
+				component={SettingsScreen}
+				options={{ drawerIcon: ({ color }) => <Ionicons name="settings-outline" size={24} color={color} /> }}
 			/>
 		</Drawer.Navigator>
 	);
