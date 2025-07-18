@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useTransactions } from '../../../../shared/context/TransactionsContext';
+import { useCategories } from '../../../../shared/context/CategoriesContext';
 import { View, Text, TextInput, StyleSheet, Dimensions, Pressable } from 'react-native';
 import CategoryPicker from '../../../components/CategoryPicker';
+import DateSelector from '../../../components/DateSelector';
 import Modal from 'react-native-modal';
-import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../../../shared/constants/constants';
 import { MaterialIcons } from '@expo/vector-icons';
 import { COLORS, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
 
@@ -11,39 +12,41 @@ const screenHeight = Dimensions.get('window').height;
 
 export default function TransactionDetailModal({ isVisible, onClose, transaction }) {
 	const { editTransaction, removeTransaction } = useTransactions();
-	const [categories, setCategories] = useState([]);
+  const { getCategories, getCategoryById } = useCategories();
 
+  const [categories, setCategories] = useState([]);
 	const [amount, setAmount] = useState('');
-	const [category, setCategory] = useState('');
+	const [categoryId, setCategoryId] = useState('');
 	const [date, setDate] = useState(new Date());
 	const [note, setNote] = useState('');
 
 	useEffect(() => {
 		if (transaction) {
-			setCategories(transaction.type === 'GASTOS' ? CATEGORIES_GASTOS : CATEGORIES_INGRESOS);
-
+			setCategories(getCategories(transaction.type));
 			setAmount(String(transaction.amount));
-			setCategory(transaction.category);
+      setCategoryId(transaction.category);
 			setDate(new Date(transaction.date));
 			setNote(transaction.note || '');
 		}
 	}, [transaction]);
 
-
 	const handleUpdate = async () => {
+    const category = getCategoryById(categoryId);
+
 		if (!amount || isNaN(parseFloat(amount))) {
 			alert('Por favor ingresa una cantidad válida.');
 			return;
 		}
-		if (!category.trim()) {
-			alert('Por favor ingresa una categoría.');
-			return;
-		}
+		
+    if (!category) {
+      alert('Por favor selecciona una categoría válida.');
+      return;
+    }
 
 		const updated = {
 			...transaction,
 			amount: parseFloat(amount),
-			category,
+			category: category.id,
 			date: date.toISOString(),
 			note
 		};
@@ -72,8 +75,8 @@ export default function TransactionDetailModal({ isVisible, onClose, transaction
 
 					<CategoryPicker
 						categories={categories}
-						selectedCategory={category}
-						onCategoryChange={setCategory}
+						selectedCategory={categoryId}
+						onCategoryChange={setCategoryId}
 					/>
 
 					<DateSelector date={date} setDate={setDate} />

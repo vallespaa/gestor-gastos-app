@@ -8,47 +8,51 @@ import CategoryPicker from '../../components/CategoryPicker';
 import DateSelector from '../../components/DateSelector';
 import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
 
-export default function AddExpenseScreen() {
+export default function AddExpenseScreen({ navigation }) {
 	const [tab, setTab] = useState('GASTOS');
 	const { addTransaction } = useTransactions();
-  const { getCategories } = useCategories();
+  const { getCategories, getCategoryById } = useCategories();
 
 	const [amount, setAmount] = useState('');
-	const [category, setCategory] = useState('');
+	const [categoryId, setCategoryId] = useState('');
 	const [date, setDate] = useState(new Date());
 	const [note, setNote] = useState('');
 
   const categories = getCategories(tab);
 	
   const handleAddExpense = async () => {
+    const category = getCategoryById(categoryId);
+
 		if (!amount || isNaN(parseFloat(amount))) {
 			alert('Por favor ingresa una cantidad válida.');
 			return;
 		}
-		if (!category.trim()) {
-			alert('Por favor ingresa una categoría.');
-			return;
-		}
+
+    if (!category) {
+      alert('Por favor selecciona una categoría válida.');
+      return;
+    }
 
 		const newExpense = {
 			id: Date.now(),
 			amount: parseFloat(amount),
-			category,
+			category: category.id,
 			date: date.toISOString(),
-			type: tab,
+			type: category.type,
 			note
 		};
 
 		await addTransaction(newExpense);
 		setAmount('');
-		setCategory('');
+		setCategoryId('');
 		setDate(new Date());
 		setNote('');
+		navigation.goBack();
 	};
 
 	const handleTabChange = (newTab) => {
 		setTab(newTab);
-		setCategory('');
+		setCategoryId('');
 	};
 
 	return (
@@ -61,8 +65,8 @@ export default function AddExpenseScreen() {
 
 			<CategoryPicker
 				categories={categories}
-				selectedCategory={category}
-				onCategoryChange={setCategory}
+				selectedCategory={categoryId}
+				onCategoryChange={setCategoryId}
 			/>
 
 			<DateSelector date={date} setDate={setDate} />

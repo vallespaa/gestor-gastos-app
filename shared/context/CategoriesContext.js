@@ -25,10 +25,18 @@
       return categories.filter(cat => cat.type === type);
     };
 
+  function getCategoryById(id) {
+    if (!id) {
+      return null;
+    }
+    return categories.find(c => c.id === id) || null;
+  }
+
     return (
       <CategoriesContext.Provider value={{
         categories,
-        getCategories
+        getCategories,
+        getCategoryById
       }}>
         {children}
       </CategoriesContext.Provider>

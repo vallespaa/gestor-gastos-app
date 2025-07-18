@@ -10,7 +10,7 @@ export default function CategoryPicker({ categories, selectedCategory, onCategor
 				onValueChange={(itemValue) => onCategoryChange(itemValue)}
 				style={styles.picker}
 			>
-				<Picker.Item label="Selecciona una categoría" value="" />
+				<Picker.Item label="Selecciona una categoría" value='' />
 				{categories.map(cat => (
 					<Picker.Item key={cat.id} label={cat.name} value={cat.id} />
 				))}
