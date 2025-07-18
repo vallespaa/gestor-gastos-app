@@ -1,15 +1,7 @@
-export default class TransactionRepository {
+export default class CategoryRepository {
   async getAll() {
     throw new Error('getAll() not implemented');
   };
-
-  async getById(id) {
-    throw new Error('getById() not implemented');
-  }
-
-  async getByType(type) {
-    throw new Error('Method not implemented');
-  }
 
 	async create(category) {
     throw new Error('create() not implemented');
@@ -19,7 +11,7 @@ export default class TransactionRepository {
     throw new Error('delete() not implemented');
 	};
 
-	async update(id, upadatedCategory) {
+	async update(updatedCategory) {
     throw new Error('update() not implemented');
 	};
 }

@@ -6,7 +6,7 @@ export default class Category {
   }
 
   static fromPlainObject(obj) {
-    return new Category(obj.id, obj.name, obj.type);
+    return new Category(obj);
   }
 
   toPlainObject() {

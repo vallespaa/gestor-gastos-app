@@ -1,24 +1,26 @@
 import { useState } from 'react';
 import { useTransactions } from '../../../shared/context/TransactionsContext';
+import { useCategories } from '../../../shared/context/CategoriesContext';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
-import { CATEGORIES_GASTOS, CATEGORIES_INGRESOS } from '../../../shared/constants/constants';
 import Header from '../../components/Header';
 import TabSelector from '../../components/TabSelector';
 import CategoryPicker from '../../components/CategoryPicker';
 import DateSelector from '../../components/DateSelector';
 import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
 
-export default function AddExpenseScreen({ navigation }) {
+export default function AddExpenseScreen() {
 	const [tab, setTab] = useState('GASTOS');
 	const { addTransaction } = useTransactions();
+  const { getCategories } = useCategories();
+
 	const [amount, setAmount] = useState('');
 	const [category, setCategory] = useState('');
 	const [date, setDate] = useState(new Date());
 	const [note, setNote] = useState('');
 
-	const categories = tab === 'GASTOS' ? CATEGORIES_GASTOS : CATEGORIES_INGRESOS;
-
-	const handleAddExpense = async () => {
+  const categories = getCategories(tab);
+	
+  const handleAddExpense = async () => {
 		if (!amount || isNaN(parseFloat(amount))) {
 			alert('Por favor ingresa una cantidad válida.');
 			return;
@@ -42,14 +44,18 @@ export default function AddExpenseScreen({ navigation }) {
 		setCategory('');
 		setDate(new Date());
 		setNote('');
-		navigation.goBack();
+	};
+
+	const handleTabChange = (newTab) => {
+		setTab(newTab);
+		setCategory('');
 	};
 
 	return (
 		<View style={styles.container}>
 			<Header title={"Añadir"} />
 
-			<TabSelector tab={tab} setTab={setTab} />
+			<TabSelector tab={tab} setTab={handleTabChange} />
 
 			<TextInput style={styles.input} placeholder="Cantidad (€)" value={amount} onChangeText={setAmount} keyboardType="numeric" />
 
