@@ -4,26 +4,21 @@ Este roadmap detalla las tareas pendientes y planeadas para el desarrollo del MV
 
 ---
 
-## 🔜 [0.2.0] - Prevista: 2025-07-13
+## 🔜 [0.3.0] - Prevista: 2025-07-21
 
-- Nueva arquitectura de datos con enfoque limpio
-- Validaciones al crear transacciones
 - Mejora del encabezado de navegación
-- Pantalla de ajustes básica
-- Botón flotante para crear nuevas transacciones
-
----
-
-## [0.3.0] - Prevista: 2025-07-20
-
-- Filtro de transacciones por tipo
-- Gestión de cuentas (crear, editar, borrar, transferencias)
-- Gestión de categorías personalizadas
 - Mejora del estilo de pestañas (gastos / ingresos)
 
 ---
 
-## [0.4.0] - Prevista: 2025-07-27
+## [0.4.0] - Prevista: 2025-07-28
+
+- Gestión de cuentas (crear, editar, borrar, transferencias)
+- Gestión de categorías personalizadas
+
+---
+
+## [0.5.0] - Prevista: 2025-08-04
 
 - Mejoras visuales en la pantalla de creación de transacciones
 - Cajón ampliable para ver categorías detalladas
@@ -32,6 +27,7 @@ Este roadmap detalla las tareas pendientes y planeadas para el desarrollo del MV
 
 ## 💡 Ideas futuras (sin fecha definida)
 
+- Filtro de transacciones por tipo
 - Slider para cambio de fechas
 - Soporte para exportación/importación CSV
 - Guardado local con SQLite
