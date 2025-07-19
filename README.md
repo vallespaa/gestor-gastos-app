@@ -60,8 +60,8 @@ gestor-gastos-app/
 │   ├── components/         # Componentes visuales reutilizables
 │   ├── features/           # Pantallas principales y lógica de negocio
 │   │   ├── add/
-│   │   ├── export/
 │   │   ├── overview/
+│   │   ├── settings/
 │   │   └── transactions/
 │   ├── hooks/              # Hooks transversales
 │   └── navigation/         # Configuración de la navegación (Drawer, Stacks, etc.)
