@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { View, Text, FlatList, StyleSheet, Pressable } from "react-native";
 import { useFilteredTransactions } from "../../../hooks/useFilteredTransactions";
+import { useCategories } from "../../../../shared/context/CategoriesContext";
 import TransactionDetailModal from "./TransactionDetailModal";
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
 
 export default function TransactionsList({ transactions, tab, period }) {
+  const { getCategoryById } = useCategories();
+
 	const date = new Date();
 	const filteredTransactions = useFilteredTransactions(transactions, tab, period, date);
 
@@ -29,7 +32,7 @@ export default function TransactionsList({ transactions, tab, period }) {
 			]}
 		>
 			<View style={{ flex: 1 }}>
-				<Text style={styles.category}>{item.category}</Text>
+				<Text style={styles.category}>{getCategoryById(item.category)?.name}</Text>
 				<Text style={styles.date}>{new Date(item.date).toLocaleDateString()}</Text>
 				{item.note ? <Text style={styles.note}>{item.note}</Text> : null}
 			</View>
@@ -50,7 +53,10 @@ export default function TransactionsList({ transactions, tab, period }) {
 
 			<TransactionDetailModal
 				isVisible={modalVisible}
-				onClose={() => setModalVisible(false)}
+				onClose={() => {
+          setModalVisible(false);
+          setSelectedTransaction(null);
+        }}
 				transaction={selectedTransaction}
 			/>
 		</View>

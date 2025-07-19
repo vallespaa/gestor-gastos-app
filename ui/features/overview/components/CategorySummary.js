@@ -56,11 +56,11 @@ export default CategorySummary = ({ transactions, tab, period }) => {
 			)}
 
 			<View style={styles.summary}>
-				{categories.map((cat) => {
+				{categories.map((cat, index) => {
 					const percentage = (cat.amount / total) * 100;
 
 					return (
-						<View key={cat.name} style={styles.summaryRow}>
+						<View key={index} style={styles.summaryRow}>
 							<Text style={styles.catName}>{cat.name}</Text>
 							<View style={styles.barContainer}>
 								<View style={[styles.barFill, { width: `${percentage}%`, backgroundColor: cat.color }]} />

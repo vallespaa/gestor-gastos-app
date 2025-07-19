@@ -1,14 +1,17 @@
 import { COLORS, FONT_SIZES } from '../../../../shared/styles/global';
+import { useCategories } from '../../../../shared/context/CategoriesContext'
 
 export const useExpenseSummary = (expenses) => {
-	const total = expenses.reduce((acc, item) => acc + parseFloat(item.amount), 0);
+  const { getCategoryById } = useCategories();
+  const total = expenses.reduce((acc, item) => acc + parseFloat(item.amount), 0);
 
 	const categoryMap = {};
 	expenses.forEach(item => {
-		categoryMap[item.category] = (categoryMap[item.category] || 0) + parseFloat(item.amount);
+    const category = getCategoryById(item.category)?.name || 'Sin categoría';
+		categoryMap[category] = (categoryMap[category] || 0) + parseFloat(item.amount);
 	});
 
-	const categories = Object.entries(categoryMap).map(([category, amount], index) => ({
+  const categories = Object.entries(categoryMap).map(([category, amount], index) => ({
 		name: category,
 		amount,
 		color: getColor(index),

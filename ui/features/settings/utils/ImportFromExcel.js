@@ -1,3 +1,4 @@
+import { useCategories } from '../../../../shared/context/CategoriesContext';
 import { Alert } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import * as XLSX from 'xlsx';
@@ -5,6 +6,8 @@ import * as DocumentPicker from 'expo-document-picker';
 import { v4 as uuid } from 'uuid';
 
 export const importFromExcel = async (addTransaction) => {
+  const { categories } = useCategories();
+
 	const result = await DocumentPicker.getDocumentAsync({
 		type: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'],
 		copyToCacheDirectory: true,
@@ -30,17 +33,25 @@ export const importFromExcel = async (addTransaction) => {
 
 	for (const item of jsonData) {
 		if (item.amount && item.category && item.date && item.type) {
+
+      const matchedCategory = categories.find(
+        (cat) =>
+          cat.name.toLowerCase() === String(item.category).toLowerCase() &&
+          cat.type.toLowerCase() === String(item.type).toLowerCase()
+      );
+
 			await addTransaction({
 				id: uuid(),
 				amount: Number(item.amount),
-				category: String(item.category),
+        category: matchedCategory.id,
 				date: new Date(item.date).toISOString(),
-				type: String(item.type),
+        type: matchedCategory.type,
 				note: item.note || '',
 			});
+
 			importCount++;
 		}
 	}
 
-	return jsonData
+	return jsonData;
 };
