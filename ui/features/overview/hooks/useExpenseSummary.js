@@ -5,15 +5,11 @@ export const useExpenseSummary = (expenses) => {
   const { getCategoryById } = useCategories();
   const total = expenses.reduce((acc, item) => acc + parseFloat(item.amount), 0);
 
-  console.log('expenses', expenses);
-
 	const categoryMap = {};
 	expenses.forEach(item => {
     const category = getCategoryById(item.category)?.name || 'Sin categoría';
 		categoryMap[category] = (categoryMap[category] || 0) + parseFloat(item.amount);
 	});
-
-  console.log('categoryMap', categoryMap);
 
   const categories = Object.entries(categoryMap).map(([category, amount], index) => ({
 		name: category,
@@ -22,8 +18,6 @@ export const useExpenseSummary = (expenses) => {
 		legendFontColor: COLORS.gray,
 		legendFontSize: FONT_SIZES.sm,
 	}));
-
-  console.log('categories', categories);
 
 	return {
 		total,
