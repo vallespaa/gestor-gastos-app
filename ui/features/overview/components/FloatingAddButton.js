@@ -10,11 +10,11 @@ export default function FloatingAddButton() {
     <Pressable
       style={{
         position: 'absolute',
-        bottom: 40,
-        right: 30,
-        width: 60,
-        height: 60,
-        borderRadius: 30,
+        bottom: 16,
+        right: 16,
+        width: 56,
+        height: 56,
+        borderRadius: 16,
         backgroundColor: COLORS.primary,
         alignItems: 'center',
         justifyContent: 'center',
