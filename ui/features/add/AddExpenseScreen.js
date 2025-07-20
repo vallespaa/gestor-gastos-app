@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useTransactions } from '../../../shared/context/TransactionsContext';
 import { useCategories } from '../../../shared/context/CategoriesContext';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { TextInput, Button, StyleSheet } from 'react-native';
+import ThemedScrollView from '../../components/ThemedScrollView'
 import TabSelector from '../../components/TabSelector';
 import CategoryPicker from '../../components/CategoryPicker';
 import DateSelector from '../../components/DateSelector';
@@ -55,7 +56,7 @@ export default function AddExpenseScreen({ navigation }) {
 	};
 
 	return (
-		<View style={styles.container}>
+		<ThemedScrollView>
 			<TabSelector tab={tab} setTab={handleTabChange} />
 
 			<TextInput style={styles.input} placeholder="Cantidad (€)" value={amount} onChangeText={setAmount} keyboardType="numeric" />
@@ -78,16 +79,11 @@ export default function AddExpenseScreen({ navigation }) {
 			/>
 
 			<Button title="Agregar" onPress={handleAddExpense} />
-		</View>
+		</ThemedScrollView>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		padding: SPACING.md,
-		backgroundColor: COLORS.white
-	},
 	input: {
 		borderWidth: 1,
 		borderColor: COLORS.lightGray,

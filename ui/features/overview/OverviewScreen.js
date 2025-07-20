@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useTransactions } from '../../../shared/context/TransactionsContext';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text } from 'react-native';
+import ThemedScrollView from '../../components/ThemedScrollView'
 import TabSelector from '../../components/TabSelector';
 import CategorySummary from './components/CategorySummary';
-import { COLORS, SPACING } from '../../../shared/styles/global';
 import FloatingAddButton from './components/FloatingAddButton';
 
 export default function OverviewScreen({ route }) {
@@ -33,20 +33,12 @@ export default function OverviewScreen({ route }) {
 
 
 	return (
-		<ScrollView contentContainerStyle={styles.container}>
+		<ThemedScrollView>
 			<TabSelector tab={tab} setTab={setTab} />
 
 			<CategorySummary transactions={transactions} tab={tab} period={period} />
 
       <FloatingAddButton />
-		</ScrollView>
+		</ThemedScrollView>
 	);
 };
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		padding: SPACING.md,
-		backgroundColor: COLORS.white,
-	}
-});
