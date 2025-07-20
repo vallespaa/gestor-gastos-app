@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTransactions } from '../../../shared/context/TransactionsContext';
 import { View, StyleSheet } from 'react-native';
-import Header from '../../components/Header';
 import TabSelector from '../../components/TabSelector';
 import PeriodTabs from '../../components/PeriodTabs';
 import TransactionsList from './components/TransactionsList';
@@ -14,7 +13,6 @@ export default function TransactionsScreen() {
 
 	return (
 		<View style={styles.container}>
-			<Header title={"Transacciones"} />
 			<TabSelector tab={tab} setTab={setTab} />
 			<PeriodTabs period={period} setPeriod={setPeriod} />
 			<TransactionsList transactions={transactions} tab={tab} period={period} />

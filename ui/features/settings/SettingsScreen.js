@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Alert, Linking  } from 'react-native';
-import Header from '../../components/Header';
 import * as Sharing from 'expo-sharing';
 import { importFromExcel } from './utils/ImportFromExcel';
 import { exportToExcel } from './utils/ExportToExcel';
@@ -57,8 +56,6 @@ export default function SettingsScreen() {
 
   return (
     <View style={styles.container}>
-      <Header title={"Ajustes"} />
-
       <Text style={styles.sectionTitle}>IMPORTAR Y EXPORTAR</Text>
 
       <Pressable style={styles.item} onPress={handleImport} disabled={loading}>
