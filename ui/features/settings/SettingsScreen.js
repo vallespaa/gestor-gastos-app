@@ -4,7 +4,7 @@ import * as Sharing from 'expo-sharing';
 import { importFromExcel } from './utils/ImportFromExcel';
 import { exportToExcel } from './utils/ExportToExcel';
 import { useTransactions } from '../../../shared/context/TransactionsContext';
-import ThemedScrollView from '../../components/ThemedScrollView'
+import ThemedView from '../../components/ThemedView'
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
@@ -56,7 +56,7 @@ export default function SettingsScreen() {
   };
 
   return (
-    <ThemedScrollView>
+    <ThemedView>
       <Text style={styles.sectionTitle}>IMPORTAR Y EXPORTAR</Text>
 
       <Pressable style={styles.item} onPress={handleImport} disabled={loading}>
@@ -80,7 +80,7 @@ export default function SettingsScreen() {
         <Text style={styles.footerText}>Versión de la app:</Text>
         <Text style={styles.footerText}>{Constants.expoConfig.version}</Text>
       </View>
-    </ThemedScrollView>
+    </ThemedView>
   );
 }
 
