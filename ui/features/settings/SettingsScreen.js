@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Alert, Linking  } from 'react-native';
-import Header from '../../components/Header';
 import * as Sharing from 'expo-sharing';
 import { importFromExcel } from './utils/ImportFromExcel';
 import { exportToExcel } from './utils/ExportToExcel';
 import { useTransactions } from '../../../shared/context/TransactionsContext';
+import ThemedView from '../../components/ThemedView'
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
@@ -56,9 +56,7 @@ export default function SettingsScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Header title={"Ajustes"} />
-
+    <ThemedView>
       <Text style={styles.sectionTitle}>IMPORTAR Y EXPORTAR</Text>
 
       <Pressable style={styles.item} onPress={handleImport} disabled={loading}>
@@ -82,17 +80,11 @@ export default function SettingsScreen() {
         <Text style={styles.footerText}>Versión de la app:</Text>
         <Text style={styles.footerText}>{Constants.expoConfig.version}</Text>
       </View>
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: SPACING.md,
-    paddingTop: Constants.statusBarHeight + SPACING.md,
-    backgroundColor: COLORS.white
-  },
   sectionTitle: {
     color: COLORS.gray,
     fontWeight: '600',

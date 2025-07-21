@@ -1,11 +1,10 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { View, Text, StyleSheet } from 'react-native';
 import OverviewScreen from '../features/overview/OverviewScreen';
 import TransactionsScreen from '../features/transactions/TransactionsScreen';
 import SettingsScreen from '../features/settings/SettingsScreen.js';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../shared/styles/global'
+import { COLORS, FONT_SIZES, SPACING } from '../../shared/styles/global'
 
 const Drawer = createDrawerNavigator();
 
@@ -35,8 +34,13 @@ export default function DrawerNavigator() {
 	return (
 		<Drawer.Navigator
 			drawerContent={props => <CustomDrawerContent {...props} />}
-			screenOptions={{ headerShown: false }}
-		>
+      screenOptions={{
+        headerTintColor: COLORS.black,
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerTitleAlign: 'center',
+        headerShadowVisible: false
+      }}
+    >
 			<Drawer.Screen
 				name="Lista"
 				component={TransactionsScreen}
@@ -46,6 +50,9 @@ export default function DrawerNavigator() {
 				name="Día"
 				component={OverviewScreen}
 				initialParams={{ period: "DAY" }}
+        options={{
+          title: "Día",
+        }}
 			/>
 			<Drawer.Screen
 				name="Semana"
