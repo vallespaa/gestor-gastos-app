@@ -12,7 +12,7 @@ const CATEGORY_ICONS = [
 ];
 
 const CATEGORY_COLORS = [
-  'hsl(0, 70%, 100%)',
+  'hsl(0, 70%, 50%)',
   'hsl(30, 70%, 50%)',
   'hsl(60, 70%, 50%)',
   'hsl(90, 70%, 50%)',
