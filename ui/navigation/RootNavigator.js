@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DrawerNavigator from './DrawerNavigator';
 import AddExpenseScreen from '../features/add/AddExpenseScreen';
+import CategoriesScreen from '../features/categories/CategoriesScreen.js';
 import { COLORS } from '../../shared/styles/global.js';
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +25,13 @@ export default function RootNavigator() {
         component={AddExpenseScreen}
         options={{
           title: 'Añadir',
+        }}
+      />
+      <Stack.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          title: 'Categorías',
         }}
       />
     </Stack.Navigator>

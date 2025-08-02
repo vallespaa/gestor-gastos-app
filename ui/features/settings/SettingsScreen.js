@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, Pressable, Alert, Linking  } from 'react-native';
 import * as Sharing from 'expo-sharing';
 import { importFromExcel } from './utils/ImportFromExcel';
@@ -10,6 +11,7 @@ import Constants from 'expo-constants';
 import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
 
 export default function SettingsScreen() {
+  const navigation = useNavigation();
   const { transactions, addTransaction } = useTransactions();
   const [loading, setLoading] = useState(false);
 
@@ -57,6 +59,16 @@ export default function SettingsScreen() {
 
   return (
     <ThemedView>
+      <Text style={styles.sectionTitle}>CATEGORÍAS</Text>
+
+      <Pressable
+        style={styles.item}
+        onPress={() => navigation.navigate('Categories')}
+      >
+        <Ionicons name="shapes-outline" size={24} color={COLORS.black} style={styles.icon} />
+        <Text style={styles.itemText}>Categorías</Text>
+      </Pressable>
+
       <Text style={styles.sectionTitle}>IMPORTAR Y EXPORTAR</Text>
 
       <Pressable style={styles.item} onPress={handleImport} disabled={loading}>
