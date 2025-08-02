@@ -1,7 +1,9 @@
 export default class Category {
-  constructor({ id, name, type }) {
+  constructor({ id, name, color, icon, type }) {
     this.id = id;
     this.name = name;
+    this.color = color;
+    this.icon = icon;
     this.type = type;
   }
 
@@ -13,6 +15,8 @@ export default class Category {
     return {
       id: this.id,
       name: this.name,
+      color: this.color,
+      icon: this.icon,
       type: this.type
     };
   }
