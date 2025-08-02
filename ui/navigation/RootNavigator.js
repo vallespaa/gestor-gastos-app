@@ -13,6 +13,7 @@ export default function RootNavigator() {
         headerTintColor: COLORS.black,
         headerTitleStyle: { fontWeight: 'bold' },
         headerTitleAlign: 'center',
+        headerShadowVisible: false
       }}
     >
       <Stack.Screen 
