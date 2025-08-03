@@ -4,7 +4,7 @@ export const STATIC_CATEGORIES = [
   { id: '1', name: 'Alimentación', color: CATEGORY_COLORS[0], icon: CATEGORY_ICONS[0], type: 'GASTOS' },
   { id: '2', name: 'Transporte', color: CATEGORY_COLORS[1], icon: CATEGORY_ICONS[1], type: 'GASTOS' },
   { id: '3', name: 'Salud', color: CATEGORY_COLORS[2], icon: CATEGORY_ICONS[2], type: 'GASTOS' },
-  { id: '4', name: 'Ocio', color: CATEGORY_COLORS[3], icon: CATEGORY_ICONS[3], type: 'GASTOS' },
+  { id: '4', name: 'Ocio y Entretenimiento', color: CATEGORY_COLORS[3], icon: CATEGORY_ICONS[3], type: 'GASTOS' },
   { id: '5', name: 'Educación', color: CATEGORY_COLORS[4], icon: CATEGORY_ICONS[4], type: 'GASTOS' },
   { id: '6', name: 'Compras', color: CATEGORY_COLORS[5], icon: CATEGORY_ICONS[5], type: 'GASTOS' },
   { id: '7', name: 'Servicios', color: CATEGORY_COLORS[6], icon: CATEGORY_ICONS[6], type: 'GASTOS' },
