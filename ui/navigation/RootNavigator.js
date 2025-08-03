@@ -3,6 +3,7 @@ import DrawerNavigator from './DrawerNavigator';
 import AddExpenseScreen from '../features/add/AddExpenseScreen';
 import CategoriesScreen from '../features/categories/CategoriesScreen';
 import NewCategoryScreen from '../features/categories/components/NewCategoryScreen';
+import AccountsScreen from '../features/accounts/AccountsScreen';
 import { COLORS } from '../../shared/styles/global.js';
 
 const Stack = createNativeStackNavigator();
@@ -41,6 +42,13 @@ export default function RootNavigator() {
         component={NewCategoryScreen}
         options={{
           title: 'Nueva Categoría',
+        }}
+      />
+      <Stack.Screen
+        name="Accounts"
+        component={AccountsScreen}
+        options={{
+          title: 'Cuentas',
         }}
       />
     </Stack.Navigator>

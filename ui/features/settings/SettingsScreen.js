@@ -69,6 +69,14 @@ export default function SettingsScreen() {
         <Text style={styles.itemText}>Categorías</Text>
       </Pressable>
 
+      <Pressable
+        style={styles.item}
+        onPress={() => navigation.navigate('Accounts')}
+      >
+        <Ionicons name="wallet-outline" size={24} color={COLORS.black} style={styles.icon} />
+        <Text style={styles.itemText}>Cuentas</Text>
+      </Pressable>
+
       <Text style={styles.sectionTitle}>IMPORTAR Y EXPORTAR</Text>
 
       <Pressable style={styles.item} onPress={handleImport} disabled={loading}>
