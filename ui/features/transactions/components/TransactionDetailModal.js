@@ -28,9 +28,10 @@ export default function TransactionDetailModal({ isVisible, onClose, transaction
 	useEffect(() => {
 		if (transaction) {
 			setCategories(getCategories(transaction.type));
+
 			setAmount(String(transaction.amount));
       setCategoryId(transaction.category);
-      setCategoryId(transaction.account);
+      setAccountId(transaction.account);
 			setDate(new Date(transaction.date));
 			setNote(transaction.note || '');
 		}
