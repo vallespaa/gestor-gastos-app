@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useTransactions } from '../../../../shared/context/TransactionsContext';
 import { useCategories } from '../../../../shared/context/CategoriesContext';
+import { useAccounts } from '../../../../shared/context/AccountsContext';
 import { View, Text, TextInput, StyleSheet, Dimensions, Pressable } from 'react-native';
 import CategoryPicker from '../../../components/CategoryPicker';
+import AccountPicker from '../../../components/AccountPicker';
 import DateSelector from '../../../components/DateSelector';
 import Modal from 'react-native-modal';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -13,10 +15,13 @@ const screenHeight = Dimensions.get('window').height;
 export default function TransactionDetailModal({ isVisible, onClose, transaction }) {
 	const { editTransaction, removeTransaction } = useTransactions();
   const { getCategories, getCategoryById } = useCategories();
+  const { accounts, getAccountById } = useAccounts();
 
   const [categories, setCategories] = useState([]);
+
 	const [amount, setAmount] = useState('');
 	const [categoryId, setCategoryId] = useState('');
+  const [accountId, setAccountId] = useState('');
 	const [date, setDate] = useState(new Date());
 	const [note, setNote] = useState('');
 
@@ -25,6 +30,7 @@ export default function TransactionDetailModal({ isVisible, onClose, transaction
 			setCategories(getCategories(transaction.type));
 			setAmount(String(transaction.amount));
       setCategoryId(transaction.category);
+      setCategoryId(transaction.account);
 			setDate(new Date(transaction.date));
 			setNote(transaction.note || '');
 		}
@@ -32,6 +38,7 @@ export default function TransactionDetailModal({ isVisible, onClose, transaction
 
 	const handleUpdate = async () => {
     const category = getCategoryById(categoryId);
+    const account = getAccountById(accountId);
 
 		if (!amount || isNaN(parseFloat(amount))) {
 			alert('Por favor ingresa una cantidad válida.');
@@ -43,13 +50,20 @@ export default function TransactionDetailModal({ isVisible, onClose, transaction
       return;
     }
 
+    if (!account) {
+      alert('Por favor selecciona una cuenta válida.');
+      return;
+    }
+
 		const updated = {
 			...transaction,
 			amount: parseFloat(amount),
 			category: category.id,
+      account: account.id,
 			date: date.toISOString(),
 			note
 		};
+
 		await editTransaction(updated);
 		onClose();
 	};
@@ -78,6 +92,12 @@ export default function TransactionDetailModal({ isVisible, onClose, transaction
 						selectedCategory={categoryId}
 						onCategoryChange={setCategoryId}
 					/>
+
+          <AccountPicker
+            accounts={accounts}
+            selectedAccount={accountId}
+            onAccountChange={setAccountId}
+          />
 
 					<DateSelector date={date} setDate={setDate} />
 
