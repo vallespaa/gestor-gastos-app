@@ -4,6 +4,7 @@ import { Text, FlatList, StyleSheet, Pressable } from 'react-native';
 import ThemedView from '../../components/ThemedView'
 import TabSelector from '../../components/TabSelector';
 import CategoryCard from './components/CategoryCard';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
 
 export default function CategoriesScreen({ navigation }) {
@@ -11,6 +12,22 @@ export default function CategoriesScreen({ navigation }) {
   const { getCategories } = useCategories();
 
   const categories = getCategories(tab);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable
+          style={({ pressed }) => ({
+            padding: 12,
+            opacity: pressed ? 0.5 : 1,
+          })}
+          onPress={() => navigation.navigate('NewCategory')}
+        >
+          <Ionicons name="add" size={24} color={COLORS.black} />
+        </Pressable>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <ThemedView>
@@ -37,7 +54,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footer: {
-    marginTop: SPACING.md,
+    marginTop: SPACING.lg,
+    marginBottom: SPACING.xl, 
+    textAlign: 'center',
     color: COLORS.gray,
     fontWeight: '600',
     fontSize: FONT_SIZES.sm,
