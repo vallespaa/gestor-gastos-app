@@ -1,18 +1,36 @@
+import { useLayoutEffect } from 'react';
 import { useTransactions } from '../../../shared/context/TransactionsContext';
 import { useAccounts } from '../../../shared/context/AccountsContext';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Pressable } from 'react-native';
 import ThemedView from '../../components/ThemedView';
 import AccountCard from './components/AccountCard';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS, FONT_SIZES, SPACING,  } from '../../../shared/styles/global';
 
-export default function AccountsScreen() {
+export default function AccountsScreen({ navigation }) {
   const { accounts } = useAccounts();
   const { transactions } = useTransactions();
 
   const totalBalance = accounts.reduce(
     (acc, account) => acc + getAccountBalance(account.id, transactions),
     0
-  );
+  );  
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable
+          style={({ pressed }) => ({
+            padding: 12,
+            opacity: pressed ? 0.5 : 1,
+          })}
+          onPress={() => navigation.navigate('NewAccount')}
+        >
+          <Ionicons name="add" size={24} color={COLORS.black} />
+        </Pressable>
+      ),
+    });
+  }, [navigation]);
 
   return (
     <ThemedView>
