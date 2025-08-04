@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import StaticCategoriesRepository from '../../app/data/categories/StaticCategoriesRepository';
+import CategoryAsyncStorageRepository from '../../app/data/categories/CategoryAsyncStorageRepository';
 import { getAllCategories } from '../../app/application/getAllCategories';
 import { createCategory } from '../../app/application/createCategory';
 import { deleteCategory } from '../../app/application/deleteCategory';
@@ -7,7 +7,7 @@ import { updateCategory } from '../../app/application/updateCategory';
 
 const CategoriesContext = createContext();
 
-const repository = new StaticCategoriesRepository();
+const repository = new CategoryAsyncStorageRepository();
 
 export const CategoriesProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);

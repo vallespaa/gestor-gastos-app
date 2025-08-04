@@ -11,7 +11,7 @@ export default function CategoryCard({ category }) {
         <Ionicons name={icon} size={48} color="white" />
       </View>
       <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-        {name}
+        {name || 'Nombre de categoría'}
       </Text>
     </View>
   );
