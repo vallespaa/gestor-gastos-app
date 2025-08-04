@@ -1,6 +1,6 @@
   import { createContext, useContext, useState, useEffect } from 'react';
   import StaticCategoriesRepository from '../../app/data/categories/StaticCategoriesRepository';
-  import { getAll } from '../../app/application/getAllCategories';
+  import { getAllCategories } from '../../app/application/getAllCategories';
 
   const CategoriesContext = createContext();
 
@@ -14,7 +14,7 @@
     }, []);
 
     const loadCategories = async () => {
-      const all = await getAll(repository);
+      const all = await getAllCategories(repository);
       setCategories(all);
     };
 
@@ -25,12 +25,12 @@
       return categories.filter(cat => cat.type === type);
     };
 
-  function getCategoryById(id) {
-    if (!id) {
-      return null;
+    function getCategoryById(id) {
+      if (!id) {
+        return null;
+      }
+      return categories.find(c => c.id === id) || null;
     }
-    return categories.find(c => c.id === id) || null;
-  }
 
     return (
       <CategoriesContext.Provider value={{
