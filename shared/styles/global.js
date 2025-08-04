@@ -4,6 +4,8 @@ const COLORS = {
   gray: '#6B7280',
   primary: '#3B82F6',
   lightGray: '#E5E7EB',
+  success: '#16A34A',
+  error: '#DC2626'
 };
 
 const FONT_SIZES = {
