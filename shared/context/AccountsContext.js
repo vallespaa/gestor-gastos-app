@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import StaticAccountsRepository from '../../app/data/accounts/StaticAccountsRepository';
+import AccountAsyncStorageRepository from '../../app/data/accounts/AccountAsyncStorageRepository';
 import { getAllAccounts } from '../../app/application/getAllAccounts';
 import { createAccount } from '../../app/application/createAccount';
 import { deleteAccount } from '../../app/application/deleteAccount';
@@ -7,7 +7,7 @@ import { updateAccount } from '../../app/application/updateAccount';
 
 const AccountsContext = createContext();
 
-const repository = new StaticAccountsRepository();
+const repository = new AccountAsyncStorageRepository();
 
 export const AccountsProvider = ({ children }) => {
   const [accounts, setAccounts] = useState([]);
