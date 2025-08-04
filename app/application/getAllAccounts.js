@@ -1,3 +1,3 @@
-export const getAll = async (repository) => {
+export const getAllAccounts = async (repository) => {
   return await repository.getAll();
 };
