@@ -1,45 +1,86 @@
 import { useLayoutEffect } from 'react';
-import { Text, Pressable } from 'react-native';
-import { COLORS, FONT_SIZES } from '../../../../shared/styles/global';
+import { Text, Pressable, View, Alert } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { COLORS, FONT_SIZES, SPACING } from '../../../../shared/styles/global';
 
 export function useCategoryFormHeader({ 
   navigation, 
   isEditing, 
   isFormValid, 
   isLoading, 
-  onSave 
+  onSave,
+  onDelete 
 }) {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: isEditing ? 'Editar Categoría' : 'Nueva Categoría',
-      headerRight: () => (
-        <Pressable
-          style={({ pressed }) => ({
-            padding: 12,
-            opacity: pressed ? 0.5 : 1,
-          })}
-          onPress={onSave}
-          disabled={!isFormValid || isLoading}
-        >
-          <Text style={[
-            styles.saveButton,
-            (!isFormValid || isLoading) && styles.saveButtonDisabled
-          ]}>
-            {isEditing ? 'Actualizar' : 'Guardar'}
-          </Text>
-        </Pressable>
-      ),
+      headerRight: renderHeaderRight,
     });
   }, [navigation, isEditing, isFormValid, isLoading, onSave]);
+
+  const handleDelete = () => {
+    Alert.alert(
+      'Eliminar categoría',
+      '¿Estás seguro que deseas eliminar esta categoría? Esta acción no se puede deshacer.',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        { text: 'Eliminar', style: 'destructive', onPress: onDelete },
+      ]
+    );
+  };
+
+  const renderSaveButton = () => (
+    <Pressable
+      style={({ pressed }) => [
+        styles.headerButton,
+        { opacity: pressed ? 0.5 : 1 }
+      ]}
+      onPress={onSave}
+      disabled={!isFormValid || isLoading}
+    >
+      <Ionicons 
+        name="checkmark-outline" 
+        size={22} 
+        color={(!isFormValid || isLoading) ? COLORS.gray : COLORS.black} 
+      />
+    </Pressable>
+  );
+
+  const renderHeaderRight = () => {
+    if (isEditing) {
+      return (
+        <View style={styles.headerButtonsContainer}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.headerButton,
+              { opacity: pressed ? 0.5 : 1 }
+            ]}
+            onPress={handleDelete}
+            disabled={isLoading}
+          >
+            <Ionicons 
+              name="trash-outline" 
+              size={22} 
+              color={isLoading ? COLORS.gray : COLORS.error} 
+            />
+          </Pressable>
+
+          {renderSaveButton()}
+        </View>
+      );
+    }
+
+    return renderSaveButton();
+  };
 }
 
 const styles = {
-  saveButton: {
-    color: COLORS.black,
-    fontSize: FONT_SIZES.md,
-    fontWeight: '600',
+  headerButtonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  saveButtonDisabled: {
-    color: COLORS.gray,
+  headerButton: {
+    padding: SPACING.sm,
+    marginLeft: SPACING.xs,
   },
 };

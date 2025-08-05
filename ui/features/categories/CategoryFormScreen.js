@@ -26,6 +26,7 @@ export default function CategoryFormScreen({ navigation, route }) {
     setSelectedColor,
     setSelectedIcon,
     handleSave,
+    handleDelete
   } = useCategoryForm(editingCategory, navigation);
 
   useCategoryFormHeader({
@@ -34,6 +35,7 @@ export default function CategoryFormScreen({ navigation, route }) {
     isFormValid,
     isLoading,
     onSave: handleSave,
+    onDelete: handleDelete,
   });
 
   return (

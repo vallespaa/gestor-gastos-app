@@ -78,6 +78,24 @@ export function useCategoryForm(editingCategory, navigation) {
     }
   };
 
+  const handleDelete = async () => {
+    setIsLoading(true);
+    
+    try {
+      await deleteCategory(editingCategory.id);
+      
+      Alert.alert(
+        'Éxito', 
+        'Categoría eliminada correctamente',
+        [{ text: 'OK', onPress: () => navigation.goBack() }]
+      );
+    } catch (error) {
+      Alert.alert('Error', 'No se pudo eliminar la categoría');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return {
     tab,
     categoryName,
