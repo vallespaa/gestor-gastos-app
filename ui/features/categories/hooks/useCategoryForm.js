@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Alert } from 'react-native';
 import { useCategories } from '../../../../shared/context/CategoriesContext';
+import { useTransactions } from '../../../../shared/context/TransactionsContext';
 import { CATEGORY_ICONS, CATEGORY_COLORS } from '../../../../shared/constants/constants';
 
 export function useCategoryForm(editingCategory, navigation) {
@@ -16,6 +17,7 @@ export function useCategoryForm(editingCategory, navigation) {
   const [isLoading, setIsLoading] = useState(false);
   
   const { addCategory, updateCategory } = useCategories();
+  const { transactions } = useTransactions();
 
   const isFormValid = categoryName.trim().length > 0;
 
@@ -79,6 +81,18 @@ export function useCategoryForm(editingCategory, navigation) {
   };
 
   const handleDelete = async () => {
+    const isCategoryInUse = transactions.some(
+      (tx) => tx.categoryId === editingCategory.id
+    );
+
+    if (isCategoryInUse) {
+      Alert.alert(
+        'No se puede eliminar',
+        'Esta categoría tiene transacciones asociadas. Cámbialas de categoría o elimínalas antes de eliminar esta categoría.'
+      );
+      return;
+    }
+
     setIsLoading(true);
     
     try {
@@ -110,5 +124,6 @@ export function useCategoryForm(editingCategory, navigation) {
     setSelectedColor,
     setSelectedIcon,
     handleSave,
+    handleDelete
   };
 }
