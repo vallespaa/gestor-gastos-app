@@ -1,0 +1,96 @@
+import { useState } from 'react';
+import { Alert } from 'react-native';
+import { useCategories } from '../../../../shared/context/CategoriesContext';
+import { CATEGORY_ICONS, CATEGORY_COLORS } from '../../../../shared/constants/constants';
+
+export function useCategoryForm(editingCategory, navigation) {
+  const isEditing = !!editingCategory;
+  const [tab, setTab] = useState(editingCategory?.type || 'GASTOS');
+  const [categoryName, setCategoryName] = useState(editingCategory?.name || '');
+  const [selectedColor, setSelectedColor] = useState(
+    editingCategory?.color || CATEGORY_COLORS[0]
+  );
+  const [selectedIcon, setSelectedIcon] = useState(
+    editingCategory?.icon || CATEGORY_ICONS[0]
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const { addCategory, updateCategory } = useCategories();
+
+  const isFormValid = categoryName.trim().length > 0;
+
+  const createNewCategory = async () => {
+    const newCategory = {
+      id: Date.now(),
+      name: categoryName.trim(),
+      color: selectedColor,
+      icon: selectedIcon,
+      type: tab
+    };
+
+    await addCategory(newCategory);
+  };
+
+  const updateExistingCategory = async () => {
+    const updatedCategory = {
+      ...editingCategory,
+      name: categoryName.trim(),
+      color: selectedColor,
+      icon: selectedIcon,
+      type: tab,
+      updatedAt: new Date().toISOString(),
+    };
+
+    await updateCategory(updatedCategory);
+  };
+
+  const handleSave = async () => {
+    if (!isFormValid) {
+      Alert.alert('Error', 'Por favor ingresa un nombre para la categoría');
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      if (isEditing) {
+        await updateExistingCategory();
+        Alert.alert(
+          'Éxito', 
+          'Categoría actualizada correctamente',
+          [{ text: 'OK', onPress: () => navigation.goBack() }]
+        );
+      } else {
+        await createNewCategory();
+        Alert.alert(
+          'Éxito', 
+          'Categoría creada correctamente',
+          [{ text: 'OK', onPress: () => navigation.goBack() }]
+        );
+      }
+    } catch (error) {
+      Alert.alert(
+        'Error', 
+        isEditing ? 'No se pudo actualizar la categoría' : 'No se pudo crear la categoría'
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return {
+    tab,
+    categoryName,
+    selectedColor,
+    selectedIcon,
+    isLoading,
+    isEditing,
+    isFormValid,
+    
+    setTab,
+    setCategoryName,
+    setSelectedColor,
+    setSelectedIcon,
+    handleSave,
+  };
+}

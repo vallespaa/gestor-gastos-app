@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DrawerNavigator from './DrawerNavigator';
 import AddExpenseScreen from '../features/add/AddExpenseScreen';
 import CategoriesScreen from '../features/categories/CategoriesScreen';
-import NewCategoryScreen from '../features/categories/NewCategoryScreen';
+import CategoryFormScreen from '../features/categories/CategoryFormScreen';
 import { COLORS } from '../../shared/styles/global.js';
 
 const Stack = createNativeStackNavigator();
@@ -37,11 +37,8 @@ export default function RootNavigator() {
         }}
       />
       <Stack.Screen
-        name="NewCategory"
-        component={NewCategoryScreen}
-        options={{
-          title: 'Nueva Categoría',
-        }}
+        name="CategoryForm"
+        component={CategoryFormScreen}
       />
     </Stack.Navigator>
   );
