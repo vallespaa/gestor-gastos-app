@@ -8,7 +8,7 @@ import CategoryNameInput from './components/CategoryNameInput';
 import ColorSelector from './components/ColorSelector';
 import IconSelector from './components/IconSelector';
 import { CATEGORY_ICONS, CATEGORY_COLORS } from '../../../shared/constants/constants'
-import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
+import { SPACING } from '../../../shared/styles/global';
 
 export default function CategoryFormScreen({ navigation, route }) {
   const editingCategory = route?.params?.category;
@@ -80,13 +80,5 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
     marginLeft: SPACING.sm,
-  },
-  saveButton: {
-    color: COLORS.black,
-    fontSize: FONT_SIZES.md,
-    fontWeight: '600',
-  },
-  saveButtonDisabled: {
-    color: COLORS.gray,
   },
 });

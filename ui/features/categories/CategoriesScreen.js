@@ -21,7 +21,7 @@ export default function CategoriesScreen({ navigation }) {
             padding: 12,
             opacity: pressed ? 0.5 : 1,
           })}
-          onPress={() => navigation.navigate('NewCategory')}
+          onPress={() => navigation.navigate('CategoryForm')}
         >
           <Ionicons name="add" size={24} color={COLORS.black} />
         </Pressable>
@@ -38,7 +38,10 @@ export default function CategoriesScreen({ navigation }) {
         numColumns={3}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
-          <CategoryCard category={item} />
+          <CategoryCard 
+            category={item}
+            onPress={() => navigation.navigate('CategoryForm', { category: item })}
+          />
         )}
         ListEmptyComponent={<Text>No hay categorías</Text>}
         ListFooterComponent={<Text style={styles.footer}>{`${categories.length} CATEGORÍAS`}</Text>}
