@@ -16,7 +16,7 @@ export function useCategoryForm(editingCategory, navigation) {
   );
   const [isLoading, setIsLoading] = useState(false);
   
-  const { addCategory, updateCategory } = useCategories();
+  const { addCategory, editCategory, removeCategory } = useCategories();
   const { transactions } = useTransactions();
 
   const isFormValid = categoryName.trim().length > 0;
@@ -43,7 +43,7 @@ export function useCategoryForm(editingCategory, navigation) {
       updatedAt: new Date().toISOString(),
     };
 
-    await updateCategory(updatedCategory);
+    await editCategory(updatedCategory);
   };
 
   const handleSave = async () => {
@@ -96,7 +96,7 @@ export function useCategoryForm(editingCategory, navigation) {
     setIsLoading(true);
     
     try {
-      await deleteCategory(editingCategory.id);
+      await removeCategory(editingCategory.id);
       
       Alert.alert(
         'Éxito', 
