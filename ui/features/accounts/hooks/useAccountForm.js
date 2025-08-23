@@ -11,20 +11,18 @@ export function useAccountForm(editingAccount, adjustment, navigation) {
   const [accountName, setAccountName] = useState(editingAccount?.name || '');
   const [balance, setBalance] = useState(getAccountBalance(editingAccount?.id) || 0);
 
-  console.log(getAccountBalance(0))
-
   const [isLoading, setIsLoading] = useState(false);
   
   const isFormValid = accountName.trim().length > 0;
 
   const createNewAccount = async () => {
     const newAccount = {
-      id: Date.now(),
+      id: String(Date.now()),
       name: accountName.trim()
     };
 
     const newAdjustment = {
-      id: Date.now(),
+      id: String(Date.now()),
       accountId: newAccount.id,
       amount: adjustment,
       date: Date.now()
