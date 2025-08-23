@@ -4,7 +4,7 @@ import AddExpenseScreen from '../features/add/AddExpenseScreen';
 import CategoriesScreen from '../features/categories/CategoriesScreen';
 import NewCategoryScreen from '../features/categories/components/NewCategoryScreen';
 import AccountsScreen from '../features/accounts/AccountsScreen';
-import NewAccountScreen from '../features/accounts/components/NewAccountScreen';
+import AccountFormScreen from '../features/accounts/AccountFormScreen.js';
 import { COLORS } from '../../shared/styles/global.js';
 
 const Stack = createNativeStackNavigator();
@@ -53,11 +53,8 @@ export default function RootNavigator() {
         }}
       />
       <Stack.Screen
-        name="NewAccount"
-        component={NewAccountScreen}
-        options={{
-          title: 'Nueva Cuenta',
-        }}
+        name="AccountForm"
+        component={AccountFormScreen}
       />
     </Stack.Navigator>
   );
