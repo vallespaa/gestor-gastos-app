@@ -93,10 +93,17 @@ export const FinancialProvider = ({ children }) => {
     return transTotal + adjTotal;
   };
 
+  // Obtener el balance total
+  const totalBalance = transactions.reduce((acc, t) => {
+    const amount = parseFloat(t.amount) || 0;
+    return t.type === 'INGRESOS' ? acc + amount : acc - amount;
+  }, 0) + adjustments.reduce((acc, a) => acc + a.amount, 0);
+
 	return (
 		<FinancialContext.Provider value={{
 			transactions,
       adjustments,
+      totalBalance,
 			addTransaction,
 			removeTransaction,
 			editTransaction,

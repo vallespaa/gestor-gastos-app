@@ -13,24 +13,17 @@ export default function OverviewScreen({ route }) {
 
 	const { period } = route.params;
 	const [tab, setTab] = useState('GASTOS');
-	const { transactions } = useFinancial();
-
-	const balance = transactions.reduce((acc, item) => {
-		if (item.type === 'INGRESOS') {
-			return acc + parseFloat(item.amount);
-		}
-		return acc - parseFloat(item.amount);
-	}, 0);
+	const { transactions, totalBalance } = useFinancial();
 
   useEffect(() => {
     navigation.setOptions({ 
       headerTitle: () => (
         <View>
-          <Text style={styles.headerTitle}>{balance.toFixed(2)}€</Text>
+          <Text style={styles.headerTitle}>{totalBalance.toFixed(2)}€</Text>
         </View>
       )
     })
-  }, [balance, navigation]);
+  }, [totalBalance, navigation]);
 
 
 	return (
