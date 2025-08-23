@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import ThemedView from '../../components/ThemedView';
 import AccountCard from './components/AccountCard';
@@ -9,6 +10,7 @@ import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
 
 export default function AccountFormScreen({ navigation, route }) {
   const editingAccount = route?.params?.account;
+  const [adjustment, setAdjustment] = useState(0);
   
   const {
     accountName,
@@ -20,7 +22,7 @@ export default function AccountFormScreen({ navigation, route }) {
     setBalance,
     handleSave,
     handleDelete,
-  } = useAccountForm(editingAccount, navigation);
+  } = useAccountForm(editingAccount, adjustment, navigation);
 
   useAccountFormHeader({
     navigation,
@@ -52,6 +54,7 @@ export default function AccountFormScreen({ navigation, route }) {
           <BalanceInput 
             value={balance}
             onChangeText={setBalance}
+            onChangeDifference={setAdjustment}
             isEditing={isEditing}
           />
         </View>

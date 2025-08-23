@@ -1,15 +1,26 @@
+import { useState} from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { COLORS, FONT_SIZES, SPACING } from '../../../../shared/styles/global';
 
-export default function BalanceInput({ value, onChangeText, isEditing }) {
-  const formatCurrency = (text) => {
-    const numericValue = text.replace(/[^0-9.,]/g, '');
-    return numericValue;
-  };
+export default function BalanceInput({ value, onChangeText, onChangeDifference, isEditing }) {
+  const [previousBalance] = useState(value || 0);
 
   const handleChangeText = (text) => {
-    const formattedText = formatCurrency(text);
-    onChangeText(formattedText.replace(',', '.') || 0);
+    if (!text) {
+      onChangeText(0);
+      onChangeDifference(0 - previousBalance);
+      return;
+    }
+
+    let formatted = text.replace(/[^0-9.,+-]/g, '');
+    formatted = formatted.replace(/^([+-]?)(.*)$/, (m, sign, rest) => sign + rest.replace(/[+-]/g, ''));
+    formatted = formatted.replace(/,/g, '.');
+
+    onChangeText(formatted || 0);
+
+    // Calculamos diferencia con el anterior
+    const diff = parseFloat(formatted) - previousBalance;
+    onChangeDifference(diff);
   };
 
   return (

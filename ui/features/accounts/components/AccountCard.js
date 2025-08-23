@@ -11,7 +11,7 @@ export default function AccountCard({ account, balance }) {
         {name}
       </Text>
       <Text style={[styles.balance, { color: balanceColor }]}>
-        {balance.toFixed(2)} €
+        {Number(balance).toFixed(2)} €
       </Text>
     </View>
   );
