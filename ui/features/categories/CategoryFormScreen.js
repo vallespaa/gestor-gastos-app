@@ -39,7 +39,7 @@ export default function CategoryFormScreen({ navigation, route }) {
   });
 
   return (
-    <ThemedView>
+    <ThemedView withPadding={false}>
       <ScrollView>
         {!isEditing && (
           <TabSelector tab={tab} setTab={setTab} />
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingHorizontal: SPACING.md,
     marginBottom: SPACING.lg, 
   },
   inputContainer: {
