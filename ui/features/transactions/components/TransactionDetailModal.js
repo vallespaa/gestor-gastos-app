@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useTransactions } from '../../../../shared/context/TransactionsContext';
+import { useFinancial } from '../../../../shared/context/FinancialContext';
 import { useCategories } from '../../../../shared/context/CategoriesContext';
 import { useAccounts } from '../../../../shared/context/AccountsContext';
 import { View, Text, TextInput, StyleSheet, Dimensions, Pressable } from 'react-native';
@@ -13,7 +13,7 @@ import { COLORS, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global
 const screenHeight = Dimensions.get('window').height;
 
 export default function TransactionDetailModal({ isVisible, onClose, transaction }) {
-	const { editTransaction, removeTransaction } = useTransactions();
+	const { editTransaction, removeTransaction } = useFinancial();
   const { getCategories, getCategoryById } = useCategories();
   const { accounts, getAccountById } = useAccounts();
 

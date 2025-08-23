@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 
-import { TransactionsProvider } from './shared/context/TransactionsContext';
+import { FinancialProvider } from './shared/context/FinancialContext';
 import { AccountsProvider } from './shared/context/AccountsContext';
 import { CategoriesProvider } from './shared/context/CategoriesContext';
 import { NavigationContainer } from '@react-navigation/native';
@@ -8,7 +8,7 @@ import RootNavigator from './ui/navigation/RootNavigator';
 
 export default function App() {
 	return (
-		<TransactionsProvider>
+		<FinancialProvider>
       <AccountsProvider>
 			  <CategoriesProvider>
 				  <NavigationContainer>
@@ -16,6 +16,6 @@ export default function App() {
 				  </NavigationContainer>
 			  </CategoriesProvider>
       </AccountsProvider>
-		</TransactionsProvider>
+		</FinancialProvider>
 	);
 };

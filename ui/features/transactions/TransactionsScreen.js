@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTransactions } from '../../../shared/context/TransactionsContext';
+import { useFinancial } from '../../../shared/context/FinancialContext';
 import ThemedView from '../../components/ThemedView'
 import TabSelector from '../../components/TabSelector';
 import PeriodTabs from '../../components/PeriodTabs';
@@ -8,7 +8,7 @@ import TransactionsList from './components/TransactionsList';
 export default function TransactionsScreen() {
 	const [tab, setTab] = useState('GASTOS');
 	const [period, setPeriod] = useState('MONTH');
-	const { transactions } = useTransactions();
+	const { transactions } = useFinancial();
 
 	return (
 		<ThemedView>

@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Pressable, Alert, Linking  } from 'react-native
 import * as Sharing from 'expo-sharing';
 import { importFromExcel } from './utils/ImportFromExcel';
 import { exportToExcel } from './utils/ExportToExcel';
-import { useTransactions } from '../../../shared/context/TransactionsContext';
+import { useFinancial } from '../../../shared/context/FinancialContext';
 import ThemedView from '../../components/ThemedView'
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
@@ -12,7 +12,7 @@ import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
 
 export default function SettingsScreen() {
   const navigation = useNavigation();
-  const { transactions, addTransaction } = useTransactions();
+  const { transactions, addTransaction } = useFinancial();
   const [loading, setLoading] = useState(false);
 
   const handleImport = async () => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTransactions } from '../../../shared/context/TransactionsContext';
+import { useFinancial } from '../../../shared/context/FinancialContext';
 import { useCategories } from '../../../shared/context/CategoriesContext';
 import { useAccounts } from '../../../shared/context/AccountsContext';
 import { TextInput, Button, StyleSheet } from 'react-native';
@@ -12,7 +12,7 @@ import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
 
 export default function AddExpenseScreen({ navigation }) {
 	const [tab, setTab] = useState('GASTOS');
-	const { addTransaction } = useTransactions();
+	const { addTransaction } = useFinancial();
   const { getCategories, getCategoryById } = useCategories();
   const { accounts, getAccountById } = useAccounts();
 

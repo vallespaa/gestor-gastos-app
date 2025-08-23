@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { useTransactions } from '../../../shared/context/TransactionsContext';
+import { useFinancial } from '../../../shared/context/FinancialContext';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import ThemedView from '../../components/ThemedView'
 import TabSelector from '../../components/TabSelector';
@@ -13,7 +13,7 @@ export default function OverviewScreen({ route }) {
 
 	const { period } = route.params;
 	const [tab, setTab] = useState('GASTOS');
-	const { transactions } = useTransactions();
+	const { transactions } = useFinancial();
 
 	const balance = transactions.reduce((acc, item) => {
 		if (item.type === 'INGRESOS') {
