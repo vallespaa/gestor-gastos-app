@@ -80,8 +80,11 @@ export const FinancialProvider = ({ children }) => {
   // Obtener balance de una cuenta
   const getAccountBalance = (accountId) => {
     const transTotal = transactions
-      .filter(t => t.accountId === accountId)
-      .reduce((acc, t) => acc + t.amount, 0);
+      .filter(t => t.account === accountId)
+      .reduce((acc, t) => {
+      const amount = parseFloat(t.amount) || 0;
+      return t.type === 'INGRESOS' ? acc + amount : acc - amount;
+    }, 0);
 
     const adjTotal = adjustments
       .filter(a => a.accountId === accountId)
@@ -89,7 +92,6 @@ export const FinancialProvider = ({ children }) => {
 
     return transTotal + adjTotal;
   };
-
 
 	return (
 		<FinancialContext.Provider value={{

@@ -9,10 +9,10 @@ import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
 
 export default function AccountsScreen({ navigation }) {
   const { accounts } = useAccounts();
-  const { transactions } = useFinancial();
+  const { getAccountBalance } = useFinancial();
 
   const totalBalance = accounts.reduce(
-    (acc, account) => acc + getAccountBalance(account.id, transactions),
+    (acc, account) => acc + getAccountBalance(account.id),
     0
   );  
 
@@ -43,22 +43,13 @@ export default function AccountsScreen({ navigation }) {
         keyExtractor={item => item.id}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => {
-          const balance = getAccountBalance(item.id, transactions);
+          const balance = getAccountBalance(item.id);
           return <AccountCard account={item} balance={balance} />;
         }}
       />
 
     </ThemedView>
   );
-}
-
-function getAccountBalance(accountId, transactions) {
-  return transactions
-    .filter(tx => tx.account === accountId)
-    .reduce((acc, tx) => {
-      const amount = parseFloat(tx.amount) || 0;
-      return tx.type === 'INGRESOS' ? acc + amount : acc - amount;
-    }, 0);
 }
 
 const styles = StyleSheet.create({
