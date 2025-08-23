@@ -7,7 +7,7 @@ export default function ColorSelector({ selectedColor, onColorSelect, colors }) 
     <Pressable
       style={[
         styles.colorItem,
-        { backgroundColor: color },
+        { backgroundColor: color, borderColor: color },
         selectedColor === color && styles.selectedColorItem
       ]}
       onPress={() => onColorSelect(color)}
@@ -26,6 +26,7 @@ export default function ColorSelector({ selectedColor, onColorSelect, colors }) 
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={renderColorItem}
+        contentContainerStyle={styles.contentContainter}
       />
     </View>
   );
@@ -35,15 +36,17 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: SPACING.lg, 
   },
+  contentContainter: {
+    paddingHorizontal: SPACING.md,
+  },
   colorItem: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    marginRight: SPACING.sm,
+    marginHorizontal: SPACING.xs,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: 'transparent',
   },
   selectedColorItem: {
     borderColor: COLORS.black,
