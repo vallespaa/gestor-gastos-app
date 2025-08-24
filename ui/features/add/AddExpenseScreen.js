@@ -28,8 +28,6 @@ export default function AddExpenseScreen({ navigation }) {
     const category = getCategoryById(categoryId);
     const account = getAccountById(accountId);
 
-    console.log(account)
-
 		if (!amount || isNaN(parseFloat(amount))) {
 			alert('Por favor ingresa una cantidad válida.');
 			return;

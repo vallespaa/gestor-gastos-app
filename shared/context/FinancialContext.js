@@ -7,6 +7,7 @@ import { deleteTransaction } from '../../app/application/deleteTransaction';
 import { updateTransaction } from '../../app/application/updateTransaction';
 import { getAllAdjustments } from '../../app/application/getAllAdjustments';
 import { createAdjustment } from '../../app/application/createAdjustment';
+import { deleteAdjustment } from '../../app/application/deleteAdjustment';
 
 const FinancialContext = createContext();
 
@@ -67,12 +68,18 @@ export const FinancialProvider = ({ children }) => {
       await loadTransactions();
 	};
 
+	// Eliminar un ajuste
+	const removeAdjustment = async (id) => {
+			await deleteAdjustment(adjRepo, id);
+      await loadAdjustments();
+	};
+
   // Obtener ajustes de una cuenta
   function getAdjustmentsByAccount(accountId) {
     if (!accountId) {
       return null;
     }
-    return adjustments.find(a => a.accountId === accountId) || null;
+    return adjustments.filter(a => a.accountId === accountId) || [];
   }
 
   // BALANCE
@@ -108,6 +115,7 @@ export const FinancialProvider = ({ children }) => {
 			removeTransaction,
 			editTransaction,
       addAdjustment,
+      removeAdjustment,
       getAdjustmentsByAccount,
       getAccountBalance
 		}}>

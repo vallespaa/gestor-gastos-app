@@ -5,7 +5,7 @@ import { useFinancial } from '../../../../shared/context/FinancialContext';
 
 export function useAccountForm(editingAccount, adjustment, navigation) {
   const { addAccount, editAccount, removeAccount } = useAccounts();
-  const { transactions, addAdjustment, getAccountBalance } = useFinancial();
+  const { transactions, addAdjustment, removeAdjustment, getAdjustmentsByAccount, getAccountBalance } = useFinancial();
 
   const isEditing = !!editingAccount;
   const [accountName, setAccountName] = useState(editingAccount?.name || '');
@@ -48,6 +48,18 @@ export function useAccountForm(editingAccount, adjustment, navigation) {
     await editAccount(updatedAccount);
     await addAdjustment(newAdjustment);
   };
+
+  const deleteAccount = async () => {
+    const adjustments = getAdjustmentsByAccount(editingAccount.id);
+
+    console.log(adjustments)
+
+    for(const adjustment of adjustments) {
+      await removeAdjustment(adjustment.id)
+    }
+
+    await removeAccount(editingAccount.id);
+  }
 
   const handleSave = async () => {
     if (!isFormValid) {
@@ -99,8 +111,7 @@ export function useAccountForm(editingAccount, adjustment, navigation) {
     setIsLoading(true);
     
     try {
-      await removeAccount(editingAccount.id);
-      
+      await deleteAccount();
       Alert.alert(
         'Éxito', 
         'Cuenta eliminada correctamente',
