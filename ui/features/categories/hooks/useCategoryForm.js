@@ -23,7 +23,7 @@ export function useCategoryForm(editingCategory, navigation) {
 
   const createNewCategory = async () => {
     const newCategory = {
-      id: Date.now(),
+      id: String(Date.now()),
       name: categoryName.trim(),
       color: selectedColor,
       icon: selectedIcon,
@@ -82,7 +82,7 @@ export function useCategoryForm(editingCategory, navigation) {
 
   const handleDelete = async () => {
     const isCategoryInUse = transactions.some(
-      (tx) => tx.categoryId === editingCategory.id
+      (tx) => tx.category === editingCategory.id
     );
 
     if (isCategoryInUse) {
