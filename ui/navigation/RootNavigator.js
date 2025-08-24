@@ -1,6 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DrawerNavigator from './DrawerNavigator';
 import AddExpenseScreen from '../features/add/AddExpenseScreen';
+import CategoriesScreen from '../features/categories/CategoriesScreen';
+import CategoryFormScreen from '../features/categories/CategoryFormScreen';
 import { COLORS } from '../../shared/styles/global.js';
 
 const Stack = createNativeStackNavigator();
@@ -12,6 +14,7 @@ export default function RootNavigator() {
         headerTintColor: COLORS.black,
         headerTitleStyle: { fontWeight: 'bold' },
         headerTitleAlign: 'center',
+        headerShadowVisible: false
       }}
     >
       <Stack.Screen 
@@ -25,6 +28,17 @@ export default function RootNavigator() {
         options={{
           title: 'Añadir',
         }}
+      />
+      <Stack.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          title: 'Categorías',
+        }}
+      />
+      <Stack.Screen
+        name="CategoryForm"
+        component={CategoryFormScreen}
       />
     </Stack.Navigator>
   );

@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { COLORS, SPACING } from '../../shared/styles/global'
 
-export default function ThemedView({ style, children, ...props}) {
+export default function ThemedView({ style, children, withPadding = true, ...props}) {
   const insets = useSafeAreaInsets();
 
   return (
@@ -11,8 +11,7 @@ export default function ThemedView({ style, children, ...props}) {
         flex: 1,
         backgroundColor: COLORS.white, 
         paddingBottom: insets.bottom,
-        paddingHorizontal: SPACING.md
-      },
+          ...(withPadding && { paddingHorizontal: SPACING.md }),      },
         style
       ]}
       {...props}

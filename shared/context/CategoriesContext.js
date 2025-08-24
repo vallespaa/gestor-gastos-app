@@ -1,29 +1,32 @@
-  import { createContext, useContext, useState, useEffect } from 'react';
-  import StaticCategoriesRepository from '../../app/data/categories/StaticCategoriesRepository';
-  import { getAll } from '../../app/application/getAllCategories';
+import { createContext, useContext, useState, useEffect } from 'react';
+import CategoryAsyncStorageRepository from '../../app/data/categories/CategoryAsyncStorageRepository';
+import { getAllCategories } from '../../app/application/getAllCategories';
+import { createCategory } from '../../app/application/createCategory';
+import { deleteCategory } from '../../app/application/deleteCategory';
+import { updateCategory } from '../../app/application/updateCategory';
 
-  const CategoriesContext = createContext();
+const CategoriesContext = createContext();
 
-  const repository = new StaticCategoriesRepository();
+const repository = new CategoryAsyncStorageRepository();
 
-  export const CategoriesProvider = ({ children }) => {
-    const [categories, setCategories] = useState([]);
+export const CategoriesProvider = ({ children }) => {
+  const [categories, setCategories] = useState([]);
 
-    useEffect(() => {
-      loadCategories();
-    }, []);
+  useEffect(() => {
+    loadCategories();
+  }, []);
 
-    const loadCategories = async () => {
-      const all = await getAll(repository);
-      setCategories(all);
-    };
+  const loadCategories = async () => {
+    const all = await getAllCategories(repository);
+    setCategories(all);
+  };
 
-    function getCategories(type) {
-      if (!type) {
-        return categories;
-      }
-      return categories.filter(cat => cat.type === type);
-    };
+  function getCategories(type) {
+    if (!type) {
+      return categories;
+    }
+    return categories.filter(cat => cat.type === type);
+  };
 
   function getCategoryById(id) {
     if (!id) {
@@ -31,18 +34,39 @@
     }
     return categories.find(c => c.id === id) || null;
   }
-
-    return (
-      <CategoriesContext.Provider value={{
-        categories,
-        getCategories,
-        getCategoryById
-      }}>
-        {children}
-      </CategoriesContext.Provider>
-    );
+  
+  // Agregar una nueva categoría
+  const addCategory = async (category) => {
+      await createCategory(repository, category);
+      await loadCategories();
   };
 
-  export const useCategories = () => {
-    return useContext(CategoriesContext);
+  // Eliminar una categoría  
+  const removeCategory = async (id) => {
+    await deleteCategory(repository, id);
+    await loadCategories();
   };
+
+  // Editar una categoría
+  const editCategory = async (updatedCategory) => {
+    await updateCategory(repository, updatedCategory);
+    await loadCategories();
+    };
+
+  return (
+    <CategoriesContext.Provider value={{
+      categories,
+      getCategories,
+      getCategoryById,
+      addCategory,
+      removeCategory,
+      editCategory
+    }}>
+      {children}
+    </CategoriesContext.Provider>
+  );
+};
+
+export const useCategories = () => {
+  return useContext(CategoriesContext);
+};
