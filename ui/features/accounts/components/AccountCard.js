@@ -1,19 +1,26 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
 
-export default function AccountCard({ account, balance }) {
+export default function AccountCard({ account, balance, onPress }) {
   const { name } = account;
   const balanceColor = balance >= 0 ? COLORS.success : COLORS.error;
 
   return (
-    <View style={styles.card}>
-      <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
-        {name}
-      </Text>
-      <Text style={[styles.balance, { color: balanceColor }]}>
-        {Number(balance).toFixed(2)} €
-      </Text>
-    </View>
+    <Pressable
+      style={({ pressed }) => [
+        pressed && styles.pressed
+      ]}
+      onPress={() => onPress?.(category)}
+    >
+      <View style={styles.card}>
+        <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+          {name}
+        </Text>
+        <Text style={[styles.balance, { color: balanceColor }]}>
+          {Number(balance).toFixed(2)} €
+        </Text>
+      </View>
+    </Pressable>
   );
 };
 
@@ -34,5 +41,9 @@ const styles = StyleSheet.create({
   balance: {
     fontSize: FONT_SIZES.md,
     fontWeight: 'bold',
+  },
+  pressed: {
+    opacity: 0.7,
+    transform: [{ scale: 0.95 }],
   },
 });
