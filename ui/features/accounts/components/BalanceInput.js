@@ -1,27 +1,53 @@
-import { useState} from 'react';
+import { useState, useCallback } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { COLORS, FONT_SIZES, SPACING } from '../../../../shared/styles/global';
 
 export default function BalanceInput({ value, onChangeText, onChangeDifference, isEditing }) {
   const [previousBalance] = useState(value || 0);
 
-  const handleChangeText = (text) => {
+  // Validar, limpiar y guardar el input
+  const handleChangeText = useCallback((text) => {
+
+    // Validar
     if (!text) {
-      onChangeText(0);
-      onChangeDifference(0 - previousBalance);
+      onChangeText('');
       return;
     }
 
+    // Limpiar
     let formatted = text.replace(/[^0-9.,+-]/g, '');
-    formatted = formatted.replace(/^([+-]?)(.*)$/, (m, sign, rest) => sign + rest.replace(/[+-]/g, ''));
+    formatted = formatted.replace(/^([+-]?)(.*)$/, (m, sign, rest) =>
+      sign + rest.replace(/[+-]/g, '')
+    );
     formatted = formatted.replace(/,/g, '.');
 
-    onChangeText(formatted || 0);
+    const parts = formatted.split('.');
+    if (parts.length > 2) {
+      formatted = parts[0] + '.' + parts.slice(1).join('');
+    }
+
+    if (parts.length === 2 && parts[1].length > 2) {
+      formatted = parts[0] + '.' + parts[1].substring(0, 2);
+    }
+
+    onChangeText(formatted || '0');
 
     // Calculamos diferencia con el anterior
-    const diff = parseFloat(formatted) - previousBalance;
-    onChangeDifference(diff);
-  };
+    const numericValue = parseFloat(formatted);
+    if (!isNaN(numericValue)) {
+      const diff = numericValue - previousBalance;
+      // Guardar
+      onChangeDifference(diff);
+    }
+  }, [onChangeText, onChangeDifference, previousBalance]);
+
+  // Si está vacío al perder el foco, establecer como 0
+  const handleBlur = useCallback(() => {
+    if (!value || value === '') {
+      onChangeText('0');
+      onChangeDifference(0 - previousBalance);
+    }
+  }, [value, onChangeText, onChangeDifference, previousBalance]);
 
   return (
     <View style={styles.container}>
@@ -34,6 +60,7 @@ export default function BalanceInput({ value, onChangeText, onChangeDifference, 
           style={styles.input}
           value={value?.toString() || ''}
           onChangeText={handleChangeText}
+          onBlur={handleBlur}
           keyboardType="numeric"
           placeholder="0.00"
           placeholderTextColor={COLORS.gray}
