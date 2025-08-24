@@ -7,7 +7,7 @@ const ITEM_MARGIN = SPACING.xs;
 
 export default function IconSelector({ selectedIcon, onIconSelect, icons }) {
   return (
-    <View style={[styles.iconList, rowWrapperStyle]}>
+    <View style={[styles.iconList]}>
       {icons.map((icon) => (
         <Pressable
           key={icon}
