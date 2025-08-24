@@ -38,7 +38,15 @@ export function useAccountForm(editingAccount, adjustment, navigation) {
       name: accountName.trim()
     };
 
+    const newAdjustment = {
+      id: String(Date.now()),
+      accountId: editingAccount.id,
+      amount: adjustment,
+      date: Date.now()
+    }
+
     await editAccount(updatedAccount);
+    await addAdjustment(newAdjustment);
   };
 
   const handleSave = async () => {

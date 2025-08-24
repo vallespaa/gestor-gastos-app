@@ -44,10 +44,15 @@ export default function AccountsScreen({ navigation }) {
         contentContainerStyle={styles.list}
         renderItem={({ item }) => {
           const balance = getAccountBalance(item.id);
-          return <AccountCard account={item} balance={balance} />;
+          return (
+            <AccountCard
+              account={item}
+              balance={balance}
+              onPress={() => navigation.navigate('AccountForm', { account: item })}
+            />
+          );
         }}
       />
-
     </ThemedView>
   );
 }

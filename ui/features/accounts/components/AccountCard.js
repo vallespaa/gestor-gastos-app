@@ -10,7 +10,7 @@ export default function AccountCard({ account, balance, onPress }) {
       style={({ pressed }) => [
         pressed && styles.pressed
       ]}
-      onPress={() => onPress?.(category)}
+      onPress={() => onPress?.(account)}
     >
       <View style={styles.card}>
         <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
