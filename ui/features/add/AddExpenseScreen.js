@@ -44,7 +44,7 @@ export default function AddExpenseScreen({ navigation }) {
     }
 
 		const newExpense = {
-			id: Date.now(),
+			id: String(Date.now()),
 			amount: parseFloat(amount),
 			type: category.type,
 			category: category.id,

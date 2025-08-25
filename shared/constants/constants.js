@@ -8,7 +8,7 @@ const CATEGORY_ICONS = [
   'film-outline', 'beer-outline', 'wine-outline', 'gift-outline',
   'camera-outline', 'airplane-outline', 'cash-outline', 'wallet-outline',
   'card-outline', 'trending-down-outline', 'trending-up-outline',
-  'piggy-bank-outline', 'ellipsis-horizontal-outline', 'settings-outline'
+  'ellipsis-horizontal-outline', 'settings-outline'
 ];
 
 const CATEGORY_COLORS = [

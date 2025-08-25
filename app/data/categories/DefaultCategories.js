@@ -1,6 +1,6 @@
 import { CATEGORY_COLORS, CATEGORY_ICONS } from '../../../shared/constants/constants';
 
-export const STATIC_CATEGORIES = [
+export const DEFAULT_CATEGORIES = [
   { id: '1', name: 'Alimentación', color: CATEGORY_COLORS[0], icon: CATEGORY_ICONS[0], type: 'GASTOS' },
   { id: '2', name: 'Transporte', color: CATEGORY_COLORS[1], icon: CATEGORY_ICONS[1], type: 'GASTOS' },
   { id: '3', name: 'Salud', color: CATEGORY_COLORS[2], icon: CATEGORY_ICONS[2], type: 'GASTOS' },
@@ -13,7 +13,7 @@ export const STATIC_CATEGORIES = [
   { id: '10', name: 'Salario', color: CATEGORY_COLORS[9], icon: CATEGORY_ICONS[9], type: 'INGRESOS' },
   { id: '11', name: 'Freelance', color: CATEGORY_COLORS[10], icon: CATEGORY_ICONS[10], type: 'INGRESOS' },
   { id: '12', name: 'Inversiones', color: CATEGORY_COLORS[11], icon: CATEGORY_ICONS[11], type: 'INGRESOS' },
-  { id: '13', name: 'Venta', color: CATEGORY_COLORS[12], icon: CATEGORY_ICONS[12], type: 'INGRESOS' },
-  { id: '14', name: 'Regalo', color: CATEGORY_COLORS[13], icon: CATEGORY_ICONS[13], type: 'INGRESOS' },
-  { id: '15', name: 'Otros', color: CATEGORY_COLORS[14], icon: CATEGORY_ICONS[14], type: 'INGRESOS' }
+  { id: '13', name: 'Venta', color: CATEGORY_COLORS[0], icon: CATEGORY_ICONS[12], type: 'INGRESOS' },
+  { id: '14', name: 'Regalo', color: CATEGORY_COLORS[1], icon: CATEGORY_ICONS[13], type: 'INGRESOS' },
+  { id: '15', name: 'Otros', color: CATEGORY_COLORS[2], icon: CATEGORY_ICONS[14], type: 'INGRESOS' }
 ];

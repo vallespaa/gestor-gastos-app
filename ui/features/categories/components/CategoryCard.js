@@ -1,19 +1,26 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
 
-export default function CategoryCard({ category }) {
+export default function CategoryCard({ category, onPress }) {
   const { name, color, icon } = category;
 
   return (
-    <View style={styles.card}>
-      <View style={[styles.iconContainer, { backgroundColor: color }]}>
-        <Ionicons name={icon} size={48} color="white" />
+    <Pressable
+      style={({ pressed }) => [
+        pressed && styles.pressed
+      ]}
+      onPress={() => onPress?.(category)}
+    >
+      <View style={styles.card}>
+        <View style={[styles.iconContainer, { backgroundColor: color }]}>
+          <Ionicons name={icon} size={48} color="white" />
+        </View>
+        <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+          {name || 'Nombre de categoría'}
+        </Text>
       </View>
-      <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-        {name}
-      </Text>
-    </View>
+    </Pressable>
   );
 };
 
@@ -43,5 +50,9 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     textAlign: 'center',
     marginTop: SPACING.xs,
+  },
+  pressed: {
+    opacity: 0.7,
+    transform: [{ scale: 0.95 }],
   },
 });
