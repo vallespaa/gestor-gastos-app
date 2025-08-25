@@ -59,7 +59,9 @@ gestor-gastos-app/
 ├── ui/
 │   ├── components/         # Componentes visuales reutilizables
 │   ├── features/           # Pantallas principales y lógica de negocio
+│   │   ├── accounts/
 │   │   ├── add/
+│   │   ├── categories/
 │   │   ├── overview/
 │   │   ├── settings/
 │   │   └── transactions/

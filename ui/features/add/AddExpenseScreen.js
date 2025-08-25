@@ -1,27 +1,32 @@
 import { useState } from 'react';
-import { useTransactions } from '../../../shared/context/TransactionsContext';
+import { useFinancial } from '../../../shared/context/FinancialContext';
 import { useCategories } from '../../../shared/context/CategoriesContext';
+import { useAccounts } from '../../../shared/context/AccountsContext';
 import { TextInput, Button, StyleSheet } from 'react-native';
 import ThemedView from '../../components/ThemedView'
 import TabSelector from '../../components/TabSelector';
 import CategoryPicker from '../../components/CategoryPicker';
+import AccountPicker from '../../components/AccountPicker';
 import DateSelector from '../../components/DateSelector';
 import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
 
 export default function AddExpenseScreen({ navigation }) {
 	const [tab, setTab] = useState('GASTOS');
-	const { addTransaction } = useTransactions();
+	const { addTransaction } = useFinancial();
   const { getCategories, getCategoryById } = useCategories();
+  const { accounts, getAccountById } = useAccounts();
+
+  const categories = getCategories(tab);
 
 	const [amount, setAmount] = useState('');
 	const [categoryId, setCategoryId] = useState('');
+  const [accountId, setAccountId] = useState('');
 	const [date, setDate] = useState(new Date());
 	const [note, setNote] = useState('');
 
-  const categories = getCategories(tab);
-	
   const handleAddExpense = async () => {
     const category = getCategoryById(categoryId);
+    const account = getAccountById(accountId);
 
 		if (!amount || isNaN(parseFloat(amount))) {
 			alert('Por favor ingresa una cantidad válida.');
@@ -33,18 +38,25 @@ export default function AddExpenseScreen({ navigation }) {
       return;
     }
 
+    if (!account) {
+      alert('Por favor selecciona una cuenta válida.');
+      return;
+    }
+
 		const newExpense = {
 			id: String(Date.now()),
 			amount: parseFloat(amount),
-			category: category.id,
-			date: date.toISOString(),
 			type: category.type,
+			category: category.id,
+      account: account.id,
+			date: date.toISOString(),
 			note
 		};
 
 		await addTransaction(newExpense);
 		setAmount('');
 		setCategoryId('');
+		setAccountId('');
 		setDate(new Date());
 		setNote('');
 		navigation.goBack();
@@ -65,6 +77,12 @@ export default function AddExpenseScreen({ navigation }) {
 				categories={categories}
 				selectedCategory={categoryId}
 				onCategoryChange={setCategoryId}
+			/>
+
+      <AccountPicker
+				accounts={accounts}
+				selectedAccount={accountId}
+				onAccountChange={setAccountId}
 			/>
 
 			<DateSelector date={date} setDate={setDate} />

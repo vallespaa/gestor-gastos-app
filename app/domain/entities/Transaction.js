@@ -1,9 +1,10 @@
 export default class Transaction {
-  constructor({ id, amount, type, category, date, note }) {
+  constructor({ id, amount, type, category, account, date, note }) {
     this.id = id;
     this.amount = amount;
     this.type = type;
     this.category = category;
+    this.account = account;
     this.date = date;
     this.note = note || '';
   }
@@ -19,7 +20,7 @@ export default class Transaction {
   isValid() {
     return (
       this.amount > 0 && ['INGRESOS', 'GASTOS'].includes(this.type) &&
-      this.category && this.date
+      this.category && this.account && this.date
     );
   }
 }
