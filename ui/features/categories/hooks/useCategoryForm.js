@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Alert } from 'react-native';
 import { useCategories } from '../../../../shared/context/CategoriesContext';
-import { useTransactions } from '../../../../shared/context/TransactionsContext';
+import { useFinancial } from '../../../../shared/context/FinancialContext';
 import { CATEGORY_ICONS, CATEGORY_COLORS } from '../../../../shared/constants/constants';
 
 export function useCategoryForm(editingCategory, navigation) {
@@ -17,7 +17,7 @@ export function useCategoryForm(editingCategory, navigation) {
   const [isLoading, setIsLoading] = useState(false);
   
   const { addCategory, editCategory, removeCategory } = useCategories();
-  const { transactions } = useTransactions();
+  const { transactions } = useFinancial();
 
   const isFormValid = categoryName.trim().length > 0;
 

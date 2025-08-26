@@ -2,7 +2,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DrawerNavigator from './DrawerNavigator';
 import AddExpenseScreen from '../features/add/AddExpenseScreen';
 import CategoriesScreen from '../features/categories/CategoriesScreen';
-import NewCategoryScreen from '../features/categories/components/NewCategoryScreen';
 import CategoryFormScreen from '../features/categories/CategoryFormScreen';
 import AccountsScreen from '../features/accounts/AccountsScreen';
 import AccountFormScreen from '../features/accounts/AccountFormScreen.js';
