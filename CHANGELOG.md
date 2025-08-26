@@ -30,3 +30,13 @@ Todas las modificaciones importantes de este proyecto se documentarán en este a
 
 - Uso del encabezado estándar: consistencia en la navegación de la aplicación
 - Creación de zonas seguras del dispositivo (como la muesca o la barra de estado)
+
+---
+
+## [0.4.0] - 2025-08-27
+
+### Añadido
+
+- Nueva gestión de cuentas para su creación, edición y borrado
+- Nueva gestión de categorías personalizadas para su creación, edición y borrado
+- Mejoras en el diseño de las pestañas superiores

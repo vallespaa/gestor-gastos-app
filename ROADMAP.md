@@ -4,22 +4,16 @@ Este roadmap detalla las tareas pendientes y planeadas para el desarrollo del MV
 
 ---
 
-## 🔜 [0.4.0] - Prevista: 2025-07-28
+## 🔜 [0.5.0] - Prevista: 2025-09-01
 
-- Gestión de cuentas (crear, editar, borrar, transferencias)
-- Gestión de categorías personalizadas
-
----
-
-## [0.5.0] - Prevista: 2025-08-04
-
+- Gestión de transferencias entre cuentas
 - Mejoras visuales en la pantalla de creación de transacciones
-- Mejoras visuales en la pantalla principal: Cajón ampliable para ver categorías detalladas y estilo de pestañas (gastos / ingresos)
 
 ---
 
 ## 💡 Ideas futuras (sin fecha definida)
 
+- Mejoras visuales en la pantalla principal: Cajón ampliable para ver categorías detalladas
 - Filtro de transacciones por tipo
 - Slider para cambio de fechas
 - Soporte para exportación/importación CSV
