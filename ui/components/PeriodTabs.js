@@ -33,7 +33,7 @@ export default function PeriodTabs({ period, setPeriod }) {
 const styles = StyleSheet.create({
 	tabContainer: {
 		flexDirection: 'row',
-		marginBottom: SPACING.md,
+		marginVertical: SPACING.sm,
 		borderRadius: BORDER_RADIUS.lg,
 		overflow: 'hidden',
 	},

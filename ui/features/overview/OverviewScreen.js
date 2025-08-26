@@ -6,7 +6,7 @@ import ThemedView from '../../components/ThemedView'
 import TabSelector from '../../components/TabSelector';
 import CategorySummary from './components/CategorySummary';
 import FloatingAddButton from './components/FloatingAddButton';
-import { SPACING, FONT_SIZES } from '../../../shared/styles/global';
+import { FONT_SIZES } from '../../../shared/styles/global';
 
 export default function OverviewScreen({ route }) {
 	const navigation = useNavigation();
@@ -28,7 +28,7 @@ export default function OverviewScreen({ route }) {
 
 	return (
     <ThemedView>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+      <ScrollView style={styles.scrollView}>
         <TabSelector tab={tab} setTab={setTab} />
 
         <CategorySummary transactions={transactions} tab={tab} period={period} />
@@ -42,9 +42,6 @@ export default function OverviewScreen({ route }) {
 const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
-  },
-  scrollContent: {
-    paddingVertical: SPACING.md,
   },
   headerTitle: {
     fontWeight: 'bold',
