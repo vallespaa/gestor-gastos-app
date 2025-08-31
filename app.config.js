@@ -4,7 +4,7 @@ export default {
   expo: {
     name: 'gestor-gastos-app',
     slug: 'gestor-gastos-app',
-    version: '0.4.0',
+    version: '0.5.0',
     orientation: 'portrait',
     icon: './assets/icon.png',
     userInterfaceStyle: 'light',
