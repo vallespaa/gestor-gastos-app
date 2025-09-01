@@ -22,12 +22,12 @@ export default function AccountPicker({ accounts, selectedAccount, onAccountChan
 const styles = StyleSheet.create({
 	pickerContainer: {
 		borderWidth: 1,
-		borderColor: COLORS.gray,
+		borderColor: COLORS.lightGray,
 		borderRadius: BORDER_RADIUS.md,
 		marginBottom: SPACING.md
 	},
 	picker: {
-		height: SPACING.xl,
+		height: 48,
 		width: '100%',
 	},
 });
