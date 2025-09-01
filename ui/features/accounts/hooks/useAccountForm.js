@@ -5,7 +5,15 @@ import { useFinancial } from '../../../../shared/context/FinancialContext';
 
 export function useAccountForm(editingAccount, adjustment, navigation) {
   const { addAccount, editAccount, removeAccount } = useAccounts();
-  const { transactions, addAdjustment, removeAdjustment, getAdjustmentsByAccount, getAccountBalance } = useFinancial();
+  const { 
+    transactions, 
+    transfers,
+    addAdjustment, 
+    removeAdjustment, 
+    getAdjustmentsByAccount, 
+    getAccountBalance 
+  } = useFinancial();
+
 
   const isEditing = !!editingAccount;
   const [accountName, setAccountName] = useState(editingAccount?.name || '');
@@ -51,8 +59,6 @@ export function useAccountForm(editingAccount, adjustment, navigation) {
 
   const deleteAccount = async () => {
     const adjustments = getAdjustmentsByAccount(editingAccount.id);
-
-    console.log(adjustments)
 
     for(const adjustment of adjustments) {
       await removeAdjustment(adjustment.id)
@@ -104,6 +110,18 @@ export function useAccountForm(editingAccount, adjustment, navigation) {
       Alert.alert(
         'No se puede eliminar',
         'Esta cuenta tiene transacciones asociadas. Cámbialas de cuenta o elimínalas antes de eliminar esta cuenta.'
+      );
+      return;
+    }
+
+    const hasTransfers = transfers.some(
+      (tr) => tr.fromAccountId === editingAccount.id || tr.toAccountId === editingAccount.id
+    );
+
+    if (hasTransfers) {
+      Alert.alert(
+        'No se puede eliminar',
+        'Esta cuenta tiene transferencias asociadas. Elimina esas transferencias antes de eliminar esta cuenta.'
       );
       return;
     }
