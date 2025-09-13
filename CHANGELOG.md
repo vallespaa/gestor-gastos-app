@@ -40,3 +40,12 @@ Todas las modificaciones importantes de este proyecto se documentarán en este a
 - Nueva gestión de cuentas para su creación, edición y borrado
 - Nueva gestión de categorías personalizadas para su creación, edición y borrado
 - Mejoras en el diseño de las pestañas superiores
+
+---
+
+## [0.5.0] - 2025-09-13
+
+### Añadido
+
+- Gestión de transferencias entre cuentas
+- Lista de transacciones actualizada: Muestra de cambios en balance y transferencias
