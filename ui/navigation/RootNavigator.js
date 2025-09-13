@@ -4,8 +4,9 @@ import AddExpenseScreen from '../features/add/AddExpenseScreen';
 import CategoriesScreen from '../features/categories/CategoriesScreen';
 import CategoryFormScreen from '../features/categories/CategoryFormScreen';
 import AccountsScreen from '../features/accounts/AccountsScreen';
-import AccountFormScreen from '../features/accounts/AccountFormScreen.js';
-import { COLORS } from '../../shared/styles/global.js';
+import AccountFormScreen from '../features/accounts/AccountFormScreen';
+import TransferFormScreen from '../features/transfers/TransferFormScreen';
+import { COLORS } from '../../shared/styles/global';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,13 @@ export default function RootNavigator() {
       <Stack.Screen
         name="AccountForm"
         component={AccountFormScreen}
+      />
+      <Stack.Screen
+        name="TransferForm"
+        component={TransferFormScreen}
+        options={{
+          title: 'Nueva Transferencia',
+        }}
       />
     </Stack.Navigator>
   );

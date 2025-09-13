@@ -19,15 +19,28 @@ export default function AccountsScreen({ navigation }) {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Pressable
-          style={({ pressed }) => ({
-            padding: 12,
-            opacity: pressed ? 0.5 : 1,
-          })}
-          onPress={() => navigation.navigate('AccountForm')}
-        >
-          <Ionicons name="add" size={24} color={COLORS.black} />
-        </Pressable>
+        <View style={styles.headerButtonsContainer}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.headerButton,
+              { opacity: pressed ? 0.5 : 1 }
+            ]}
+            onPress={() => navigation.navigate('TransferForm')}
+          >
+            <Ionicons name="swap-horizontal" size={22} color={COLORS.black} />
+          </Pressable>
+
+          
+          <Pressable
+            style={({ pressed }) => [
+              styles.headerButton,
+              { opacity: pressed ? 0.5 : 1 }
+            ]}
+            onPress={() => navigation.navigate('AccountForm')}
+          >
+            <Ionicons name="add" size={22} color={COLORS.black} />
+          </Pressable>
+        </View>
       ),
     });
   }, [navigation]);
@@ -58,6 +71,14 @@ export default function AccountsScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  headerButtonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerButton: {
+    padding: SPACING.sm,
+    marginLeft: SPACING.xs,
+  },
   totalContainer: {
     flexDirection: 'row',
     alignItems: 'center',

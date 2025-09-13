@@ -1,10 +1,17 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import TransactionAsyncStorageRepository from '../../app/data/transactions/TransactionAsyncStorageRepository';
+import TransferAsyncStorageRepository from '../../app/data/transfers/TransferAsyncStorageRepository';
 import AdjustmentAsyncStorageRepository from '../../app/data/adjustments/AdjustmentAsyncStorageRepository';
 import { getAllTransactions } from '../../app/application/getAllTransactions';
 import { createTransaction } from '../../app/application/createTransaction';
 import { deleteTransaction } from '../../app/application/deleteTransaction';
 import { updateTransaction } from '../../app/application/updateTransaction';
+import {
+  getAllTransfers,
+  getTransfersByAccount as getTransfersByAccountUseCase,
+  createTransfer,
+  deleteTransfer
+} from '../../app/application/TransferUseCases'
 import { getAllAdjustments } from '../../app/application/getAllAdjustments';
 import { createAdjustment } from '../../app/application/createAdjustment';
 import { deleteAdjustment } from '../../app/application/deleteAdjustment';
@@ -12,10 +19,12 @@ import { deleteAdjustment } from '../../app/application/deleteAdjustment';
 const FinancialContext = createContext();
 
 const txRepo = new TransactionAsyncStorageRepository();
+const tfRepo = new TransferAsyncStorageRepository();
 const adjRepo = new AdjustmentAsyncStorageRepository();
 
 export const FinancialProvider = ({ children }) => {
 	const [transactions, setTransactions] = useState([]);
+	const [transfers, setTransfers] = useState([]);
   const [adjustments, setAdjustments] = useState([]);
 
 	useEffect(() => {
@@ -30,6 +39,12 @@ export const FinancialProvider = ({ children }) => {
     setTransactions(all);
   };
 
+	// Cargar la transferencias desde AsyncStorage
+  const loadTransfers = async () => {
+    const all = await getAllTransfers(adjRepo);
+    setTransfers(all);
+  };
+
 	// Cargar los ajustes desde AsyncStorage
   const loadAdjustments = async () => {
     const all = await getAllAdjustments(adjRepo);
@@ -37,7 +52,7 @@ export const FinancialProvider = ({ children }) => {
   };
 
   const loadAll = async () => {
-    await Promise.all([loadTransactions(), loadAdjustments()]);
+    await Promise.all([loadTransactions(), loadTransfers(), loadAdjustments()]);
   };
 
   // TRANSACTIONS
@@ -59,6 +74,28 @@ export const FinancialProvider = ({ children }) => {
     await updateTransaction(txRepo, updatedTransaction);
     await loadTransactions();
 	};
+
+  // TRANSFERS
+
+	// Agregar una nueva transferencia
+	const addTransfer = async (transfer) => {
+			await createTransfer(tfRepo, transfer);
+      await loadTransfers();
+	};
+
+	// Eliminar una transferencia  
+	const removeTransfer = async (id) => {
+    await deleteTransfer(tfRepo, id);
+    await loadTransfers();
+	};
+
+  // Obtener transferencias de una cuenta
+  const getTransfersByAccount = async (accountId) => {
+    if (!accountId) {
+      return null;
+    }
+    return await getTransfersByAccountUseCase(accountId);
+  }
 
   // ADJUSTMENTS
 
@@ -97,7 +134,16 @@ export const FinancialProvider = ({ children }) => {
       .filter(a => a.accountId === accountId)
       .reduce((acc, a) => acc + a.amount, 0);
 
-    return transTotal + adjTotal;
+    const transferTotal = transfers
+      .filter(tr => tr.fromAccountId === accountId || tr.toAccountId === accountId)
+      .reduce((acc, tr) => {
+        const amount = parseFloat(tr.amount) || 0;
+        if (tr.fromAccountId === accountId) return acc - amount;
+        if (tr.toAccountId === accountId) return acc + amount;
+        return acc;
+      }, 0);
+
+    return transTotal + adjTotal + transferTotal;
   };
 
   // Obtener el balance total
@@ -114,6 +160,9 @@ export const FinancialProvider = ({ children }) => {
 			addTransaction,
 			removeTransaction,
 			editTransaction,
+      addTransfer,
+      removeTransfer,
+      getTransfersByAccount,
       addAdjustment,
       removeAdjustment,
       getAdjustmentsByAccount,
