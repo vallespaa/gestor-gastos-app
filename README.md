@@ -47,7 +47,11 @@ gestor-gastos-app/
 ├── app/
 │   ├── application/        # Casos de uso
 │   ├── data/               # Implementaciones concretas del acceso a datos
-│   │   └── transactions/
+│   │   ├── accounts/
+│   │   ├── adjustments/
+│   │   ├── categories/
+│   │   ├── transactions/
+│   │   └── transfers/
 │   └── domain/
 │       ├── entities/       # Modelos puros del negocio
 │       └── repositories/   # Contratos que define el dominio
