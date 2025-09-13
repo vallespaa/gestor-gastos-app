@@ -14,7 +14,6 @@ export function useAccountForm(editingAccount, adjustment, navigation) {
     getAccountBalance 
   } = useFinancial();
 
-
   const isEditing = !!editingAccount;
   const [accountName, setAccountName] = useState(editingAccount?.name || '');
   const [balance, setBalance] = useState(getAccountBalance(editingAccount?.id) || 0);
@@ -94,7 +93,7 @@ export function useAccountForm(editingAccount, adjustment, navigation) {
     } catch (error) {
       Alert.alert(
         'Error', 
-        isEditing ? 'No se pudo acualitzar la cuenta' : 'No se pudo crear la cuenta'
+        isEditing ? 'No se pudo actualizar la cuenta' : 'No se pudo crear la cuenta'
       );
     } finally {
       setIsLoading(false);

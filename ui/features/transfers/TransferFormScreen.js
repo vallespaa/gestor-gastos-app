@@ -17,7 +17,6 @@ export default function TransferFormScreen({ navigation }) {
 	const [date, setDate] = useState(new Date());
 	const [note, setNote] = useState('');
 
-
   const handleAddTransfer = async () => {
     const fromAccount = getAccountById(fromAccountId);
     const toAccount = getAccountById(toAccountId);
@@ -40,7 +39,7 @@ export default function TransferFormScreen({ navigation }) {
       id: String(Date.now()),
       fromAccountId: fromAccount.id,
       toAccountId: toAccount.id,
-      amount: amount,
+      amount: parseFloat(amount),
       date: date.toISOString(),
       note
     }
