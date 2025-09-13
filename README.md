@@ -68,7 +68,8 @@ gestor-gastos-app/
 │   │   ├── categories/
 │   │   ├── overview/
 │   │   ├── settings/
-│   │   └── transactions/
+│   │   ├── transactions/
+│   │   └── transfers/
 │   ├── hooks/              # Hooks transversales
 │   └── navigation/         # Configuración de la navegación (Drawer, Stacks, etc.)
 ├── App.js              # Punto de entrada principal de la app
