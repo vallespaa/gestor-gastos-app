@@ -1,104 +1,98 @@
 import { useState } from "react";
-import { View, Text, FlatList, StyleSheet, Pressable } from "react-native";
-import { useFilteredTransactions } from "../../../hooks/useFilteredTransactions";
+import { View, Text, SectionList, StyleSheet } from "react-native";
 import { useCategories } from "../../../../shared/context/CategoriesContext";
+import { useAccounts } from "../../../../shared/context/AccountsContext";
 import TransactionDetailModal from "./TransactionDetailModal";
-import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
+import TransactionRow from "./TransactionRow";
+import TransferRow from "./TransferRow";
+import AdjustmentRow from "./AdjustmentRow";
+import { COLORS, FONT_SIZES, SPACING } from '../../../../shared/styles/global';
 
-export default function TransactionsList({ transactions, tab, period }) {
+export default function TransactionsList({ sections }) {
   const { getCategoryById } = useCategories();
+  const { getAccountById } = useAccounts();
 
-	const date = new Date();
-	const filteredTransactions = useFilteredTransactions(transactions, tab, period, date);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
-	const [selectedTransaction, setSelectedTransaction] = useState(null);
-	const [modalVisible, setModalVisible] = useState(false);
+  const handlePress = (transaction) => {
+    setSelectedTransaction(transaction);
+    setModalVisible(true);
+  };
 
-	const sortedTransactions = filteredTransactions
-		.slice()
-		.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const renderItem = ({ item }) => {
+    switch (item.source) {
+      case "transaction":
+        const category = getCategoryById(item.category);
+        return (
+          <TransactionRow
+            transaction={item}
+            category={category}
+            onPress={handlePress}
+          />
+        );
 
-	const handlePress = (transaction) => {
-		setSelectedTransaction(transaction);
-		setModalVisible(true);
-	};
+      case "transfer":
+        const fromAccount = getAccountById(item.fromAccountId);
+        const toAccount = getAccountById(item.toAccountId);
+        return (
+          <TransferRow
+            transfer={item}
+            fromAccount={fromAccount}
+            toAccount={toAccount}
+          />
+        );
 
-	const renderItem = ({ item }) => (
-		<Pressable
-			onPress={() => handlePress(item)}
-			style={({ pressed }) => [
-				styles.item,
-				pressed && styles.pressed
-			]}
-		>
-			<View style={{ flex: 1 }}>
-				<Text style={styles.category}>{getCategoryById(item.category)?.name}</Text>
-				<Text style={styles.date}>{new Date(item.date).toLocaleDateString()}</Text>
-				{item.note ? <Text style={styles.note}>{item.note}</Text> : null}
-			</View>
-			<Text style={styles.amount}>
-				{item.type === 'GASTOS' ? '-' : ''}€{item.amount.toFixed(2)}
-			</Text>
-		</Pressable>
-	);
+      case "adjustment":
+        const account = getAccountById(item.accountId);
+        return (
+          <AdjustmentRow
+            adjustment={item}
+            account={account}
+          />
+        );
+      
+      default:
+        return null;
+    }
+  };
+  
+  return (
+    <View>
+      <SectionList
+        sections={sections}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={styles.sectionHeader}>{title}</Text>
+        )}
+        ListEmptyComponent={<Text style={styles.empty}>No hay transacciones registradas.</Text>}
+      />
 
-	return (
-		<View>
-			<FlatList
-				data={sortedTransactions}
-				keyExtractor={(item) => item.id.toString()}
-				renderItem={renderItem}
-				ListEmptyComponent={<Text style={styles.empty}>No hay transacciones registradas.</Text>}
-			/>
-
-			<TransactionDetailModal
-				isVisible={modalVisible}
-				onClose={() => {
+      <TransactionDetailModal
+        isVisible={modalVisible}
+        onClose={() => {
           setModalVisible(false);
           setSelectedTransaction(null);
-        }}
-				transaction={selectedTransaction}
-			/>
-		</View>
-	);
+        }}  
+        transaction={selectedTransaction}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-	item: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		padding: SPACING.sm,
-		marginVertical: SPACING.xs,
-		backgroundColor: COLORS.lightGray,
-		borderRadius: BORDER_RADIUS.sm,
-	},
-	category: {
-		fontSize: FONT_SIZES.md,
-		fontWeight: '600'
-	},
-	date: {
-		fontSize: FONT_SIZES.sm,
-		color: COLORS.gray
-	},
-	note: {
-		fontSize: FONT_SIZES.md,
-		color: COLORS.gray,
-		fontStyle: 'italic',
-		marginTop: SPACING.xs
-	},
-	amount: {
-		fontSize: FONT_SIZES.md,
-		fontWeight: 'bold',
-		color: COLORS.primary,
-		marginLeft: SPACING.sm
-	},
-	empty: {
-		textAlign: 'center',
-		marginTop: SPACING.md,
-		fontSize: FONT_SIZES.md,
-		color: COLORS.gray
-	},
-	pressed: {
-		opacity: 0.5,
-	},
+  sectionHeader: {
+    fontSize: FONT_SIZES.md,
+    fontWeight: "600",
+    marginTop: 20,
+    marginBottom: 8,
+    paddingHorizontal: SPACING.md
+  },
+  empty: {
+    textAlign: 'center',
+    marginTop: SPACING.md,
+    fontSize: FONT_SIZES.md,
+    color: COLORS.gray
+  },
 });
