@@ -12,7 +12,7 @@ export default class AdjustmentAsyncStorageRepository extends AdjustmentReposito
   async getByAccount(accountId) {
     const currentAdjustments = await this.getAll();
     const filteredAdjustments = currentAdjustments.filter(a => a.accountId == accountId);
-    return filteredAdjustments ? JSON.parse(filteredAdjustments) : [];
+    return filteredAdjustments;
   };
 
 	async create(adjustment) {
