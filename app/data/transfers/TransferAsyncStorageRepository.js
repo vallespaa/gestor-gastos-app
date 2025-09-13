@@ -12,9 +12,9 @@ export default class TransferAsyncStorageRepository extends TransferRepository {
   async getByAccount(accountId) {
     const currentTransfers = await this.getAll();
     const filteredTransfers = currentTransfers.filter(a => 
-      a.fromAcountId == accountId || a.toAccountId == accountId
+      a.fromAccountId == accountId || a.toAccountId == accountId
     );
-    return filteredTransfers ? JSON.parse(filteredTransfers) : [];
+    return filteredTransfers;
   };
 
 	async create(transfer) {

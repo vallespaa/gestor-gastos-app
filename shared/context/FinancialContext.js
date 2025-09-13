@@ -41,7 +41,7 @@ export const FinancialProvider = ({ children }) => {
 
 	// Cargar la transferencias desde AsyncStorage
   const loadTransfers = async () => {
-    const all = await getAllTransfers(adjRepo);
+    const all = await getAllTransfers(tfRepo);
     setTransfers(all);
   };
 
@@ -102,7 +102,7 @@ export const FinancialProvider = ({ children }) => {
 	// Agregar un nuevo ajuste
 	const addAdjustment = async (adjustment) => {
 			await createAdjustment(adjRepo, adjustment);
-      await loadTransactions();
+      await loadAdjustments();
 	};
 
 	// Eliminar un ajuste
@@ -155,6 +155,7 @@ export const FinancialProvider = ({ children }) => {
 	return (
 		<FinancialContext.Provider value={{
 			transactions,
+      transfers,
       adjustments,
       totalBalance,
 			addTransaction,

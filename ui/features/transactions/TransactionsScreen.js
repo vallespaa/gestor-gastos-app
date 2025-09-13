@@ -1,20 +1,37 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { View, Text, StyleSheet } from "react-native";
 import { useFinancial } from '../../../shared/context/FinancialContext';
-import ThemedView from '../../components/ThemedView'
-import TabSelector from '../../components/TabSelector';
-import PeriodTabs from '../../components/PeriodTabs';
+import { useTransactions } from './hooks/useTransactions';
+import ThemedView from '../../components/ThemedView';
 import TransactionsList from './components/TransactionsList';
+import FloatingAddButton from '../overview/components/FloatingAddButton';
+import { FONT_SIZES } from "../../../shared/styles/global";
 
-export default function TransactionsScreen() {
-	const [tab, setTab] = useState('GASTOS');
-	const [period, setPeriod] = useState('MONTH');
-	const { transactions } = useFinancial();
+export default function TransactionsScreen({ navigation }) {
+  const { totalBalance } = useFinancial();
+  const { sections } = useTransactions();
 
-	return (
-		<ThemedView>
-			<TabSelector tab={tab} setTab={setTab} />
-			<PeriodTabs period={period} setPeriod={setPeriod} />
-			<TransactionsList transactions={transactions} tab={tab} period={period} />
-		</ThemedView>
-	);
+  useEffect(() => {
+    navigation.setOptions({ 
+      headerTitle: () => (
+        <View>
+          <Text style={styles.headerTitle}>{totalBalance.toFixed(2)}€</Text>
+        </View>
+      )
+    });
+  }, [totalBalance, navigation]);
+
+  return (
+    <ThemedView withPadding={false}>
+      <TransactionsList sections={sections}/>
+      <FloatingAddButton />
+    </ThemedView>
+  );
 }
+
+const styles = StyleSheet.create({
+  headerTitle: {
+    fontSize: FONT_SIZES.lg,
+    fontWeight: "bold",
+  },
+});

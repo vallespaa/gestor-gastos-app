@@ -47,7 +47,11 @@ gestor-gastos-app/
 ├── app/
 │   ├── application/        # Casos de uso
 │   ├── data/               # Implementaciones concretas del acceso a datos
-│   │   └── transactions/
+│   │   ├── accounts/
+│   │   ├── adjustments/
+│   │   ├── categories/
+│   │   ├── transactions/
+│   │   └── transfers/
 │   └── domain/
 │       ├── entities/       # Modelos puros del negocio
 │       └── repositories/   # Contratos que define el dominio
@@ -64,7 +68,8 @@ gestor-gastos-app/
 │   │   ├── categories/
 │   │   ├── overview/
 │   │   ├── settings/
-│   │   └── transactions/
+│   │   ├── transactions/
+│   │   └── transfers/
 │   ├── hooks/              # Hooks transversales
 │   └── navigation/         # Configuración de la navegación (Drawer, Stacks, etc.)
 ├── App.js              # Punto de entrada principal de la app

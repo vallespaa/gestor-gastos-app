@@ -1,16 +1,18 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { Pressable, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../../../../shared/styles/global';
 
 export default function FloatingAddButton() {
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation();
 
   return (
     <Pressable
       style={{
         position: 'absolute',
-        bottom: 16,
+        bottom: insets.bottom + 16,
         right: 16,
         width: 56,
         height: 56,
