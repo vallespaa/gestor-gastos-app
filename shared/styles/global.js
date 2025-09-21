@@ -5,7 +5,7 @@ const COLORS = {
   primary: '#3B82F6',
   lightGray: '#E5E7EB',
   success: '#16A34A',
-  error: '#DC2626'
+  error: '#DC2626',
 };
 
 const FONT_SIZES = {
@@ -23,7 +23,7 @@ const SPACING = {
   md: 16,
   lg: 24,
   xl: 32,
-};  
+};
 
 const BORDER_RADIUS = {
   sm: 4,

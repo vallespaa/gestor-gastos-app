@@ -1,12 +1,21 @@
-import { View, Text, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
+import { View, Text, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import {
+  COLORS,
+  FONT_SIZES,
+  SPACING,
+  BORDER_RADIUS,
+} from '../../../../shared/styles/global';
 
 export default function TransferRow({ transfer, fromAccount, toAccount }) {
   return (
     <View style={styles.row}>
       <View style={[styles.iconContainer, { backgroundColor: COLORS.white }]}>
-        <Ionicons name="swap-horizontal-outline" size={20} color={COLORS.black} />
+        <Ionicons
+          name="swap-horizontal-outline"
+          size={20}
+          color={COLORS.black}
+        />
       </View>
       <View style={{ flex: 1 }}>
         <Text style={styles.subText}>{toAccount.name}</Text>
@@ -21,30 +30,30 @@ export default function TransferRow({ transfer, fromAccount, toAccount }) {
 
 const styles = StyleSheet.create({
   row: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: SPACING.sm,
-    paddingHorizontal: SPACING.md
+    paddingHorizontal: SPACING.md,
   },
   iconContainer: {
     width: 40,
     height: 40,
     borderRadius: BORDER_RADIUS.md,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginRight: SPACING.md,
   },
   label: {
     flex: 1,
     fontSize: FONT_SIZES.md,
-    fontWeight: "bold"
+    fontWeight: 'bold',
   },
   subText: {
     fontSize: FONT_SIZES.md - 2,
-    color: COLORS.gray
+    color: COLORS.gray,
   },
   amount: {
     fontSize: FONT_SIZES.md,
-    fontWeight: "600",
+    fontWeight: '600',
   },
 });

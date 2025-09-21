@@ -11,7 +11,7 @@ export default class Account {
   toPlainObject() {
     return {
       id: this.id,
-      name: this.name
+      name: this.name,
     };
   }
 }

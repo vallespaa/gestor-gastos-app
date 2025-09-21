@@ -1,5 +1,10 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
+import {
+  COLORS,
+  FONT_SIZES,
+  SPACING,
+  BORDER_RADIUS,
+} from '../../../../shared/styles/global';
 
 export default function AccountCard({ account, balance, onPress }) {
   const { name } = account;
@@ -7,9 +12,7 @@ export default function AccountCard({ account, balance, onPress }) {
 
   return (
     <Pressable
-      style={({ pressed }) => [
-        pressed && styles.pressed
-      ]}
+      style={({ pressed }) => [pressed && styles.pressed]}
       onPress={() => onPress?.(account)}
     >
       <View style={styles.card}>
@@ -22,7 +25,7 @@ export default function AccountCard({ account, balance, onPress }) {
       </View>
     </Pressable>
   );
-};
+}
 
 const styles = StyleSheet.create({
   card: {
@@ -32,7 +35,7 @@ const styles = StyleSheet.create({
     padding: SPACING.lg,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   name: {
     fontSize: FONT_SIZES.lg,

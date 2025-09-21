@@ -1,15 +1,18 @@
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
+import {
+  COLORS,
+  FONT_SIZES,
+  SPACING,
+  BORDER_RADIUS,
+} from '../../../../shared/styles/global';
 
 export default function CategoryCard({ category, onPress }) {
   const { name, color, icon } = category;
 
   return (
     <Pressable
-      style={({ pressed }) => [
-        pressed && styles.pressed
-      ]}
+      style={({ pressed }) => [pressed && styles.pressed]}
       onPress={() => onPress?.(category)}
     >
       <View style={styles.card}>
@@ -22,7 +25,7 @@ export default function CategoryCard({ category, onPress }) {
       </View>
     </Pressable>
   );
-};
+}
 
 const styles = StyleSheet.create({
   card: {
@@ -30,7 +33,6 @@ const styles = StyleSheet.create({
     width: 96,
     height: 120,
     borderRadius: BORDER_RADIUS.lg,
-    backgroundColor: COLORS.lightGray,
     padding: SPACING.xs,
     alignItems: 'center',
     margin: SPACING.sm,

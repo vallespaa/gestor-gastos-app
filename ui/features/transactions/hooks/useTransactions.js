@@ -7,14 +7,14 @@ export const useTransactions = () => {
   const getFormattedTransactions = () => {
     // Unificar todas las transacciones
     const unifiedTransactions = [
-      ...transactions.map(t => ({ ...t, source: "transaction" })),
-      ...adjustments.map(a => ({ ...a, source: "adjustment" })),
-      ...transfers.map(tr => ({ ...tr, source: "transfer" })),
+      ...transactions.map((t) => ({ ...t, source: 'transaction' })),
+      ...adjustments.map((a) => ({ ...a, source: 'adjustment' })),
+      ...transfers.map((tr) => ({ ...tr, source: 'transfer' })),
     ];
 
     // Ordenar por fecha descendente
     const sorted = unifiedTransactions.sort(
-      (a, b) => new Date(b.date) - new Date(a.date)
+      (a, b) => new Date(b.date) - new Date(a.date),
     );
 
     // Agrupar por fecha
@@ -28,7 +28,7 @@ export const useTransactions = () => {
     }, {});
 
     // Transformar al formato de SectionList
-    return Object.keys(grouped).map(dateKey => ({
+    return Object.keys(grouped).map((dateKey) => ({
       title: dateKey,
       data: grouped[dateKey],
     }));

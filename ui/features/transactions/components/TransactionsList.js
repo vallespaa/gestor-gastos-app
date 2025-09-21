@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { View, Text, SectionList, StyleSheet } from "react-native";
-import { useCategories } from "../../../../shared/context/CategoriesContext";
-import { useAccounts } from "../../../../shared/context/AccountsContext";
-import TransactionDetailModal from "./TransactionDetailModal";
-import TransactionRow from "./TransactionRow";
-import TransferRow from "./TransferRow";
-import AdjustmentRow from "./AdjustmentRow";
+import { useState } from 'react';
+import { View, Text, SectionList, StyleSheet } from 'react-native';
+import { useCategories } from '../../../../shared/context/CategoriesContext';
+import { useAccounts } from '../../../../shared/context/AccountsContext';
+import TransactionDetailModal from './TransactionDetailModal';
+import TransactionRow from './TransactionRow';
+import TransferRow from './TransferRow';
+import AdjustmentRow from './AdjustmentRow';
 import { COLORS, FONT_SIZES, SPACING } from '../../../../shared/styles/global';
 
 export default function TransactionsList({ sections }) {
@@ -22,7 +22,7 @@ export default function TransactionsList({ sections }) {
 
   const renderItem = ({ item }) => {
     switch (item.source) {
-      case "transaction":
+      case 'transaction':
         const category = getCategoryById(item.category);
         return (
           <TransactionRow
@@ -32,7 +32,7 @@ export default function TransactionsList({ sections }) {
           />
         );
 
-      case "transfer":
+      case 'transfer':
         const fromAccount = getAccountById(item.fromAccountId);
         const toAccount = getAccountById(item.toAccountId);
         return (
@@ -43,20 +43,15 @@ export default function TransactionsList({ sections }) {
           />
         );
 
-      case "adjustment":
+      case 'adjustment':
         const account = getAccountById(item.accountId);
-        return (
-          <AdjustmentRow
-            adjustment={item}
-            account={account}
-          />
-        );
-      
+        return <AdjustmentRow adjustment={item} account={account} />;
+
       default:
         return null;
     }
   };
-  
+
   return (
     <View>
       <SectionList
@@ -66,7 +61,9 @@ export default function TransactionsList({ sections }) {
         renderSectionHeader={({ section: { title } }) => (
           <Text style={styles.sectionHeader}>{title}</Text>
         )}
-        ListEmptyComponent={<Text style={styles.empty}>No hay transacciones registradas.</Text>}
+        ListEmptyComponent={
+          <Text style={styles.empty}>No hay transacciones registradas.</Text>
+        }
       />
 
       <TransactionDetailModal
@@ -74,7 +71,7 @@ export default function TransactionsList({ sections }) {
         onClose={() => {
           setModalVisible(false);
           setSelectedTransaction(null);
-        }}  
+        }}
         transaction={selectedTransaction}
       />
     </View>
@@ -84,15 +81,15 @@ export default function TransactionsList({ sections }) {
 const styles = StyleSheet.create({
   sectionHeader: {
     fontSize: FONT_SIZES.md,
-    fontWeight: "600",
+    fontWeight: '600',
     marginTop: 20,
     marginBottom: 8,
-    paddingHorizontal: SPACING.md
+    paddingHorizontal: SPACING.md,
   },
   empty: {
     textAlign: 'center',
     marginTop: SPACING.md,
     fontSize: FONT_SIZES.md,
-    color: COLORS.gray
+    color: COLORS.gray,
   },
 });

@@ -17,7 +17,7 @@ export default class Category {
       name: this.name,
       color: this.color,
       icon: this.icon,
-      type: this.type
+      type: this.type,
     };
   }
 

@@ -3,13 +3,13 @@ import { Pressable, View, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS, SPACING } from '../../../../shared/styles/global';
 
-export function useAccountFormHeader({ 
-  navigation, 
-  isEditing, 
-  isFormValid, 
-  isLoading, 
+export function useAccountFormHeader({
+  navigation,
+  isEditing,
+  isFormValid,
+  isLoading,
   onSave,
-  onDelete 
+  onDelete,
 }) {
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -25,7 +25,7 @@ export function useAccountFormHeader({
       [
         { text: 'Cancelar', style: 'cancel' },
         { text: 'Eliminar', style: 'destructive', onPress: onDelete },
-      ]
+      ],
     );
   };
 
@@ -33,15 +33,15 @@ export function useAccountFormHeader({
     <Pressable
       style={({ pressed }) => [
         styles.headerButton,
-        { opacity: pressed ? 0.5 : 1 }
+        { opacity: pressed ? 0.5 : 1 },
       ]}
       onPress={onSave}
       disabled={!isFormValid || isLoading}
     >
-      <Ionicons 
-        name="checkmark-outline" 
-        size={22} 
-        color={(!isFormValid || isLoading) ? COLORS.gray : COLORS.black} 
+      <Ionicons
+        name="checkmark-outline"
+        size={22}
+        color={!isFormValid || isLoading ? COLORS.gray : COLORS.black}
       />
     </Pressable>
   );
@@ -53,15 +53,15 @@ export function useAccountFormHeader({
           <Pressable
             style={({ pressed }) => [
               styles.headerButton,
-              { opacity: pressed ? 0.5 : 1 }
+              { opacity: pressed ? 0.5 : 1 },
             ]}
             onPress={handleDelete}
             disabled={isLoading}
           >
-            <Ionicons 
-              name="trash-outline" 
-              size={22} 
-              color={isLoading ? COLORS.gray : COLORS.error} 
+            <Ionicons
+              name="trash-outline"
+              size={22}
+              color={isLoading ? COLORS.gray : COLORS.error}
             />
           </Pressable>
 

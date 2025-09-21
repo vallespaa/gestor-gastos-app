@@ -5,7 +5,9 @@ import { DEFAULT_CATEGORIES } from './DefaultCategories';
 export default class StaticCategoriesRepository extends CategoryRepository {
   constructor() {
     super();
-    this.categories = DEFAULT_CATEGORIES.map(cat => Category.fromPlainObject(cat));
+    this.categories = DEFAULT_CATEGORIES.map((cat) =>
+      Category.fromPlainObject(cat),
+    );
   }
 
   async getAll() {

@@ -1,5 +1,5 @@
 import { Text } from 'react-native';
-import ThemedView from '../../../components/ThemedView'
+import ThemedView from '../../../components/ThemedView';
 
 export default function NewAccountScreen() {
   return (

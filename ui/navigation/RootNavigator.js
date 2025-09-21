@@ -17,13 +17,13 @@ export default function RootNavigator() {
         headerTintColor: COLORS.black,
         headerTitleStyle: { fontWeight: 'bold' },
         headerTitleAlign: 'center',
-        headerShadowVisible: false
+        headerShadowVisible: false,
       }}
     >
-      <Stack.Screen 
+      <Stack.Screen
         name="Drawer"
         component={DrawerNavigator}
-        options={{ headerShown: false }} 
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="AddTransaction"
@@ -39,10 +39,7 @@ export default function RootNavigator() {
           title: 'Categorías',
         }}
       />
-      <Stack.Screen
-        name="CategoryForm"
-        component={CategoryFormScreen}
-      />
+      <Stack.Screen name="CategoryForm" component={CategoryFormScreen} />
       <Stack.Screen
         name="Accounts"
         component={AccountsScreen}
@@ -50,10 +47,7 @@ export default function RootNavigator() {
           title: 'Cuentas',
         }}
       />
-      <Stack.Screen
-        name="AccountForm"
-        component={AccountFormScreen}
-      />
+      <Stack.Screen name="AccountForm" component={AccountFormScreen} />
       <Stack.Screen
         name="TransferForm"
         component={TransferFormScreen}

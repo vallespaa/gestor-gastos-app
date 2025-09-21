@@ -11,7 +11,7 @@ import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
 export default function AccountFormScreen({ navigation, route }) {
   const editingAccount = route?.params?.account;
   const [adjustment, setAdjustment] = useState(0);
-  
+
   const {
     accountName,
     balance,
@@ -38,20 +38,20 @@ export default function AccountFormScreen({ navigation, route }) {
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.previewSection}>
           <Text style={styles.sectionTitle}>Vista previa</Text>
-          <AccountCard 
+          <AccountCard
             account={{ name: accountName || 'Nombre de cuenta' }}
             balance={balance || 0}
           />
         </View>
 
         <View style={styles.formSection}>
-          <AccountNameInput 
+          <AccountNameInput
             value={accountName}
             onChangeText={setAccountName}
             maxLength={30}
           />
-          
-          <BalanceInput 
+
+          <BalanceInput
             value={balance}
             onChangeText={setBalance}
             onChangeDifference={setAdjustment}

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { TextInput, Button, StyleSheet } from 'react-native';
 import { useAccounts } from '../../../shared/context/AccountsContext';
 import { useFinancial } from '../../../shared/context/FinancialContext';
-import ThemedView from '../../components/ThemedView'
+import ThemedView from '../../components/ThemedView';
 import AccountPicker from '../../components/AccountPicker';
 import DateSelector from '../../components/DateSelector';
 import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
@@ -14,17 +14,17 @@ export default function TransferFormScreen({ navigation }) {
   const [fromAccountId, setFromAccountId] = useState('');
   const [toAccountId, setToAccountId] = useState('');
   const [amount, setAmount] = useState('');
-	const [date, setDate] = useState(new Date());
-	const [note, setNote] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [note, setNote] = useState('');
 
   const handleAddTransfer = async () => {
     const fromAccount = getAccountById(fromAccountId);
     const toAccount = getAccountById(toAccountId);
 
-		if (!amount || isNaN(parseFloat(amount))) {
-			alert('Por favor ingresa una cantidad válida.');
-			return;
-		}
+    if (!amount || isNaN(parseFloat(amount))) {
+      alert('Por favor ingresa una cantidad válida.');
+      return;
+    }
 
     if (!fromAccount || !toAccount) {
       alert('Selecciona dos cuentas válidas');
@@ -41,16 +41,16 @@ export default function TransferFormScreen({ navigation }) {
       toAccountId: toAccount.id,
       amount: parseFloat(amount),
       date: date.toISOString(),
-      note
-    }
+      note,
+    };
 
-		await addTransfer(newTransfer);
-		setFromAccountId('');
-		setToAccountId('');
+    await addTransfer(newTransfer);
+    setFromAccountId('');
+    setToAccountId('');
     setAmount('');
-		setDate(new Date());
-		setNote('');
-		navigation.goBack();
+    setDate(new Date());
+    setNote('');
+    navigation.goBack();
   };
 
   return (
@@ -61,7 +61,8 @@ export default function TransferFormScreen({ navigation }) {
         placeholderTextColor={COLORS.gray}
         value={amount}
         onChangeText={setAmount}
-        keyboardType="numeric" />
+        keyboardType="numeric"
+      />
 
       <AccountPicker
         accounts={accounts}
@@ -87,26 +88,30 @@ export default function TransferFormScreen({ navigation }) {
         textAlignVertical="top"
       />
 
-      <Button title="Agregar" color={COLORS.primary} onPress={handleAddTransfer} />
+      <Button
+        title="Agregar"
+        color={COLORS.primary}
+        onPress={handleAddTransfer}
+      />
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-	amountInput: {
+  amountInput: {
     height: 48,
-		borderWidth: 1,
-		borderColor: COLORS.lightGray,
-		marginVertical: SPACING.md,
-		padding: SPACING.sm,
-		borderRadius: BORDER_RADIUS.md,
-	},
-	noteInput: {
+    borderWidth: 1,
+    borderColor: COLORS.lightGray,
+    marginVertical: SPACING.md,
+    padding: SPACING.sm,
+    borderRadius: BORDER_RADIUS.md,
+  },
+  noteInput: {
     height: 48,
-		borderWidth: 1,
-		borderColor: COLORS.lightGray,
-		marginBottom: SPACING.md,
-		padding: SPACING.sm,
-		borderRadius: BORDER_RADIUS.md,
-	}
+    borderWidth: 1,
+    borderColor: COLORS.lightGray,
+    marginBottom: SPACING.md,
+    padding: SPACING.sm,
+    borderRadius: BORDER_RADIUS.md,
+  },
 });

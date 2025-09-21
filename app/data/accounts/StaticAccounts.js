@@ -1,4 +1,4 @@
 export const STATIC_ACCOUNTS = [
   { id: '1', name: 'Tarjeta' },
-  { id: '2', name: 'Efectivo' }
+  { id: '2', name: 'Efectivo' },
 ];

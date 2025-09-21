@@ -1,6 +1,6 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
-import { Pressable, Text } from 'react-native';
+import { Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../../../../shared/styles/global';
 
@@ -20,8 +20,8 @@ export default function FloatingAddButton() {
         backgroundColor: COLORS.primary,
         alignItems: 'center',
         justifyContent: 'center',
-        elevation: 5, 
-        shadowColor: "#000", 
+        elevation: 5,
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,

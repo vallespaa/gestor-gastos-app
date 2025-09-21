@@ -1,14 +1,18 @@
-import {View, FlatList, Pressable, StyleSheet } from 'react-native';
+import { View, FlatList, Pressable, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS, SPACING } from '../../../../shared/styles/global';
 
-export default function ColorSelector({ selectedColor, onColorSelect, colors }) {
+export default function ColorSelector({
+  selectedColor,
+  onColorSelect,
+  colors,
+}) {
   const renderColorItem = ({ item: color }) => (
     <Pressable
       style={[
         styles.colorItem,
         { backgroundColor: color, borderColor: color },
-        selectedColor === color && styles.selectedColorItem
+        selectedColor === color && styles.selectedColorItem,
       ]}
       onPress={() => onColorSelect(color)}
     >
@@ -34,7 +38,7 @@ export default function ColorSelector({ selectedColor, onColorSelect, colors }) 
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: SPACING.lg, 
+    marginBottom: SPACING.lg,
   },
   contentContainter: {
     paddingHorizontal: SPACING.md,

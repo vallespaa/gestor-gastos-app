@@ -1,7 +1,16 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
-import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
+import {
+  COLORS,
+  FONT_SIZES,
+  SPACING,
+  BORDER_RADIUS,
+} from '../../../../shared/styles/global';
 
-export default function CategoryNameInput({ value, onChangeText, maxLength = 20 }) {
+export default function CategoryNameInput({
+  value,
+  onChangeText,
+  maxLength = 20,
+}) {
   return (
     <View>
       <TextInput
@@ -12,7 +21,9 @@ export default function CategoryNameInput({ value, onChangeText, maxLength = 20 
         placeholderTextColor={COLORS.gray}
         maxLength={maxLength}
       />
-      <Text style={styles.charCount}>{value.length}/{maxLength}</Text>
+      <Text style={styles.charCount}>
+        {value.length}/{maxLength}
+      </Text>
     </View>
   );
 }

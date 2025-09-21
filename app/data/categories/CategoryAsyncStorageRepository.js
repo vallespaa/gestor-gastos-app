@@ -10,32 +10,46 @@ export default class CategoryAsyncStorageRepository extends CategoryRepository {
     const stored = await AsyncStorage.getItem(STORAGE_KEY);
 
     if (!stored) {
-      const defaultCategories = DEFAULT_CATEGORIES.map(cat => Category.fromPlainObject(cat));
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(defaultCategories.map(c => c.toPlainObject())));
+      const defaultCategories = DEFAULT_CATEGORIES.map((cat) =>
+        Category.fromPlainObject(cat),
+      );
+      await AsyncStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(defaultCategories.map((c) => c.toPlainObject())),
+      );
       return defaultCategories;
     }
 
     const categories = JSON.parse(stored);
-    return categories.map(cat => Category.fromPlainObject(cat));
-  };
+    return categories.map((cat) => Category.fromPlainObject(cat));
+  }
 
   async create(category) {
     const currentCategories = await this.getAll();
     const updatedCategories = [...currentCategories, category];
-    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCategories.map(c => c.toPlainObject())));
-  };
+    await AsyncStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(updatedCategories.map((c) => c.toPlainObject())),
+    );
+  }
 
-  async delete(id) {  
+  async delete(id) {
     const currentCategories = await this.getAll();
-    const updatedCategories = currentCategories.filter(c => c.id !== id);
-    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCategories.map(c => c.toPlainObject())));
-  };
+    const updatedCategories = currentCategories.filter((c) => c.id !== id);
+    await AsyncStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(updatedCategories.map((c) => c.toPlainObject())),
+    );
+  }
 
   async update(updatedCategory) {
     const currentCategories = await this.getAll();
-    const updatedCategories = currentCategories.map(c =>
-      c.id === updatedCategory.id ? updatedCategory : c
+    const updatedCategories = currentCategories.map((c) =>
+      c.id === updatedCategory.id ? updatedCategory : c,
     );
-    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCategories.map(c => c.toPlainObject())));
-  };
+    await AsyncStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(updatedCategories.map((c) => c.toPlainObject())),
+    );
+  }
 }

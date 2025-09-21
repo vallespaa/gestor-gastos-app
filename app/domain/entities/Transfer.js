@@ -19,7 +19,7 @@ export default class Transfer {
       toAccountId: this.toAccountId,
       amount: this.amount,
       date: this.date,
-      note: this.note
+      note: this.note,
     };
   }
 }

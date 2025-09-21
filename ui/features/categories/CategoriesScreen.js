@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from 'react';
 import { useCategories } from '../../../shared/context/CategoriesContext';
 import { Text, FlatList, StyleSheet, Pressable } from 'react-native';
-import ThemedView from '../../components/ThemedView'
+import ThemedView from '../../components/ThemedView';
 import TabSelector from '../../components/TabSelector';
 import CategoryCard from './components/CategoryCard';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -34,17 +34,21 @@ export default function CategoriesScreen({ navigation }) {
       <TabSelector tab={tab} setTab={setTab} />
       <FlatList
         data={categories}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         numColumns={3}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
-          <CategoryCard 
+          <CategoryCard
             category={item}
-            onPress={() => navigation.navigate('CategoryForm', { category: item })}
+            onPress={() =>
+              navigation.navigate('CategoryForm', { category: item })
+            }
           />
         )}
         ListEmptyComponent={<Text>No hay categorías</Text>}
-        ListFooterComponent={<Text style={styles.footer}>{`${categories.length} CATEGORÍAS`}</Text>}
+        ListFooterComponent={
+          <Text style={styles.footer}>{`${categories.length} CATEGORÍAS`}</Text>
+        }
       />
     </ThemedView>
   );
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     marginTop: SPACING.lg,
-    marginBottom: SPACING.xl, 
+    marginBottom: SPACING.xl,
     textAlign: 'center',
     color: COLORS.gray,
     fontWeight: '600',

@@ -5,7 +5,7 @@ import { DEFAULT_ACCOUNTS } from './DefaultAccounts';
 export default class StaticAccountsRepository extends AccountRepository {
   constructor() {
     super();
-    this.accounts = DEFAULT_ACCOUNTS.map(acc => Account.fromPlainObject(acc));
+    this.accounts = DEFAULT_ACCOUNTS.map((acc) => Account.fromPlainObject(acc));
   }
 
   async getAll() {

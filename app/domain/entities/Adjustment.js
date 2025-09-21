@@ -15,7 +15,7 @@ export default class Adjustment {
       id: this.id,
       accountId: this.accountId,
       amount: this.amount,
-      date: this.date
+      date: this.date,
     };
   }
 }

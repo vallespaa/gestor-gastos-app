@@ -1,8 +1,12 @@
 import { View, Pressable, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { COLORS, SPACING, BORDER_RADIUS } from '../../../../shared/styles/global';
+import {
+  COLORS,
+  SPACING,
+  BORDER_RADIUS,
+} from '../../../../shared/styles/global';
 
-const ITEM_SIZE = 48; 
+const ITEM_SIZE = 48;
 const ITEM_MARGIN = SPACING.xs;
 
 export default function IconSelector({ selectedIcon, onIconSelect, icons }) {
@@ -13,7 +17,7 @@ export default function IconSelector({ selectedIcon, onIconSelect, icons }) {
           key={icon}
           style={[
             styles.iconItem,
-            selectedIcon === icon && styles.selectedIconItem
+            selectedIcon === icon && styles.selectedIconItem,
           ]}
           onPress={() => onIconSelect(icon)}
         >
@@ -34,8 +38,8 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.sm,
     paddingHorizontal: SPACING.md,
     marginBottom: SPACING.xl,
-    flexDirection: "row", 
-    flexWrap: "wrap"
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   iconItem: {
     width: ITEM_SIZE,

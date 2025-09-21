@@ -19,8 +19,11 @@ export default class Transaction {
 
   isValid() {
     return (
-      this.amount > 0 && ['INGRESOS', 'GASTOS'].includes(this.type) &&
-      this.category && this.account && this.date
+      this.amount > 0 &&
+      ['INGRESOS', 'GASTOS'].includes(this.type) &&
+      this.category &&
+      this.account &&
+      this.date
     );
   }
 }

@@ -2,44 +2,52 @@ import { useState, useCallback } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { COLORS, FONT_SIZES, SPACING } from '../../../../shared/styles/global';
 
-export default function BalanceInput({ value, onChangeText, onChangeDifference, isEditing }) {
+export default function BalanceInput({
+  value,
+  onChangeText,
+  onChangeDifference,
+  isEditing,
+}) {
   const [previousBalance] = useState(value || 0);
 
   // Validar, limpiar y guardar el input
-  const handleChangeText = useCallback((text) => {
+  const handleChangeText = useCallback(
+    (text) => {
+      // Validar
+      if (!text) {
+        onChangeText('');
+        return;
+      }
 
-    // Validar
-    if (!text) {
-      onChangeText('');
-      return;
-    }
+      // Limpiar
+      let formatted = text.replace(/[^0-9.,+-]/g, '');
+      formatted = formatted.replace(
+        /^([+-]?)(.*)$/,
+        (m, sign, rest) => sign + rest.replace(/[+-]/g, ''),
+      );
+      formatted = formatted.replace(/,/g, '.');
 
-    // Limpiar
-    let formatted = text.replace(/[^0-9.,+-]/g, '');
-    formatted = formatted.replace(/^([+-]?)(.*)$/, (m, sign, rest) =>
-      sign + rest.replace(/[+-]/g, '')
-    );
-    formatted = formatted.replace(/,/g, '.');
+      const parts = formatted.split('.');
+      if (parts.length > 2) {
+        formatted = parts[0] + '.' + parts.slice(1).join('');
+      }
 
-    const parts = formatted.split('.');
-    if (parts.length > 2) {
-      formatted = parts[0] + '.' + parts.slice(1).join('');
-    }
+      if (parts.length === 2 && parts[1].length > 2) {
+        formatted = parts[0] + '.' + parts[1].substring(0, 2);
+      }
 
-    if (parts.length === 2 && parts[1].length > 2) {
-      formatted = parts[0] + '.' + parts[1].substring(0, 2);
-    }
+      onChangeText(formatted || '0');
 
-    onChangeText(formatted || '0');
-
-    // Calculamos diferencia con el anterior
-    const numericValue = parseFloat(formatted);
-    if (!isNaN(numericValue)) {
-      const diff = numericValue - previousBalance;
-      // Guardar
-      onChangeDifference(diff);
-    }
-  }, [onChangeText, onChangeDifference, previousBalance]);
+      // Calculamos diferencia con el anterior
+      const numericValue = parseFloat(formatted);
+      if (!isNaN(numericValue)) {
+        const diff = numericValue - previousBalance;
+        // Guardar
+        onChangeDifference(diff);
+      }
+    },
+    [onChangeText, onChangeDifference, previousBalance],
+  );
 
   // Si está vacío al perder el foco, establecer como 0
   const handleBlur = useCallback(() => {
@@ -68,10 +76,9 @@ export default function BalanceInput({ value, onChangeText, onChangeDifference, 
         />
       </View>
       <Text style={styles.helperText}>
-        {isEditing 
+        {isEditing
           ? 'Actualiza el balance actual de tu cuenta'
-          : 'Ingresa el balance inicial (opcional)'
-        }
+          : 'Ingresa el balance inicial (opcional)'}
       </Text>
     </View>
   );

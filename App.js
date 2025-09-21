@@ -7,15 +7,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './ui/navigation/RootNavigator';
 
 export default function App() {
-	return (
-		<FinancialProvider>
+  return (
+    <FinancialProvider>
       <AccountsProvider>
-			  <CategoriesProvider>
-				  <NavigationContainer>
-					  <RootNavigator />
-				  </NavigationContainer>
-			  </CategoriesProvider>
+        <CategoriesProvider>
+          <NavigationContainer>
+            <RootNavigator />
+          </NavigationContainer>
+        </CategoriesProvider>
       </AccountsProvider>
-		</FinancialProvider>
-	);
-};
+    </FinancialProvider>
+  );
+}

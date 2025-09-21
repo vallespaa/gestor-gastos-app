@@ -7,7 +7,10 @@ import CategoryCard from './components/CategoryCard';
 import CategoryNameInput from './components/CategoryNameInput';
 import ColorSelector from './components/ColorSelector';
 import IconSelector from './components/IconSelector';
-import { CATEGORY_ICONS, CATEGORY_COLORS } from '../../../shared/constants/constants'
+import {
+  CATEGORY_ICONS,
+  CATEGORY_COLORS,
+} from '../../../shared/constants/constants';
 import { SPACING } from '../../../shared/styles/global';
 
 export default function CategoryFormScreen({ navigation, route }) {
@@ -26,7 +29,7 @@ export default function CategoryFormScreen({ navigation, route }) {
     setSelectedColor,
     setSelectedIcon,
     handleSave,
-    handleDelete
+    handleDelete,
   } = useCategoryForm(editingCategory, navigation);
 
   useCategoryFormHeader({
@@ -46,11 +49,17 @@ export default function CategoryFormScreen({ navigation, route }) {
             <TabSelector tab={tab} setTab={setTab} />
           </View>
         )}
-        
+
         <View style={styles.row}>
-          <CategoryCard category={{ name: categoryName, color: selectedColor, icon: selectedIcon }} />
+          <CategoryCard
+            category={{
+              name: categoryName,
+              color: selectedColor,
+              icon: selectedIcon,
+            }}
+          />
           <View style={styles.inputContainer}>
-            <CategoryNameInput 
+            <CategoryNameInput
               value={categoryName}
               onChangeText={setCategoryName}
               maxLength={20}
@@ -58,13 +67,13 @@ export default function CategoryFormScreen({ navigation, route }) {
           </View>
         </View>
 
-        <ColorSelector 
+        <ColorSelector
           selectedColor={selectedColor}
           onColorSelect={setSelectedColor}
           colors={CATEGORY_COLORS}
         />
 
-        <IconSelector 
+        <IconSelector
           selectedIcon={selectedIcon}
           onIconSelect={setSelectedIcon}
           icons={CATEGORY_ICONS}
@@ -83,7 +92,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: SPACING.md,
-    marginBottom: SPACING.lg, 
+    marginBottom: SPACING.lg,
   },
   inputContainer: {
     flex: 1,

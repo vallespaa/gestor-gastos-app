@@ -1,7 +1,11 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { COLORS, FONT_SIZES, SPACING } from '../../../../shared/styles/global';
 
-export default function AccountNameInput({ value, onChangeText, maxLength = 30 }) {
+export default function AccountNameInput({
+  value,
+  onChangeText,
+  maxLength = 30,
+}) {
   const remainingChars = maxLength - (value?.length || 0);
 
   return (
@@ -10,7 +14,7 @@ export default function AccountNameInput({ value, onChangeText, maxLength = 30 }
       <TextInput
         style={[
           styles.input,
-          value && value.length > 0 && styles.inputWithText
+          value && value.length > 0 && styles.inputWithText,
         ]}
         value={value}
         onChangeText={onChangeText}
@@ -24,10 +28,12 @@ export default function AccountNameInput({ value, onChangeText, maxLength = 30 }
         <Text style={styles.helperText}>
           Elige un nombre descriptivo para tu cuenta
         </Text>
-        <Text style={[
-          styles.charCounter,
-          remainingChars < 5 && styles.charCounterWarning
-        ]}>
+        <Text
+          style={[
+            styles.charCounter,
+            remainingChars < 5 && styles.charCounterWarning,
+          ]}
+        >
           {remainingChars}/{maxLength}
         </Text>
       </View>

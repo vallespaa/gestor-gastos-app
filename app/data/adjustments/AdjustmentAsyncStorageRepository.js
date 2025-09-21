@@ -7,31 +7,33 @@ export default class AdjustmentAsyncStorageRepository extends AdjustmentReposito
   async getAll() {
     const stored = await AsyncStorage.getItem(STORAGE_KEY);
     return stored ? JSON.parse(stored) : [];
-  };
+  }
 
   async getByAccount(accountId) {
     const currentAdjustments = await this.getAll();
-    const filteredAdjustments = currentAdjustments.filter(a => a.accountId == accountId);
+    const filteredAdjustments = currentAdjustments.filter(
+      (a) => a.accountId == accountId,
+    );
     return filteredAdjustments;
-  };
+  }
 
-	async create(adjustment) {
+  async create(adjustment) {
     const currentAdjustments = await this.getAll();
     const updatedAdjustments = [...currentAdjustments, adjustment];
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedAdjustments));
-	};
+  }
 
-	async delete(id) {  
+  async delete(id) {
     const currentAdjustments = await this.getAll();
-    const updatedAdjustments = currentAdjustments.filter(a => a.id !== id);
+    const updatedAdjustments = currentAdjustments.filter((a) => a.id !== id);
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedAdjustments));
-	};
+  }
 
-	async update(updatedAdjustment) {
+  async update(updatedAdjustment) {
     const currentAdjustments = await this.getAll();
-    const updatedAdjustments = currentAdjustments.map(a =>
-      a.id === updatedAdjustments.id ? updatedAdjustment : a
+    const updatedAdjustments = currentAdjustments.map((a) =>
+      a.id === updatedAdjustments.id ? updatedAdjustment : a,
     );
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedAdjustments));
-	};
+  }
 }

@@ -13,8 +13,8 @@ export default function AccountsScreen({ navigation }) {
 
   const totalBalance = accounts.reduce(
     (acc, account) => acc + getAccountBalance(account.id),
-    0
-  );  
+    0,
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -23,18 +23,17 @@ export default function AccountsScreen({ navigation }) {
           <Pressable
             style={({ pressed }) => [
               styles.headerButton,
-              { opacity: pressed ? 0.5 : 1 }
+              { opacity: pressed ? 0.5 : 1 },
             ]}
             onPress={() => navigation.navigate('TransferForm')}
           >
             <Ionicons name="swap-horizontal" size={22} color={COLORS.black} />
           </Pressable>
 
-          
           <Pressable
             style={({ pressed }) => [
               styles.headerButton,
-              { opacity: pressed ? 0.5 : 1 }
+              { opacity: pressed ? 0.5 : 1 },
             ]}
             onPress={() => navigation.navigate('AccountForm')}
           >
@@ -53,7 +52,7 @@ export default function AccountsScreen({ navigation }) {
       </View>
       <FlatList
         data={accounts}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => {
           const balance = getAccountBalance(item.id);
@@ -61,7 +60,9 @@ export default function AccountsScreen({ navigation }) {
             <AccountCard
               account={item}
               balance={balance}
-              onPress={() => navigation.navigate('AccountForm', { account: item })}
+              onPress={() =>
+                navigation.navigate('AccountForm', { account: item })
+              }
             />
           );
         }}
@@ -88,15 +89,15 @@ const styles = StyleSheet.create({
   totalLabel: {
     color: COLORS.gray,
     fontSize: FONT_SIZES.sm,
-    fontWeight: '600'
+    fontWeight: '600',
   },
   totalValue: {
     color: COLORS.black,
     fontSize: FONT_SIZES.xl,
     fontWeight: 'bold',
-    marginLeft: SPACING.xs, 
+    marginLeft: SPACING.xs,
   },
   list: {
-    gap: SPACING.md, 
+    gap: SPACING.md,
   },
 });

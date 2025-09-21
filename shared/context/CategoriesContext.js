@@ -25,23 +25,23 @@ export const CategoriesProvider = ({ children }) => {
     if (!type) {
       return categories;
     }
-    return categories.filter(cat => cat.type === type);
-  };
+    return categories.filter((cat) => cat.type === type);
+  }
 
   function getCategoryById(id) {
     if (!id) {
       return null;
     }
-    return categories.find(c => c.id === id) || null;
+    return categories.find((c) => c.id === id) || null;
   }
-  
+
   // Agregar una nueva categoría
   const addCategory = async (category) => {
-      await createCategory(repository, category);
-      await loadCategories();
+    await createCategory(repository, category);
+    await loadCategories();
   };
 
-  // Eliminar una categoría  
+  // Eliminar una categoría
   const removeCategory = async (id) => {
     await deleteCategory(repository, id);
     await loadCategories();
@@ -51,17 +51,19 @@ export const CategoriesProvider = ({ children }) => {
   const editCategory = async (updatedCategory) => {
     await updateCategory(repository, updatedCategory);
     await loadCategories();
-    };
+  };
 
   return (
-    <CategoriesContext.Provider value={{
-      categories,
-      getCategories,
-      getCategoryById,
-      addCategory,
-      removeCategory,
-      editCategory
-    }}>
+    <CategoriesContext.Provider
+      value={{
+        categories,
+        getCategories,
+        getCategoryById,
+        addCategory,
+        removeCategory,
+        editCategory,
+      }}
+    >
       {children}
     </CategoriesContext.Provider>
   );

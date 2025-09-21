@@ -2,7 +2,11 @@ import { View, Text, StyleSheet, Pressable, Animated } from 'react-native';
 import { useState, useRef, useEffect } from 'react';
 import { COLORS, FONT_SIZES } from '../../shared/styles/global';
 
-export default function TabSelector({ tab, tabs = ['GASTOS', 'INGRESOS'], setTab }) {
+export default function TabSelector({
+  tab,
+  tabs = ['GASTOS', 'INGRESOS'],
+  setTab,
+}) {
   const [containerWidth, setContainerWidth] = useState(0);
   const indicatorAnim = useRef(new Animated.Value(0)).current;
 
@@ -30,7 +34,7 @@ export default function TabSelector({ tab, tabs = ['GASTOS', 'INGRESOS'], setTab
       onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}
     >
       <View style={styles.baseIndicator} />
-      
+
       {tabs.map((tabName, index) => {
         const isActive = tab === tabName;
         return (
@@ -45,7 +49,7 @@ export default function TabSelector({ tab, tabs = ['GASTOS', 'INGRESOS'], setTab
           </Pressable>
         );
       })}
-      
+
       {containerWidth > 0 && (
         <Animated.View
           style={[

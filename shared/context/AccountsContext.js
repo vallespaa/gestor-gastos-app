@@ -20,7 +20,7 @@ export const AccountsProvider = ({ children }) => {
     if (!id) {
       return null;
     }
-    return accounts.find(c => c.id === id) || null;
+    return accounts.find((c) => c.id === id) || null;
   }
 
   // Cargar las cuentas desde AsyncStorage
@@ -28,14 +28,14 @@ export const AccountsProvider = ({ children }) => {
     const all = await getAllAccounts(repository);
     setAccounts(all);
   };
-  
+
   // Agregar una nueva cuenta
   const addAccount = async (account) => {
-      await createAccount(repository, account);
-      await loadAccounts();
+    await createAccount(repository, account);
+    await loadAccounts();
   };
 
-  // Eliminar una cuenta  
+  // Eliminar una cuenta
   const removeAccount = async (id) => {
     await deleteAccount(repository, id);
     await loadAccounts();
@@ -45,16 +45,18 @@ export const AccountsProvider = ({ children }) => {
   const editAccount = async (updatedAccount) => {
     await updateAccount(repository, updatedAccount);
     await loadAccounts();
-    };
+  };
 
   return (
-    <AccountsContext.Provider value={{
-      accounts,
-      getAccountById,
-      addAccount,
-      removeAccount,
-      editAccount
-    }}>
+    <AccountsContext.Provider
+      value={{
+        accounts,
+        getAccountById,
+        addAccount,
+        removeAccount,
+        editAccount,
+      }}
+    >
       {children}
     </AccountsContext.Provider>
   );
