@@ -56,6 +56,7 @@ gestor-gastos-app/
 │       ├── entities/       # Modelos puros del negocio
 │       └── repositories/   # Contratos que define el dominio
 ├── assets/
+├── docs/                   # Documentación del proyecto
 ├── shared/                 # Componentes reutilizables, hooks, estilos y contexto global
 │   ├── constants/
 │   ├── context/
@@ -75,11 +76,7 @@ gestor-gastos-app/
 ├── App.js              # Punto de entrada principal de la app
 ├── index.js            # Registro de la app para Expo
 ├── app.json            # Configuración de Expo
-├── package.json        # Dependencias y scripts del proyecto
-├── README.md           # Documentación principal
-├── CHANGELOG.md        # Historial de cambios
-├── ROADMAP.md          # Plan de desarrollo y futuras funcionalidades
-└── LICENSE.md          # Licencia del proyecto
+└── package.json        # Dependencias y scripts del proyecto
 ```
 
 ## Tecnologías utilizadas
