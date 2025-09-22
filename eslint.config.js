@@ -1,13 +1,15 @@
-const { defineConfig } = require('eslint/config');
-const expoConfig = require('eslint-config-expo/flat');
-const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommended');
+import expoConfig from 'eslint-config-expo/flat.js';
+import prettierPlugin from 'eslint-plugin-prettier';
 
-module.exports = defineConfig([
+export default [
   {
     ignores: ['dist/*', 'node_modules/*', 'android/*', 'ios/*'],
   },
+  ...expoConfig,
   {
-    extends: [expoConfig, eslintPluginPrettierRecommended],
+    plugins: {
+      prettier: prettierPlugin,
+    },
     rules: {
       'prettier/prettier': [
         'error',
@@ -24,4 +26,4 @@ module.exports = defineConfig([
       ],
     },
   },
-]);
+];
