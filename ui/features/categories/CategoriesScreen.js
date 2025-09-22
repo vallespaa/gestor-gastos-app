@@ -4,7 +4,7 @@ import { Text, FlatList, StyleSheet, Pressable } from 'react-native';
 import ThemedView from '../../components/ThemedView';
 import TabSelector from '../../components/TabSelector';
 import CategoryCard from './components/CategoryCard';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
 
 export default function CategoriesScreen({ navigation }) {

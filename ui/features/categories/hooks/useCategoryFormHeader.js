@@ -1,6 +1,6 @@
 import { useLayoutEffect } from 'react';
 import { Pressable, View, Alert } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SPACING } from '../../../../shared/styles/global';
 
 export function useCategoryFormHeader({

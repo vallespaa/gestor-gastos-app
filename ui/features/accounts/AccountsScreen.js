@@ -4,7 +4,7 @@ import { useAccounts } from '../../../shared/context/AccountsContext';
 import { View, Text, FlatList, StyleSheet, Pressable } from 'react-native';
 import ThemedView from '../../components/ThemedView';
 import AccountCard from './components/AccountCard';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import { COLORS, FONT_SIZES, SPACING } from '../../../shared/styles/global';
 
 export default function AccountsScreen({ navigation }) {
