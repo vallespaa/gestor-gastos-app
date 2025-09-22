@@ -9,8 +9,8 @@ import {
   Linking,
 } from 'react-native';
 import * as Sharing from 'expo-sharing';
-import { importFromExcel } from './utils/ImportFromExcel';
-import { exportToExcel } from './utils/ExportToExcel';
+//import { importFromExcel } from './utils/ImportFromExcel';
+//import { exportToExcel } from './utils/ExportToExcel';
 import { useFinancial } from '../../../shared/context/FinancialContext';
 import ThemedView from '../../components/ThemedView';
 import { Ionicons } from '@expo/vector-icons';
@@ -101,6 +101,7 @@ export default function SettingsScreen() {
         <Text style={styles.itemText}>Cuentas</Text>
       </Pressable>
 
+      {/*
       <Text style={styles.sectionTitle}>IMPORTAR Y EXPORTAR</Text>
 
       <Pressable style={styles.item} onPress={handleImport} disabled={loading}>
@@ -122,6 +123,7 @@ export default function SettingsScreen() {
         />
         <Text style={styles.itemText}>Exportar datos en Formato Excel</Text>
       </Pressable>
+      */}
 
       <Text style={styles.sectionTitle}>CONTACTO</Text>
 

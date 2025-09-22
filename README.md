@@ -36,7 +36,6 @@ expo start
 - Registro de gastos e ingresos
 - Visualización de transacciones por día, semana, mes y año
 - Gráficas de resumen por categoría
-- Importación y exportación de transacciones en Excel
 
 ---
 
@@ -85,7 +84,6 @@ gestor-gastos-app/
 - Expo
 - React Navigation
 - AsyncStorage
-- XLSX (para importación/exportación Excel)
 
 ## Contribución
 
