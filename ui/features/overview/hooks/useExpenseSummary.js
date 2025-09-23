@@ -1,45 +1,42 @@
-import { COLORS, FONT_SIZES } from '../../../../shared/styles/global';
 import { useCategories } from '../../../../shared/context/CategoriesContext';
+import { COLORS, FONT_SIZES } from '../../../../shared/styles/global';
 
 export const useExpenseSummary = (expenses) => {
   const { getCategoryById } = useCategories();
-  const total = expenses.reduce(
-    (acc, item) => acc + parseFloat(item.amount),
-    0,
-  );
 
-  const categoryMap = {};
+  let total = 0;
+  const categorySummary = new Map();
+
   expenses.forEach((item) => {
-    const category = getCategoryById(item.category)?.name || 'Sin categoría';
-    categoryMap[category] =
-      (categoryMap[category] || 0) + parseFloat(item.amount);
+    const amount = parseFloat(item.amount) || 0;
+    total += amount;
+
+    const categoryId = item.category;
+    const category = getCategoryById(categoryId);
+
+    const categoryKey = categoryId || 'uncategorized';
+
+    if (categorySummary.has(categoryKey)) {
+      categorySummary.get(categoryKey).amount += amount;
+    } else {
+      categorySummary.set(categoryKey, {
+        name: category?.name || 'Sin categoría',
+        amount: amount,
+        color: category?.color || COLORS.gray,
+      });
+    }
   });
 
-  const categories = Object.entries(categoryMap).map(
-    ([category, amount], index) => ({
-      name: category,
-      amount,
-      color: getColor(index),
+  const categories = Array.from(categorySummary.values())
+    .map((categoryData) => ({
+      ...categoryData,
       legendFontColor: COLORS.gray,
       legendFontSize: FONT_SIZES.sm,
-    }),
-  );
+    }))
+    .sort((a, b) => b.amount - a.amount);
 
   return {
     total,
     categories,
   };
-};
-
-// Asignar color a cada categoría
-const getColor = (index) => {
-  const colors = [
-    '#FF6384',
-    '#36A2EB',
-    '#FFCE56',
-    '#4BC0C0',
-    '#9966FF',
-    '#F77825',
-  ];
-  return colors[index % colors.length];
 };
