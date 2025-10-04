@@ -10,6 +10,8 @@ import CategoryPicker from '../../components/CategoryPicker';
 import AccountPicker from '../../components/AccountPicker';
 import DateSelector from '../../components/DateSelector';
 import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
+import * as math from 'mathjs';
+import KeyPad from '../../components/KeyPad';
 
 export default function AddExpenseScreen({ navigation }) {
   const [tab, setTab] = useState('GASTOS');
@@ -20,11 +22,58 @@ export default function AddExpenseScreen({ navigation }) {
   const categories = getCategories(tab);
 
   const [amount, setAmount] = useState('0');
+  const [expression, setExpression] = useState('');
   const [categoryId, setCategoryId] = useState('');
   const [accountId, setAccountId] = useState('');
   const [date, setDate] = useState(new Date());
   const [note, setNote] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const isOperator = (input) => ['+', '-', '*', '/'].includes(input);
+
+  const evaluateExpression = (exp) => {
+    if (!exp) return '0';
+
+    // Limpiar operadores al final
+    let cleanExp = exp;
+    while (isOperator(cleanExp.slice(-1))) {
+      cleanExp = cleanExp.slice(0, -1);
+    }
+
+    try {
+      const result = math.evaluate(cleanExp || '0');
+      return result.toString();
+    } catch {
+      return '0';
+    }
+  };
+
+  const handlePress = (input) => {
+    // Borrar
+    if (input === '⌫') {
+      const newExp = expression.slice(0, -1);
+      setExpression(newExp);
+      setAmount(evaluateExpression(newExp));
+      return;
+    }
+
+    // Operador: reemplazar si último ya es operador
+    if (isOperator(input)) {
+      if (expression === '') return; // no permitir operador al inicio
+      const lastChar = expression.slice(-1);
+      const newExp = isOperator(lastChar)
+        ? expression.slice(0, -1) + input
+        : expression + input;
+      setExpression(newExp);
+      setAmount(evaluateExpression(newExp));
+      return;
+    }
+
+    // Número o coma
+    const newExp = expression + input;
+    setExpression(newExp);
+    setAmount(evaluateExpression(newExp));
+  };
 
   const handleAddExpense = async () => {
     const category = getCategoryById(categoryId);
@@ -62,7 +111,7 @@ export default function AddExpenseScreen({ navigation }) {
     } catch {
       Alert.alert('Error', 'No se pudo guardar la transacción.');
     } finally {
-      setAmount('');
+      setAmount('0');
       setCategoryId('');
       setAccountId('');
       setDate(new Date());
@@ -90,8 +139,7 @@ export default function AddExpenseScreen({ navigation }) {
         style={styles.input}
         placeholder="Cantidad (€)"
         value={amount}
-        onChangeText={setAmount}
-        keyboardType="numeric"
+        editable={false}
       />
 
       <CategoryPicker
@@ -116,6 +164,8 @@ export default function AddExpenseScreen({ navigation }) {
         multiline
         textAlignVertical="top"
       />
+
+      <KeyPad onKeyPress={handlePress} />
     </ThemedView>
   );
 }

@@ -28,6 +28,7 @@
     "expo-document-picker": "~13.1.6",
     "expo-file-system": "~18.1.11",
     "expo-sharing": "~13.1.5",
+    "mathjs": "14.8.0",
     "prettier": "3.6.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
