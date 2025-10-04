@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useFinancial } from '../../../shared/context/FinancialContext';
 import { useCategories } from '../../../shared/context/CategoriesContext';
 import { useAccounts } from '../../../shared/context/AccountsContext';
-import { TextInput, Button, StyleSheet } from 'react-native';
+import { useAddTransactionHeader } from './hooks/useAddTransactionHeader.js';
+import { TextInput, StyleSheet, Alert } from 'react-native';
 import ThemedView from '../../components/ThemedView';
 import TabSelector from '../../components/TabSelector';
 import CategoryPicker from '../../components/CategoryPicker';
@@ -18,11 +19,12 @@ export default function AddExpenseScreen({ navigation }) {
 
   const categories = getCategories(tab);
 
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState('0');
   const [categoryId, setCategoryId] = useState('');
   const [accountId, setAccountId] = useState('');
   const [date, setDate] = useState(new Date());
   const [note, setNote] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleAddExpense = async () => {
     const category = getCategoryById(categoryId);
@@ -43,6 +45,8 @@ export default function AddExpenseScreen({ navigation }) {
       return;
     }
 
+    setIsLoading(true);
+
     const newExpense = {
       id: String(Date.now()),
       amount: parseFloat(amount),
@@ -52,15 +56,26 @@ export default function AddExpenseScreen({ navigation }) {
       date: date.toISOString(),
       note,
     };
-
-    await addTransaction(newExpense);
-    setAmount('');
-    setCategoryId('');
-    setAccountId('');
-    setDate(new Date());
-    setNote('');
-    navigation.goBack();
+    try {
+      await addTransaction(newExpense);
+      navigation.goBack();
+    } catch {
+      Alert.alert('Error', 'No se pudo guardar la transacción.');
+    } finally {
+      setAmount('');
+      setCategoryId('');
+      setAccountId('');
+      setDate(new Date());
+      setNote('');
+      setIsLoading(false);
+    }
   };
+
+  useAddTransactionHeader({
+    navigation,
+    isLoading,
+    onSave: handleAddExpense,
+  });
 
   const handleTabChange = (newTab) => {
     setTab(newTab);
@@ -101,8 +116,6 @@ export default function AddExpenseScreen({ navigation }) {
         multiline
         textAlignVertical="top"
       />
-
-      <Button title="Agregar" onPress={handleAddExpense} />
     </ThemedView>
   );
 }
