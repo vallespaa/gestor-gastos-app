@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useFinancial } from '../../../shared/context/FinancialContext';
 import { useCategories } from '../../../shared/context/CategoriesContext';
 import { useAccounts } from '../../../shared/context/AccountsContext';
-import { useAddTransactionHeader } from './hooks/useAddTransactionHeader.js';
+import { useAddTransactionHeader } from './hooks/useAddTransactionHeader';
 import { TextInput, StyleSheet, Alert } from 'react-native';
 import ThemedView from '../../components/ThemedView';
 import TabSelector from '../../components/TabSelector';
-import CategoryPicker from '../../components/CategoryPicker';
+import CategorySelector from '../../components/CategorySelector';
 import AccountPicker from '../../components/AccountPicker';
 import DateSelector from '../../components/DateSelector';
 import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
@@ -132,7 +132,7 @@ export default function AddExpenseScreen({ navigation }) {
   };
 
   return (
-    <ThemedView>
+    <ThemedView withPadding={false}>
       <TabSelector tab={tab} setTab={handleTabChange} />
 
       <TextInput
@@ -142,7 +142,7 @@ export default function AddExpenseScreen({ navigation }) {
         editable={false}
       />
 
-      <CategoryPicker
+      <CategorySelector
         categories={categories}
         selectedCategory={categoryId}
         onCategoryChange={setCategoryId}
@@ -171,10 +171,14 @@ export default function AddExpenseScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: SPACING.md,
+  },
   input: {
     borderWidth: 1,
     borderColor: COLORS.lightGray,
     marginBottom: SPACING.md,
+    marginHorizontal: SPACING.md,
     padding: SPACING.sm,
     borderRadius: BORDER_RADIUS.md,
   },

@@ -38,6 +38,7 @@ export default function DateSelector({ date, setDate }) {
 
 const styles = StyleSheet.create({
   dateText: {
+    marginHorizontal: SPACING.md,
     marginBottom: SPACING.sm,
     color: COLORS.black,
     fontSize: FONT_SIZES.md,
