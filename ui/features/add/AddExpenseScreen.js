@@ -1,3 +1,4 @@
+import * as math from 'mathjs';
 import { useState } from 'react';
 import { useFinancial } from '../../../shared/context/FinancialContext';
 import { useCategories } from '../../../shared/context/CategoriesContext';
@@ -6,12 +7,15 @@ import { useAddTransactionHeader } from './hooks/useAddTransactionHeader';
 import { TextInput, StyleSheet, Alert } from 'react-native';
 import ThemedView from '../../components/ThemedView';
 import TabSelector from '../../components/TabSelector';
+import TransactionOptions from '../../components/TransactionOptions';
 import CategorySelector from '../../components/CategorySelector';
-import AccountPicker from '../../components/AccountPicker';
-import DateSelector from '../../components/DateSelector';
-import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
-import * as math from 'mathjs';
 import KeyPad from '../../components/KeyPad';
+import {
+  COLORS,
+  SPACING,
+  BORDER_RADIUS,
+  FONT_SIZES,
+} from '../../../shared/styles/global';
 
 export default function AddExpenseScreen({ navigation }) {
   const [tab, setTab] = useState('GASTOS');
@@ -134,52 +138,43 @@ export default function AddExpenseScreen({ navigation }) {
   return (
     <ThemedView withPadding={false}>
       <TabSelector tab={tab} setTab={handleTabChange} />
-
       <TextInput
         style={styles.input}
         placeholder="Cantidad (€)"
         value={amount}
         editable={false}
       />
-
+      <TransactionOptions
+        date={date}
+        setDate={setDate}
+        selectedAccount={accountId}
+        setSelectedAccount={setAccountId}
+        note={note}
+        onAddNote={setNote}
+        accounts={accounts}
+      />
       <CategorySelector
         categories={categories}
         selectedCategory={categoryId}
         onCategoryChange={setCategoryId}
       />
-
-      <AccountPicker
-        accounts={accounts}
-        selectedAccount={accountId}
-        onAccountChange={setAccountId}
-      />
-
-      <DateSelector date={date} setDate={setDate} />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Notas"
-        value={note}
-        onChangeText={setNote}
-        multiline
-        textAlignVertical="top"
-      />
-
       <KeyPad onKeyPress={handlePress} />
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: SPACING.md,
-  },
   input: {
+    color: COLORS.black,
+    fontSize: FONT_SIZES.xxl,
+    fontWeight: 'bold',
+    textAlign: 'right',
     borderWidth: 1,
     borderColor: COLORS.lightGray,
-    marginBottom: SPACING.md,
-    marginHorizontal: SPACING.md,
-    padding: SPACING.sm,
     borderRadius: BORDER_RADIUS.md,
+    marginHorizontal: SPACING.md,
+    marginTop: SPACING.lg,
+    marginBottom: SPACING.md,
+    padding: SPACING.sm,
   },
 });

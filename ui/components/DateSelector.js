@@ -1,29 +1,28 @@
 import { useState } from 'react';
 import { Pressable, View, Text, StyleSheet, Platform } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { COLORS, FONT_SIZES, SPACING } from '../../shared/styles/global';
+import { formatRelativeDate } from '../../shared/utils/dateUtils';
 
 export default function DateSelector({ date, setDate }) {
   const [show, setShow] = useState(false);
 
-  if (!date || !(date instanceof Date)) {
-    date = new Date();
-  }
+  const currentDate = date instanceof Date ? date : new Date();
 
   return (
     <View>
       <Pressable
+        style={({ pressed }) => [styles.option, pressed && styles.pressed]}
         onPress={() => setShow(true)}
-        style={({ pressed }) => ({
-          opacity: pressed ? 0.2 : 1,
-        })}
       >
-        <Text style={styles.dateText}>Fecha: {date.toDateString()}</Text>
+        <MaterialIcons name="edit-calendar" size={24} color={COLORS.black} />
+        <Text style={styles.text}>{formatRelativeDate(currentDate)}</Text>
       </Pressable>
 
       {show && (
         <DateTimePicker
-          value={date}
+          value={currentDate}
           mode="date"
           display={Platform.OS === 'ios' ? 'spinner' : 'default'}
           onChange={(e, selectedDate) => {
@@ -37,10 +36,17 @@ export default function DateSelector({ date, setDate }) {
 }
 
 const styles = StyleSheet.create({
-  dateText: {
-    marginHorizontal: SPACING.md,
-    marginBottom: SPACING.sm,
-    color: COLORS.black,
+  option: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  pressed: {
+    opacity: 0.5,
+  },
+  text: {
+    marginLeft: SPACING.sm,
     fontSize: FONT_SIZES.md,
+    color: COLORS.black,
+    textTransform: 'capitalize',
   },
 });
