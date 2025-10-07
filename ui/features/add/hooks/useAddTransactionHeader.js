@@ -1,23 +1,29 @@
 import { useLayoutEffect, useCallback } from 'react';
-import { Pressable, Text } from 'react-native';
+import { Alert, Pressable, Text } from 'react-native';
 import { COLORS, SPACING } from '../../../../shared/styles/global';
 
 export function useAddTransactionHeader({ navigation, isLoading, onSave }) {
-  const renderSaveButton = useCallback(
-    () => (
+  const renderSaveButton = useCallback(() => {
+    if (typeof onSave !== 'function') return null;
+    return (
       <Pressable
         style={({ pressed }) => [
           styles.headerButton,
           { opacity: pressed ? 0.5 : 1 },
         ]}
-        onPress={onSave}
+        onPress={() => {
+          try {
+            onSave();
+          } catch {
+            Alert.alert('Error', 'No se pudo guardar la transacción.');
+          }
+        }}
         disabled={isLoading}
       >
         <Text style={styles.headerButtonText}>Guardar</Text>
       </Pressable>
-    ),
-    [isLoading, onSave],
-  );
+    );
+  }, [isLoading, onSave]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
