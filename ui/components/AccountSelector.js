@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 'auto',
     maxWidth: 130,
   },
   accountText: {

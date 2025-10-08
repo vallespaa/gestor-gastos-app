@@ -15,13 +15,21 @@ export default function TransactionOptions({
 }) {
   return (
     <View style={styles.container}>
-      <DateSelector date={date} setDate={setDate} />
-      <NoteInput note={note} onChangeNote={onAddNote} />
-      <AccountSelector
-        accounts={accounts}
-        selectedAccount={selectedAccount}
-        onSelect={setSelectedAccount}
-      />
+      <View style={styles.left}>
+        <DateSelector date={date} setDate={setDate} />
+      </View>
+
+      <View style={styles.center}>
+        <NoteInput note={note} onChangeNote={onAddNote} />
+      </View>
+
+      <View style={styles.right}>
+        <AccountSelector
+          accounts={accounts}
+          selectedAccount={selectedAccount}
+          onSelect={setSelectedAccount}
+        />
+      </View>
     </View>
   );
 }
@@ -30,10 +38,24 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     backgroundColor: COLORS.lightGray,
     marginHorizontal: SPACING.md,
     marginBottom: SPACING.md,
     borderRadius: BORDER_RADIUS.md,
-    padding: SPACING.md,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.sm,
+  },
+  left: {
+    flex: 1,
+    alignItems: 'flex-start',
+  },
+  center: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  right: {
+    flex: 1,
+    alignItems: 'flex-end',
   },
 });

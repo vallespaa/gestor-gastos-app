@@ -36,7 +36,7 @@ export default function NoteInput({ note, onChangeNote }) {
           <TextInput
             style={styles.input}
             placeholder="Notas"
-            value={note}
+            placeholderTextColor={COLORS.gray}
             onChangeText={onChangeNote}
             multiline
             textAlignVertical="top"
@@ -57,9 +57,8 @@ export default function NoteInput({ note, onChangeNote }) {
 
 const styles = StyleSheet.create({
   button: {
-    position: 'absolute',
-    left: '50%',
-    transform: [{ translateX: -11 }],
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   pressed: { opacity: 0.5 },
   modal: { justifyContent: 'flex-end', margin: 0 },
@@ -76,6 +75,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
+    color: COLORS.black,
     minHeight: 80,
     maxHeight: 200,
     padding: SPACING.sm,
