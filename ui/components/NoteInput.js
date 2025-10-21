@@ -1,6 +1,13 @@
 import { useState } from 'react';
-import { Pressable, TextInput, View, Text, StyleSheet } from 'react-native';
-import Modal from 'react-native-modal';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  Pressable,
+  Modal,
+  TextInput,
+  View,
+  Text,
+  StyleSheet,
+} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   COLORS,
@@ -10,6 +17,8 @@ import {
 } from '../../shared/styles/global';
 
 export default function NoteInput({ note, onChangeNote }) {
+  const insets = useSafeAreaInsets();
+
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -22,16 +31,16 @@ export default function NoteInput({ note, onChangeNote }) {
       </Pressable>
 
       <Modal
-        isVisible={showModal}
-        onBackdropPress={() => setShowModal(false)}
-        onSwipeComplete={() => setShowModal(false)}
-        swipeDirection="down"
-        animationIn="slideInUp"
-        animationOut="slideOutDown"
-        style={styles.modal}
-        propagateSwipe
+        visible={showModal}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setShowModal(false)}
       >
-        <View style={styles.modalContainer}>
+        <Pressable
+          style={styles.backdrop}
+          onPress={() => setShowModal(false)}
+        />
+        <View style={[styles.modalContainer, { bottom: insets.bottom }]}>
           <Text style={styles.modalTitle}>Escribe una nota</Text>
           <TextInput
             style={styles.input}
@@ -40,6 +49,7 @@ export default function NoteInput({ note, onChangeNote }) {
             onChangeText={onChangeNote}
             multiline
             textAlignVertical="top"
+            value={note}
           />
           <Pressable
             style={styles.closeButton}
@@ -61,8 +71,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pressed: { opacity: 0.5 },
-  modal: { justifyContent: 'flex-end', margin: 0 },
+  backdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
   modalContainer: {
+    position: 'absolute',
+    width: '100%',
     backgroundColor: COLORS.white,
     padding: SPACING.md,
     borderTopLeftRadius: BORDER_RADIUS.lg,
