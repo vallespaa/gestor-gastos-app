@@ -4,18 +4,13 @@ import { useFinancial } from '../../../shared/context/FinancialContext';
 import { useCategories } from '../../../shared/context/CategoriesContext';
 import { useAccounts } from '../../../shared/context/AccountsContext';
 import { useAddTransactionHeader } from './hooks/useAddTransactionHeader';
-import { TextInput, StyleSheet, Alert } from 'react-native';
+import { Alert, View, StyleSheet } from 'react-native';
 import ThemedView from '../../components/ThemedView';
 import TabSelector from '../../components/TabSelector';
 import TransactionOptions from '../../components/TransactionOptions';
 import CategorySelector from '../../components/CategorySelector';
 import KeyPad from '../../components/KeyPad';
-import {
-  COLORS,
-  SPACING,
-  BORDER_RADIUS,
-  FONT_SIZES,
-} from '../../../shared/styles/global';
+import DisplayAmount from '../../components/DisplayAmount';
 
 export default function AddExpenseScreen({ navigation }) {
   const [tab, setTab] = useState('GASTOS');
@@ -138,11 +133,13 @@ export default function AddExpenseScreen({ navigation }) {
   return (
     <ThemedView withPadding={false}>
       <TabSelector tab={tab} setTab={handleTabChange} />
-      <TextInput
-        style={styles.input}
-        placeholder="Cantidad (€)"
-        value={amount}
-        editable={false}
+      <View style={styles.container}>
+        <DisplayAmount amount={amount} expression={expression} />
+      </View>
+      <CategorySelector
+        categories={categories}
+        selectedCategory={categoryId}
+        onCategoryChange={setCategoryId}
       />
       <TransactionOptions
         date={date}
@@ -153,28 +150,14 @@ export default function AddExpenseScreen({ navigation }) {
         onAddNote={setNote}
         accounts={accounts}
       />
-      <CategorySelector
-        categories={categories}
-        selectedCategory={categoryId}
-        onCategoryChange={setCategoryId}
-      />
       <KeyPad onKeyPress={handlePress} />
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
-    color: COLORS.black,
-    fontSize: FONT_SIZES.xxl,
-    fontWeight: 'bold',
-    textAlign: 'right',
-    borderWidth: 1,
-    borderColor: COLORS.lightGray,
-    borderRadius: BORDER_RADIUS.md,
-    marginHorizontal: SPACING.md,
-    marginTop: SPACING.lg,
-    marginBottom: SPACING.md,
-    padding: SPACING.sm,
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
 });

@@ -17,9 +17,11 @@ export default function DateSelector({ date, setDate }) {
         onPress={() => setShow(true)}
       >
         <MaterialIcons name="edit-calendar" size={24} color={COLORS.black} />
-        <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
-          {formatRelativeDate(currentDate)}
-        </Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.text} numberOfLines={1} ellipsizeMode="tail">
+            {formatRelativeDate(currentDate)}
+          </Text>
+        </View>
       </Pressable>
 
       {show && (
@@ -45,11 +47,13 @@ const styles = StyleSheet.create({
   pressed: {
     opacity: 0.5,
   },
-  text: {
-    marginLeft: SPACING.sm,
-    fontSize: FONT_SIZES.md,
-    color: COLORS.black,
+  textContainer: {
     flexShrink: 1,
-    maxWidth: 100,
+    flexGrow: 1,
+    marginLeft: SPACING.sm,
+  },
+  text: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.black,
   },
 });

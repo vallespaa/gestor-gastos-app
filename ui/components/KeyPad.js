@@ -1,4 +1,3 @@
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import {
   COLORS,
@@ -8,8 +7,6 @@ import {
 } from '../../shared/styles/global';
 
 export default function KeyPad({ onKeyPress }) {
-  const insets = useSafeAreaInsets();
-
   const keys = [
     ['7', '8', '9', '/'],
     ['4', '5', '6', '*'],
@@ -18,14 +15,17 @@ export default function KeyPad({ onKeyPress }) {
   ];
 
   return (
-    <View style={[styles.container, { bottom: insets.bottom + 0 }]}>
+    <View style={styles.container}>
       <View style={styles.keyboard}>
         {keys.map((row, rowIndex) => (
           <View key={rowIndex} style={styles.row}>
             {row.map((key) => (
               <Pressable
                 key={key}
-                style={styles.key}
+                style={({ pressed }) => [
+                  styles.key,
+                  pressed && { opacity: 0.5 },
+                ]}
                 onPress={() => onKeyPress(key)}
               >
                 <Text style={styles.keyText}>{key}</Text>
@@ -40,26 +40,22 @@ export default function KeyPad({ onKeyPress }) {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
     backgroundColor: 'hsl(220, 13%, 95%)',
     paddingBottom: SPACING.md,
     borderTopLeftRadius: BORDER_RADIUS.md,
     borderTopRightRadius: BORDER_RADIUS.md,
   },
   keyboard: {
-    marginTop: SPACING.md,
-    padding: SPACING.sm,
+    padding: SPACING.md,
+    gap: SPACING.sm,
   },
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    gap: SPACING.sm,
   },
   key: {
     flex: 1,
     aspectRatio: 1,
-    margin: SPACING.xs,
     backgroundColor: COLORS.lightGray,
     padding: SPACING.md,
     borderRadius: BORDER_RADIUS.md,
@@ -67,7 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   keyText: {
-    fontSize: FONT_SIZES.xl,
+    fontSize: FONT_SIZES.xxl,
     fontWeight: 'bold',
   },
 });

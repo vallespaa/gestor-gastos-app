@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   Pressable,
   Modal,
@@ -17,8 +16,6 @@ import {
 } from '../../shared/styles/global';
 
 export default function NoteInput({ note, onChangeNote }) {
-  const insets = useSafeAreaInsets();
-
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -40,7 +37,7 @@ export default function NoteInput({ note, onChangeNote }) {
           style={styles.backdrop}
           onPress={() => setShowModal(false)}
         />
-        <View style={[styles.modalContainer, { bottom: insets.bottom }]}>
+        <View style={[styles.modalContainer, { bottom: 0 }]}>
           <Text style={styles.modalTitle}>Escribe una nota</Text>
           <TextInput
             style={styles.input}

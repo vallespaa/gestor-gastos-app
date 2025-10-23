@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: SPACING.md,
+    alignItems: 'center',
   },
   iconContainer: {
     padding: SPACING.md,

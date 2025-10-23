@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     padding: SPACING.md,
   },
   expressionText: {
-    fontSize: FONT_SIZES.md,
+    fontSize: FONT_SIZES.lg,
     color: COLORS.gray,
     textAlign: 'right',
     marginBottom: SPACING.sm,

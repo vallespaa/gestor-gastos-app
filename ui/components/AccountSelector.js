@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   Pressable,
   Modal,
@@ -21,8 +20,6 @@ export default function AccountSelector({
   selectedAccount,
   onSelect,
 }) {
-  const insets = useSafeAreaInsets();
-
   const [showModal, setShowModal] = useState(false);
 
   const handleSelect = (id) => {
@@ -53,9 +50,15 @@ export default function AccountSelector({
         style={({ pressed }) => [styles.button, pressed && styles.pressed]}
         onPress={() => setShowModal(true)}
       >
-        <Text style={styles.accountText} numberOfLines={1} ellipsizeMode="tail">
-          {getAccountName(selectedAccount)}
-        </Text>
+        <View style={styles.accountTextContainer}>
+          <Text
+            style={styles.accountText}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {getAccountName(selectedAccount)}
+          </Text>
+        </View>
         <MaterialIcons
           name="account-balance-wallet"
           size={22}
@@ -73,7 +76,7 @@ export default function AccountSelector({
           style={styles.backdrop}
           onPress={() => setShowModal(false)}
         />
-        <View style={[styles.modalContainer, { bottom: insets.bottom }]}>
+        <View style={[styles.modalContainer, { bottom: 0 }]}>
           <Text style={styles.modalTitle}>Selecciona una cuenta</Text>
           <FlatList
             data={accounts}
@@ -97,16 +100,18 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    maxWidth: 130,
-  },
-  accountText: {
-    marginRight: SPACING.sm,
-    fontSize: FONT_SIZES.md,
-    color: COLORS.black,
-    flexShrink: 1,
-    maxWidth: 100,
   },
   pressed: { opacity: 0.5 },
+  accountTextContainer: {
+    flexShrink: 1,
+    flexGrow: 1,
+    marginRight: SPACING.sm,
+  },
+  accountText: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.black,
+    textAlign: 'right',
+  },
   backdrop: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.4)',
