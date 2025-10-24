@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useFilteredTransactions } from '../../../hooks/useFilteredTransactions';
-import { useExpenseSummary } from '../hooks/useExpenseSummary';
+import { useTransactionSummary } from '../hooks/useTransactionSummary';
 import PieChart from 'react-native-pie-chart';
 import { View, Text, StyleSheet, Dimensions, Pressable } from 'react-native';
 import {
@@ -30,7 +30,7 @@ export default function CategorySummary({ transactions, tab, period }) {
     period,
     selectedDate,
   );
-  const { total, categories } = useExpenseSummary(filteredTransactions);
+  const { total, categories } = useTransactionSummary(filteredTransactions);
 
   const series = categories.map((category) => {
     return {

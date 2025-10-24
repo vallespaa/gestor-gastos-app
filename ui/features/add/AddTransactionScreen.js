@@ -12,7 +12,7 @@ import CategorySelector from '../../components/CategorySelector';
 import KeyPad from '../../components/KeyPad';
 import DisplayAmount from '../../components/DisplayAmount';
 
-export default function AddExpenseScreen({ navigation }) {
+export default function AddTransactionScreen({ navigation }) {
   const [tab, setTab] = useState('GASTOS');
   const { addTransaction } = useFinancial();
   const { getCategories, getCategoryById } = useCategories();
@@ -74,7 +74,7 @@ export default function AddExpenseScreen({ navigation }) {
     setAmount(evaluateExpression(newExp));
   };
 
-  const handleAddExpense = async () => {
+  const handleAddTransaction = async () => {
     const category = getCategoryById(categoryId);
     const account = getAccountById(accountId);
 
@@ -95,7 +95,7 @@ export default function AddExpenseScreen({ navigation }) {
 
     setIsLoading(true);
 
-    const newExpense = {
+    const newTransaction = {
       id: String(Date.now()),
       amount: parseFloat(amount),
       type: category.type,
@@ -105,7 +105,7 @@ export default function AddExpenseScreen({ navigation }) {
       note,
     };
     try {
-      await addTransaction(newExpense);
+      await addTransaction(newTransaction);
       navigation.goBack();
     } catch {
       Alert.alert('Error', 'No se pudo guardar la transacción.');
@@ -122,7 +122,7 @@ export default function AddExpenseScreen({ navigation }) {
   useAddTransactionHeader({
     navigation,
     isLoading,
-    onSave: handleAddExpense,
+    onSave: handleAddTransaction,
   });
 
   const handleTabChange = (newTab) => {

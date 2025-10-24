@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DrawerNavigator from './DrawerNavigator';
-import AddExpenseScreen from '../features/add/AddExpenseScreen';
+import AddTransactionScreen from '../features/add/AddTransactionScreen';
 import CategoriesScreen from '../features/categories/CategoriesScreen';
 import CategoryFormScreen from '../features/categories/CategoryFormScreen';
 import AccountsScreen from '../features/accounts/AccountsScreen';
@@ -27,7 +27,7 @@ export default function RootNavigator() {
       />
       <Stack.Screen
         name="AddTransaction"
-        component={AddExpenseScreen}
+        component={AddTransactionScreen}
         options={{
           title: 'Añadir',
         }}

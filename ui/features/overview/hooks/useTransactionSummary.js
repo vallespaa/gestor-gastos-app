@@ -1,13 +1,13 @@
 import { useCategories } from '../../../../shared/context/CategoriesContext';
 import { COLORS, FONT_SIZES } from '../../../../shared/styles/global';
 
-export const useExpenseSummary = (expenses) => {
+export const useTransactionSummary = (transactions) => {
   const { getCategoryById } = useCategories();
 
   let total = 0;
   const categorySummary = new Map();
 
-  expenses.forEach((item) => {
+  transactions.forEach((item) => {
     const amount = parseFloat(item.amount) || 0;
     total += amount;
 
