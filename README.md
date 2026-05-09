@@ -12,15 +12,13 @@ Aplicación móvil para gestionar gastos e ingresos personales.
 
 1. Clona el repositorio:
    ```
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/vallespaa/gestor-gastos-app.git
    cd gestor-gastos-app
    ```
 
 2. Instala las dependencias:
    ```
    npm install
-   # o
-   yarn install
    ```
 
 ## Ejecución
