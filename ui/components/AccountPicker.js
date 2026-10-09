@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.lightGray,
     borderRadius: BORDER_RADIUS.md,
+    marginHorizontal: SPACING.md,
     marginBottom: SPACING.md,
   },
   picker: {

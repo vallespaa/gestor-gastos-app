@@ -1,5 +1,5 @@
 import { useFinancial } from '../../../../shared/context/FinancialContext';
-import { formatRelativeDate } from '../utils/dateUtils';
+import { formatRelativeDate } from '../../../../shared/utils/dateUtils';
 
 export const useTransactions = () => {
   const { transactions, transfers, adjustments } = useFinancial();
