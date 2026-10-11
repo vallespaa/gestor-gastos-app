@@ -1,10 +1,11 @@
 import 'dotenv/config';
+import pkg from './package.json';
 
 export default {
   expo: {
     name: 'gestor-gastos-app',
     slug: 'gestor-gastos-app',
-    version: '0.6.0',
+    version: pkg.version,
     orientation: 'portrait',
     icon: './assets/icon.png',
     userInterfaceStyle: 'light',
