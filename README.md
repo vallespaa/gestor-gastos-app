@@ -4,30 +4,29 @@ Aplicación móvil para gestionar gastos e ingresos personales.
 
 ## Requisitos
 
-- Node.js >= 14
+- Node.js >= 18
 - npm o yarn
-- Expo CLI
 
 ## Instalación
 
 1. Clona el repositorio:
    ```
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/vallespaa/gestor-gastos-app.git
    cd gestor-gastos-app
    ```
 
 2. Instala las dependencias:
    ```
    npm install
-   # o
-   yarn install
    ```
+
+3. (Opcional) Copia `.env.example` a `.env` y rellena `FEEDBACK_EMAIL`.
 
 ## Ejecución
 
 Para iniciar la app en modo desarrollo:
 ```
-expo start
+npm start
 ```
 Ábrelo en el navegador o escanea el código QR con la app Expo Go en tu móvil.
 
@@ -74,7 +73,7 @@ gestor-gastos-app/
 │   └── navigation/         # Configuración de la navegación (Drawer, Stacks, etc.)
 ├── App.js              # Punto de entrada principal de la app
 ├── index.js            # Registro de la app para Expo
-├── app.json            # Configuración de Expo
+├── app.config.js       # Configuración de Expo
 └── package.json        # Dependencias y scripts del proyecto
 ```
 
@@ -91,8 +90,8 @@ gestor-gastos-app/
 
 ## Changelog
 
-Consulta el historial de cambios en el [Changelog](./CHANGELOG.md).
+Consulta el historial de cambios en el [Changelog](./docs/CHANGELOG.md).
 
 ## Roadmap
 
-Consulta nuestro [Roadmap](./ROADMAP.md) para ver lo que se viene.
+Consulta nuestro [Roadmap](./docs/ROADMAP.md) para ver lo que se viene.
