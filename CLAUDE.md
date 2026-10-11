@@ -19,7 +19,6 @@ Personal expense/income tracker for mobile (Expo 53 / React Native 0.79, plain J
 ## MCP servers (`.mcp.json`)
 - `playwright` — drives Firefox to check the web build.
 - `context7` — up-to-date docs for React Navigation 7, Reanimated 3, date-fns 4, etc. Use it before relying on memory of a library API.
-- `expo` — needs OAuth with an Expo account (`/mcp` to sign in); docs search needs a paid EAS plan, and its screenshot/tap/log tools need SDK 54+ (this app is on 53). Not in the permission allowlist; low value until the SDK upgrade.
 
 ## Architecture
 Layers: `ui/` → `app/application` (one use case per file) → `app/domain` ← `app/data` (AsyncStorage repositories). Details and a "how to add a feature" checklist: @docs/ARCHITECTURE.md

@@ -2,15 +2,15 @@
   "mcpServers": {
     "playwright": {
       "command": "npx",
-      "args": ["@playwright/mcp@latest", "--browser", "firefox"]
+      "args": [
+        "@playwright/mcp@latest",
+        "--browser",
+        "firefox"
+      ]
     },
     "context7": {
       "type": "http",
       "url": "https://mcp.context7.com/mcp"
-    },
-    "expo": {
-      "type": "http",
-      "url": "https://mcp.expo.dev/mcp"
     }
   }
 }
