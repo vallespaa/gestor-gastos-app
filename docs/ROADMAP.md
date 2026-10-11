@@ -12,7 +12,6 @@ Este roadmap detalla las tareas pendientes y planeadas para el desarrollo de la 
   - Unificar la versión entre `package.json` y `app.config.js`
   - Mover dependencias de lint y Prettier a `devDependencies`, y declarar `expo-constants` y `@expo/vector-icons`
   - Normalizar `Transaction.amount` a número
-- Eliminación del código muerto de importación/exportación Excel
 - Mejoras visuales en la pantalla de creación de transacciones:
   - Reorganizar el flujo
   - Mejorar la selección de categorías
