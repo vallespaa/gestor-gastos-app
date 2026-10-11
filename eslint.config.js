@@ -1,11 +1,16 @@
 import expoConfig from 'eslint-config-expo/flat.js';
 import prettierPlugin from 'eslint-plugin-prettier';
+import globals from 'globals';
 
 export default [
   {
     ignores: ['dist/*', 'node_modules/*', 'android/*', 'ios/*'],
   },
   ...expoConfig,
+  {
+    files: ['__tests__/**', 'jest.setup.js'],
+    languageOptions: { globals: { ...globals.jest } },
+  },
   {
     plugins: {
       prettier: prettierPlugin,
