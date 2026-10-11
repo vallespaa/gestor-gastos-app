@@ -36,4 +36,9 @@ Non-obvious bits:
 - Known bugs and inconsistencies are tracked in @docs/KNOWN_ISSUES.md. Check there before "fixing" something odd, and update it when you fix an entry.
 
 ## Git
-English, short, imperative commit messages, optionally with a Conventional Commits prefix (`fix:`, `chore:`, `docs:`). Update `docs/CHANGELOG.md` for user-visible changes; `docs/ROADMAP.md` holds planned work.
+English, short, imperative commit messages, optionally with a Conventional Commits prefix (`fix:`, `chore:`, `docs:`). `docs/ROADMAP.md` holds planned work.
+
+## Releases
+- Don't edit `docs/CHANGELOG.md` or the version in feature PRs. For user-visible changes, add a Spanish `Changelog:` line to the PR description (see `.github/pull_request_template.md`).
+- `/release` drafts the changelog from those lines, bumps the version and opens a release PR. After it is merged, pushing the `vX.Y.Z` tag runs `.github/workflows/release.yml`: checks, an Android APK on EAS (profile `preview`) and a GitHub release. It needs the `EXPO_TOKEN` repository secret.
+- The version lives only in `package.json`; `app.config.js` reads it. EAS manages the Android build number remotely.

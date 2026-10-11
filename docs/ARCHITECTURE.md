@@ -38,4 +38,4 @@ Storage keys are one per entity, such as `'transactions'`, `'transfers'` and `'c
 4. Expose it through the matching context, or a new one added in `App.js`.
 5. Screen under `ui/features/<feature>/` with `useXForm` and `useXFormHeader` hooks, then register it in `RootNavigator`.
 6. Style with the tokens in `shared/styles/global.js`; user-facing strings in Spanish.
-7. Run `npm run lint:fix`, and add a line to `docs/CHANGELOG.md`.
+7. Run `npm run lint:fix`, and add a `Changelog:` line to the PR description.
