@@ -1,8 +1,11 @@
-import * as math from 'mathjs';
 import { useState } from 'react';
 import { useFinancial } from '../../../shared/context/FinancialContext';
 import { useCategories } from '../../../shared/context/CategoriesContext';
 import { useAccounts } from '../../../shared/context/AccountsContext';
+import {
+  evaluateExpression,
+  isOperator,
+} from '../../../shared/utils/calculator';
 import { useAddTransactionHeader } from './hooks/useAddTransactionHeader';
 import { Alert, View, StyleSheet } from 'react-native';
 import ThemedView from '../../components/ThemedView';
@@ -20,7 +23,6 @@ export default function AddExpenseScreen({ navigation }) {
 
   const categories = getCategories(tab);
 
-  const [amount, setAmount] = useState('0');
   const [expression, setExpression] = useState('');
   const [categoryId, setCategoryId] = useState('');
   const [accountId, setAccountId] = useState('');
@@ -28,31 +30,12 @@ export default function AddExpenseScreen({ navigation }) {
   const [note, setNote] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const isOperator = (input) => ['+', '-', '*', '/'].includes(input);
-
-  const evaluateExpression = (exp) => {
-    if (!exp) return '0';
-
-    // Limpiar operadores al final
-    let cleanExp = exp;
-    while (isOperator(cleanExp.slice(-1))) {
-      cleanExp = cleanExp.slice(0, -1);
-    }
-
-    try {
-      const result = math.evaluate(cleanExp || '0');
-      return result.toString();
-    } catch {
-      return '0';
-    }
-  };
+  const amount = evaluateExpression(expression);
 
   const handlePress = (input) => {
     // Borrar
     if (input === '⌫') {
-      const newExp = expression.slice(0, -1);
-      setExpression(newExp);
-      setAmount(evaluateExpression(newExp));
+      setExpression(expression.slice(0, -1));
       return;
     }
 
@@ -60,26 +43,29 @@ export default function AddExpenseScreen({ navigation }) {
     if (isOperator(input)) {
       if (expression === '') return; // no permitir operador al inicio
       const lastChar = expression.slice(-1);
-      const newExp = isOperator(lastChar)
-        ? expression.slice(0, -1) + input
-        : expression + input;
-      setExpression(newExp);
-      setAmount(evaluateExpression(newExp));
+      setExpression(
+        isOperator(lastChar)
+          ? expression.slice(0, -1) + input
+          : expression + input,
+      );
       return;
     }
 
-    // Número o coma
-    const newExp = expression + input;
-    setExpression(newExp);
-    setAmount(evaluateExpression(newExp));
+    // Coma: solo una por número
+    if (input === ',') {
+      const currentNumber = expression.split(/[+\-*/]/).pop();
+      if (currentNumber.includes(',')) return;
+    }
+
+    setExpression(expression + input);
   };
 
   const handleAddExpense = async () => {
     const category = getCategoryById(categoryId);
     const account = getAccountById(accountId);
 
-    if (!amount || isNaN(parseFloat(amount))) {
-      alert('Por favor ingresa una cantidad válida.');
+    if (amount === null || amount <= 0) {
+      alert('Por favor ingresa una cantidad mayor que 0.');
       return;
     }
 
@@ -97,7 +83,7 @@ export default function AddExpenseScreen({ navigation }) {
 
     const newExpense = {
       id: String(Date.now()),
-      amount: parseFloat(amount),
+      amount,
       type: category.type,
       category: category.id,
       account: account.id,
@@ -110,11 +96,6 @@ export default function AddExpenseScreen({ navigation }) {
     } catch {
       Alert.alert('Error', 'No se pudo guardar la transacción.');
     } finally {
-      setAmount('0');
-      setCategoryId('');
-      setAccountId('');
-      setDate(new Date());
-      setNote('');
       setIsLoading(false);
     }
   };
@@ -134,7 +115,10 @@ export default function AddExpenseScreen({ navigation }) {
     <ThemedView withPadding={false}>
       <TabSelector tab={tab} setTab={handleTabChange} />
       <View style={styles.container}>
-        <DisplayAmount amount={amount} expression={expression} />
+        <DisplayAmount
+          amount={amount === null ? '—' : String(amount)}
+          expression={expression}
+        />
       </View>
       <CategorySelector
         categories={categories}
