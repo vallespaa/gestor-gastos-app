@@ -8,7 +8,6 @@ Este roadmap detalla las tareas pendientes y planeadas para el desarrollo de la 
 
 - Corrección de problemas conocidos ([KNOWN_ISSUES.md](./KNOWN_ISSUES.md)):
   - `getTransfersByAccount` no pasa el repositorio al caso de uso
-  - Falta `assets/icon.png`, referenciado en `app.config.js`
   - Mover dependencias de lint y Prettier a `devDependencies`, y declarar `expo-constants` y `@expo/vector-icons`
   - Normalizar `Transaction.amount` a número
 - Mejoras visuales en la pantalla de creación de transacciones:

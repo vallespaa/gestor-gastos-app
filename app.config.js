@@ -7,7 +7,7 @@ export default {
     slug: 'gestor-gastos-app',
     version: pkg.version,
     orientation: 'portrait',
-    icon: './assets/icon.png',
+    icon: './assets/ios-light.png',
     userInterfaceStyle: 'light',
     newArchEnabled: true,
     splash: {
