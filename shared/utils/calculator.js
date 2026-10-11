@@ -6,8 +6,12 @@ export const isOperator = (char) => OPERATORS.includes(char);
 const toNumber = (str) =>
   NUMBER_PATTERN.test(str) ? Number(str.replace(',', '.')) : null;
 
+const roundToCents = (value) =>
+  Math.round((value + Number.EPSILON) * 100) / 100;
+
 // Evalúa una expresión del teclado (p. ej. "12,5+3*2") respetando la
-// precedencia de * y /. Devuelve null si es inválida o divide entre cero.
+// precedencia de * y /, redondeando a céntimos. Devuelve null si es
+// inválida o divide entre cero.
 export const evaluateExpression = (exp) => {
   let clean = exp;
   while (isOperator(clean.slice(-1))) {
@@ -34,5 +38,13 @@ export const evaluateExpression = (exp) => {
     } else terms.push(operator === '-' ? -value : value);
   }
 
-  return terms.reduce((sum, term) => sum + term, 0);
+  return roundToCents(terms.reduce((sum, term) => sum + term, 0));
+};
+
+// 1234.5 -> "1.234,5"
+export const formatAmount = (value) => {
+  const [integer, decimals] = Math.abs(value).toString().split('.');
+  const grouped = integer.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const sign = value < 0 ? '-' : '';
+  return decimals ? `${sign}${grouped},${decimals}` : `${sign}${grouped}`;
 };

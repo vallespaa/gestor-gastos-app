@@ -4,6 +4,7 @@ import { useCategories } from '../../../shared/context/CategoriesContext';
 import { useAccounts } from '../../../shared/context/AccountsContext';
 import {
   evaluateExpression,
+  formatAmount,
   isOperator,
 } from '../../../shared/utils/calculator';
 import { useAddTransactionHeader } from './hooks/useAddTransactionHeader';
@@ -116,7 +117,7 @@ export default function AddExpenseScreen({ navigation }) {
       <TabSelector tab={tab} setTab={handleTabChange} />
       <View style={styles.container}>
         <DisplayAmount
-          amount={amount === null ? '—' : String(amount)}
+          amount={amount === null ? '—' : formatAmount(amount)}
           expression={expression}
         />
       </View>
