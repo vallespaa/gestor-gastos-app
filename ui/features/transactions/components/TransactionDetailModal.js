@@ -13,6 +13,7 @@ import {
 import CategoryPicker from '../../../components/CategoryPicker';
 import AccountPicker from '../../../components/AccountPicker';
 import DateSelector from '../../../components/DateSelector';
+import { parseAmount } from '../../../../shared/utils/calculator';
 import Modal from 'react-native-modal';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
@@ -44,7 +45,7 @@ export default function TransactionDetailModal({
     if (transaction) {
       setCategories(getCategories(transaction.type));
 
-      setAmount(String(transaction.amount));
+      setAmount(String(transaction.amount).replace('.', ','));
       setCategoryId(transaction.category);
       setAccountId(transaction.account);
       setDate(new Date(transaction.date));
@@ -56,7 +57,8 @@ export default function TransactionDetailModal({
     const category = getCategoryById(categoryId);
     const account = getAccountById(accountId);
 
-    if (!amount || isNaN(parseFloat(amount))) {
+    const parsedAmount = parseAmount(amount);
+    if (parsedAmount === null || parsedAmount <= 0) {
       alert('Por favor ingresa una cantidad válida.');
       return;
     }
@@ -73,7 +75,7 @@ export default function TransactionDetailModal({
 
     const updated = {
       ...transaction,
-      amount: parseFloat(amount),
+      amount: parsedAmount,
       category: category.id,
       account: account.id,
       date: date.toISOString(),

@@ -41,6 +41,13 @@ export const evaluateExpression = (exp) => {
   return roundToCents(terms.reduce((sum, term) => sum + term, 0));
 };
 
+// Convierte el texto de un campo de cantidad ("12,5" o "12.5") en un
+// número redondeado a céntimos. Devuelve null si no es un número válido.
+export const parseAmount = (text) => {
+  const value = toNumber(String(text).trim().replace('.', ','));
+  return value === null ? null : roundToCents(value);
+};
+
 // 1234.5 -> "1.234,5"
 export const formatAmount = (value) => {
   const [integer, decimals] = Math.abs(value).toString().split('.');
