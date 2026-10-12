@@ -28,7 +28,7 @@ export default function AccountSelector({
   };
 
   const getAccountName = (id) =>
-    accounts?.find((a) => a.id === id)?.name || 'Predeterminada';
+    accounts?.find((a) => a.id === id)?.name || 'Selecciona cuenta';
 
   const renderItem = ({ item }) => (
     <Pressable

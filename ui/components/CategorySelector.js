@@ -17,9 +17,12 @@ export default function CategorySelector({
           styles.iconContainer,
           { backgroundColor: color },
           pressed && styles.pressed,
-          { borderColor: isSelected ? color : COLORS.white },
+          { borderColor: isSelected ? COLORS.black : COLORS.white },
         ]}
         onPress={() => onCategoryChange?.(id)}
+        accessibilityRole="button"
+        accessibilityLabel={item.name}
+        accessibilityState={{ selected: isSelected }}
       >
         <Ionicons name={icon} size={24} color="white" />
       </Pressable>

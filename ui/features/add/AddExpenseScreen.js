@@ -66,17 +66,17 @@ export default function AddExpenseScreen({ navigation }) {
     const account = getAccountById(accountId);
 
     if (amount === null || amount <= 0) {
-      alert('Por favor ingresa una cantidad mayor que 0.');
+      Alert.alert('Atención', 'Por favor ingresa una cantidad mayor que 0.');
       return;
     }
 
     if (!category) {
-      alert('Por favor selecciona una categoría válida.');
+      Alert.alert('Atención', 'Por favor selecciona una categoría válida.');
       return;
     }
 
     if (!account) {
-      alert('Por favor selecciona una cuenta válida.');
+      Alert.alert('Atención', 'Por favor selecciona una cuenta válida.');
       return;
     }
 
