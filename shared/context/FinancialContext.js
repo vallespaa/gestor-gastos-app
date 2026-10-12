@@ -94,7 +94,7 @@ export const FinancialProvider = ({ children }) => {
     if (!accountId) {
       return null;
     }
-    return await getTransfersByAccountUseCase(accountId);
+    return await getTransfersByAccountUseCase(tfRepo, accountId);
   };
 
   // ADJUSTMENTS
