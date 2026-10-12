@@ -19,6 +19,8 @@ export default class Transaction {
 
   isValid() {
     return (
+      typeof this.amount === 'number' &&
+      Number.isFinite(this.amount) &&
       this.amount > 0 &&
       ['INGRESOS', 'GASTOS'].includes(this.type) &&
       this.category &&

@@ -1,4 +1,8 @@
-import { evaluateExpression, formatAmount } from '../shared/utils/calculator';
+import {
+  evaluateExpression,
+  formatAmount,
+  parseAmount,
+} from '../shared/utils/calculator';
 
 describe('evaluateExpression', () => {
   it('returns 0 for an empty expression', () => {
@@ -56,5 +60,26 @@ describe('formatAmount', () => {
     expect(formatAmount(1234.5)).toBe('1.234,5');
     expect(formatAmount(1234567)).toBe('1.234.567');
     expect(formatAmount(-1234)).toBe('-1.234');
+  });
+});
+
+describe('parseAmount', () => {
+  it('accepts a comma or a dot as the decimal separator', () => {
+    expect(parseAmount('12,5')).toBe(12.5);
+    expect(parseAmount('12.5')).toBe(12.5);
+    expect(parseAmount(' 7 ')).toBe(7);
+  });
+
+  it('rounds to cents', () => {
+    expect(parseAmount('1,005')).toBe(1.01);
+    expect(parseAmount('0,333')).toBe(0.33);
+  });
+
+  it('returns null for empty or malformed input', () => {
+    expect(parseAmount('')).toBeNull();
+    expect(parseAmount('abc')).toBeNull();
+    expect(parseAmount('12abc')).toBeNull();
+    expect(parseAmount('1,2,3')).toBeNull();
+    expect(parseAmount('1.234,5')).toBeNull();
   });
 });

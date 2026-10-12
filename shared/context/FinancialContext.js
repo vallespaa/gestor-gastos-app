@@ -125,10 +125,10 @@ export const FinancialProvider = ({ children }) => {
   const getAccountBalance = (accountId) => {
     const transTotal = transactions
       .filter((t) => t.account === accountId)
-      .reduce((acc, t) => {
-        const amount = parseFloat(t.amount) || 0;
-        return t.type === 'INGRESOS' ? acc + amount : acc - amount;
-      }, 0);
+      .reduce(
+        (acc, t) => (t.type === 'INGRESOS' ? acc + t.amount : acc - t.amount),
+        0,
+      );
 
     const adjTotal = adjustments
       .filter((a) => a.accountId === accountId)
@@ -150,10 +150,10 @@ export const FinancialProvider = ({ children }) => {
 
   // Obtener el balance total
   const totalBalance =
-    transactions.reduce((acc, t) => {
-      const amount = parseFloat(t.amount) || 0;
-      return t.type === 'INGRESOS' ? acc + amount : acc - amount;
-    }, 0) + adjustments.reduce((acc, a) => acc + a.amount, 0);
+    transactions.reduce(
+      (acc, t) => (t.type === 'INGRESOS' ? acc + t.amount : acc - t.amount),
+      0,
+    ) + adjustments.reduce((acc, a) => acc + a.amount, 0);
 
   return (
     <FinancialContext.Provider

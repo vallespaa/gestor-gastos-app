@@ -18,6 +18,17 @@ describe('Transaction', () => {
     expect(new Transaction({ ...base, amount: 0 }).isValid()).toBeFalsy();
   });
 
+  it('is invalid with a string amount', () => {
+    expect(new Transaction({ ...base, amount: '10' }).isValid()).toBeFalsy();
+  });
+
+  it('is invalid with a non-finite amount', () => {
+    expect(new Transaction({ ...base, amount: NaN }).isValid()).toBeFalsy();
+    expect(
+      new Transaction({ ...base, amount: Infinity }).isValid(),
+    ).toBeFalsy();
+  });
+
   it('is invalid with an unknown type', () => {
     expect(new Transaction({ ...base, type: 'OTRO' }).isValid()).toBeFalsy();
   });

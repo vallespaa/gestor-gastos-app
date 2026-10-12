@@ -8,7 +8,7 @@ export const useExpenseSummary = (expenses) => {
   const categorySummary = new Map();
 
   expenses.forEach((item) => {
-    const amount = parseFloat(item.amount) || 0;
+    const { amount } = item;
     total += amount;
 
     const categoryId = item.category;
