@@ -2,13 +2,19 @@ import { useState } from 'react';
 import { useFinancial } from '../../../shared/context/FinancialContext';
 import { useCategories } from '../../../shared/context/CategoriesContext';
 import { useAccounts } from '../../../shared/context/AccountsContext';
-import { TextInput, Button, StyleSheet } from 'react-native';
+import {
+  evaluateExpression,
+  formatAmount,
+  isOperator,
+} from '../../../shared/utils/calculator';
+import { useAddTransactionHeader } from './hooks/useAddTransactionHeader';
+import { Alert, View, StyleSheet } from 'react-native';
 import ThemedView from '../../components/ThemedView';
 import TabSelector from '../../components/TabSelector';
-import CategoryPicker from '../../components/CategoryPicker';
-import AccountPicker from '../../components/AccountPicker';
-import DateSelector from '../../components/DateSelector';
-import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
+import TransactionOptions from '../../components/TransactionOptions';
+import CategorySelector from '../../components/CategorySelector';
+import KeyPad from '../../components/KeyPad';
+import DisplayAmount from '../../components/DisplayAmount';
 
 export default function AddExpenseScreen({ navigation }) {
   const [tab, setTab] = useState('GASTOS');
@@ -18,49 +24,88 @@ export default function AddExpenseScreen({ navigation }) {
 
   const categories = getCategories(tab);
 
-  const [amount, setAmount] = useState('');
+  const [expression, setExpression] = useState('');
   const [categoryId, setCategoryId] = useState('');
   const [accountId, setAccountId] = useState('');
   const [date, setDate] = useState(new Date());
   const [note, setNote] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const amount = evaluateExpression(expression);
+
+  const handlePress = (input) => {
+    // Borrar
+    if (input === '⌫') {
+      setExpression(expression.slice(0, -1));
+      return;
+    }
+
+    // Operador: reemplazar si último ya es operador
+    if (isOperator(input)) {
+      if (expression === '') return; // no permitir operador al inicio
+      const lastChar = expression.slice(-1);
+      setExpression(
+        isOperator(lastChar)
+          ? expression.slice(0, -1) + input
+          : expression + input,
+      );
+      return;
+    }
+
+    // Coma: solo una por número
+    if (input === ',') {
+      const currentNumber = expression.split(/[+\-*/]/).pop();
+      if (currentNumber.includes(',')) return;
+    }
+
+    setExpression(expression + input);
+  };
 
   const handleAddExpense = async () => {
     const category = getCategoryById(categoryId);
     const account = getAccountById(accountId);
 
-    if (!amount || isNaN(parseFloat(amount))) {
-      alert('Por favor ingresa una cantidad válida.');
+    if (amount === null || amount <= 0) {
+      Alert.alert('Atención', 'Por favor ingresa una cantidad mayor que 0.');
       return;
     }
 
     if (!category) {
-      alert('Por favor selecciona una categoría válida.');
+      Alert.alert('Atención', 'Por favor selecciona una categoría válida.');
       return;
     }
 
     if (!account) {
-      alert('Por favor selecciona una cuenta válida.');
+      Alert.alert('Atención', 'Por favor selecciona una cuenta válida.');
       return;
     }
 
+    setIsLoading(true);
+
     const newExpense = {
       id: String(Date.now()),
-      amount: parseFloat(amount),
+      amount,
       type: category.type,
       category: category.id,
       account: account.id,
       date: date.toISOString(),
       note,
     };
-
-    await addTransaction(newExpense);
-    setAmount('');
-    setCategoryId('');
-    setAccountId('');
-    setDate(new Date());
-    setNote('');
-    navigation.goBack();
+    try {
+      await addTransaction(newExpense);
+      navigation.goBack();
+    } catch {
+      Alert.alert('Error', 'No se pudo guardar la transacción.');
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  useAddTransactionHeader({
+    navigation,
+    isLoading,
+    onSave: handleAddExpense,
+  });
 
   const handleTabChange = (newTab) => {
     setTab(newTab);
@@ -68,51 +113,36 @@ export default function AddExpenseScreen({ navigation }) {
   };
 
   return (
-    <ThemedView>
+    <ThemedView withPadding={false}>
       <TabSelector tab={tab} setTab={handleTabChange} />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Cantidad (€)"
-        value={amount}
-        onChangeText={setAmount}
-        keyboardType="numeric"
-      />
-
-      <CategoryPicker
+      <View style={styles.container}>
+        <DisplayAmount
+          amount={amount === null ? '—' : formatAmount(amount)}
+          expression={expression}
+        />
+      </View>
+      <CategorySelector
         categories={categories}
         selectedCategory={categoryId}
         onCategoryChange={setCategoryId}
       />
-
-      <AccountPicker
-        accounts={accounts}
+      <TransactionOptions
+        date={date}
+        setDate={setDate}
         selectedAccount={accountId}
-        onAccountChange={setAccountId}
+        setSelectedAccount={setAccountId}
+        note={note}
+        onAddNote={setNote}
+        accounts={accounts}
       />
-
-      <DateSelector date={date} setDate={setDate} />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Notas"
-        value={note}
-        onChangeText={setNote}
-        multiline
-        textAlignVertical="top"
-      />
-
-      <Button title="Agregar" onPress={handleAddExpense} />
+      <KeyPad onKeyPress={handlePress} />
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
-    borderWidth: 1,
-    borderColor: COLORS.lightGray,
-    marginBottom: SPACING.md,
-    padding: SPACING.sm,
-    borderRadius: BORDER_RADIUS.md,
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
 });
