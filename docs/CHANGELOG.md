@@ -49,3 +49,21 @@ Todas las modificaciones importantes de este proyecto se documentarán en este a
 
 - Gestión de transferencias entre cuentas
 - Lista de transacciones actualizada: Muestra de cambios en balance y transferencias
+
+---
+
+## [0.6.0] - 2026-10-12
+
+### Añadido
+
+- Nueva pantalla de añadir gasto o ingreso con calculadora integrada, selector de categorías y opciones de fecha, nota y cuenta.
+
+### Cambiado
+
+- Se retira la importación y exportación de datos en Excel por una vulnerabilidad de seguridad en la librería `xlsx`.
+
+### Corregido
+
+- Al editar un movimiento, la cantidad admite coma decimal y se rechazan valores no numéricos.
+- Las transferencias aceptan importes con coma decimal (p. ej. «12,5») en lugar de truncarlos.
+- Colores y orden de las categorías en el resumen.
