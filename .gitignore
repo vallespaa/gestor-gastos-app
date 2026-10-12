@@ -39,3 +39,6 @@ yarn-error.*
 
 # Playwright MCP output
 .playwright-mcp/
+
+# Claude Code worktrees
+.claude/worktrees/
