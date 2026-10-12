@@ -5,6 +5,7 @@ import { useFinancial } from '../../../shared/context/FinancialContext';
 import ThemedView from '../../components/ThemedView';
 import AccountPicker from '../../components/AccountPicker';
 import DateSelector from '../../components/DateSelector';
+import { parseAmount } from '../../../shared/utils/calculator';
 import { COLORS, SPACING, BORDER_RADIUS } from '../../../shared/styles/global';
 
 export default function TransferFormScreen({ navigation }) {
@@ -21,7 +22,8 @@ export default function TransferFormScreen({ navigation }) {
     const fromAccount = getAccountById(fromAccountId);
     const toAccount = getAccountById(toAccountId);
 
-    if (!amount || isNaN(parseFloat(amount))) {
+    const parsedAmount = parseAmount(amount);
+    if (parsedAmount === null || parsedAmount <= 0) {
       alert('Por favor ingresa una cantidad válida.');
       return;
     }
@@ -39,7 +41,7 @@ export default function TransferFormScreen({ navigation }) {
       id: String(Date.now()),
       fromAccountId: fromAccount.id,
       toAccountId: toAccount.id,
-      amount: parseFloat(amount),
+      amount: parsedAmount,
       date: date.toISOString(),
       note,
     };
