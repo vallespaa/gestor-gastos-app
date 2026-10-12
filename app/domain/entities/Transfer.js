@@ -8,6 +8,18 @@ export default class Transfer {
     this.note = note || '';
   }
 
+  isValid() {
+    return (
+      typeof this.amount === 'number' &&
+      Number.isFinite(this.amount) &&
+      this.amount > 0 &&
+      this.fromAccountId &&
+      this.toAccountId &&
+      this.fromAccountId !== this.toAccountId &&
+      this.date
+    );
+  }
+
   static fromPlainObject(obj) {
     return new Transfer(obj);
   }
